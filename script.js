@@ -41,62 +41,44 @@ let currentLecture = null;
 let timerInterval = null;
 let timeLeft = 20;
 
-// DOM 요소
-const lectureSelectionScreen = document.getElementById('lecture-selection-screen');
-const lectureGrid = document.getElementById('lecture-grid');
-const recordsList = document.getElementById('records-list');
-const quizContainer = document.getElementById('quiz-container');
-const wordCard = document.getElementById('word-card');
-const wordText = document.getElementById('word-text');
-const pronounceBtn = document.getElementById('pronounce-btn');
-const optionsContainer = document.getElementById('options-container');
-const scoreDisplay = document.getElementById('score');
-const questionCounter = document.getElementById('current-question');
-const totalQuestions = document.getElementById('total-questions');
-const timerText = document.getElementById('timer-text');
-const timerProgressCircle = document.getElementById('timer-progress');
-const feedbackModal = document.getElementById('feedback-modal');
-const modalIcon = document.getElementById('modal-icon');
-const modalTitle = document.getElementById('modal-title');
-const modalWord = document.getElementById('modal-word');
-const modalMeaning = document.getElementById('modal-meaning');
-const modalExample = document.getElementById('modal-example');
-const nextBtn = document.getElementById('next-btn');
-const resultScreen = document.getElementById('result-screen');
-const finalScore = document.getElementById('final-score');
-const maxScore = document.getElementById('max-score');
-const scorePercentage = document.getElementById('score-percentage');
-const restartBtn = document.getElementById('restart-btn');
-const backToLecturesBtn = document.getElementById('back-to-lectures-btn');
+// DOM 요소 (나중에 초기화)
+let lectureSelectionScreen, lectureGrid, recordsList, quizContainer;
+let wordCard, wordText, pronounceBtn, optionsContainer;
+let scoreDisplay, questionCounter, totalQuestions;
+let timerText, timerProgressCircle;
+let feedbackModal, modalIcon, modalTitle, modalWord, modalMeaning, modalExample, nextBtn;
+let resultScreen, finalScore, maxScore, scorePercentage, restartBtn, backToLecturesBtn;
 
-// 네비게이션 기능
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
+// 네비게이션 기능 초기화
+function initNavigation() {
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('.section');
 
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetSection = link.getAttribute('data-section');
-    
-    // 활성 링크 업데이트
-    navLinks.forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-    
-    // 섹션 표시/숨김
-    sections.forEach(section => {
-      section.classList.add('hidden');
-    });
-    
-    const targetElement = document.getElementById(targetSection);
-    if (targetElement) {
-      targetElement.classList.remove('hidden');
-      // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
-      if (targetSection === 'vocab-quiz') {
-        showLectureSelection();
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetSection = link.getAttribute('data-section');
+      
+      // 활성 링크 업데이트
+      navLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      
+      // 섹션 표시/숨김
+      sections.forEach(section => {
+        section.classList.add('hidden');
+      });
+      
+      const targetElement = document.getElementById(targetSection);
+      if (targetElement) {
+        targetElement.classList.remove('hidden');
+        // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
+        if (targetSection === 'vocab-quiz') {
+          showLectureSelection();
+        }
       }
-    }
+    });
   });
-});
+}
 
 // 챕터 선택 화면 표시
 function showLectureSelection() {
@@ -345,23 +327,7 @@ function showFeedback(isCorrect, question, selectedOption = null) {
   feedbackModal.classList.remove('hidden');
 }
 
-// 다음 문제로
-nextBtn.addEventListener('click', () => {
-  feedbackModal.classList.add('hidden');
-  currentQuestionIndex++;
-  loadQuestion();
-});
-
-// 발음 듣기
-pronounceBtn.addEventListener('click', () => {
-  const word = wordText.textContent;
-  if ('speechSynthesis' in window) {
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.9;
-    speechSynthesis.speak(utterance);
-  }
-});
+// 이벤트 리스너는 initVocabQuiz에서 설정됨
 
 // 점수 업데이트
 function updateScore() {
@@ -398,18 +364,83 @@ function showResult() {
   saveStudyRecord(currentLecture.lecture, score, maxScoreValue);
 }
 
-// 다시 시작 버튼
-restartBtn.addEventListener('click', () => {
-  startQuiz(vocaData.findIndex(l => l.lecture === currentLecture.lecture));
-});
+// 이벤트 리스너는 initVocabQuiz에서 설정됨
 
-// 챕터 선택으로 돌아가기
-backToLecturesBtn.addEventListener('click', () => {
-  showLectureSelection();
-});
+// DOM 요소 초기화
+function initDOMElements() {
+  lectureSelectionScreen = document.getElementById('lecture-selection-screen');
+  lectureGrid = document.getElementById('lecture-grid');
+  recordsList = document.getElementById('records-list');
+  quizContainer = document.getElementById('quiz-container');
+  wordCard = document.getElementById('word-card');
+  wordText = document.getElementById('word-text');
+  pronounceBtn = document.getElementById('pronounce-btn');
+  optionsContainer = document.getElementById('options-container');
+  scoreDisplay = document.getElementById('score');
+  questionCounter = document.getElementById('current-question');
+  totalQuestions = document.getElementById('total-questions');
+  timerText = document.getElementById('timer-text');
+  timerProgressCircle = document.getElementById('timer-progress');
+  feedbackModal = document.getElementById('feedback-modal');
+  modalIcon = document.getElementById('modal-icon');
+  modalTitle = document.getElementById('modal-title');
+  modalWord = document.getElementById('modal-word');
+  modalMeaning = document.getElementById('modal-meaning');
+  modalExample = document.getElementById('modal-example');
+  nextBtn = document.getElementById('next-btn');
+  resultScreen = document.getElementById('result-screen');
+  finalScore = document.getElementById('final-score');
+  maxScore = document.getElementById('max-score');
+  scorePercentage = document.getElementById('score-percentage');
+  restartBtn = document.getElementById('restart-btn');
+  backToLecturesBtn = document.getElementById('back-to-lectures-btn');
+}
 
 // 페이지 로드 시 챕터 선택 화면 표시
 function initVocabQuiz() {
+  // DOM 요소 초기화
+  initDOMElements();
+  
+  // 네비게이션 초기화
+  initNavigation();
+  
+  // 이벤트 리스너 설정
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (feedbackModal) {
+        feedbackModal.classList.add('hidden');
+      }
+      currentQuestionIndex++;
+      loadQuestion();
+    });
+  }
+  
+  if (pronounceBtn && wordText) {
+    pronounceBtn.addEventListener('click', () => {
+      const word = wordText.textContent;
+      if (word && 'speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        speechSynthesis.speak(utterance);
+      }
+    });
+  }
+  
+  if (restartBtn) {
+    restartBtn.addEventListener('click', () => {
+      if (currentLecture) {
+        startQuiz(vocaData.findIndex(l => l.lecture === currentLecture.lecture));
+      }
+    });
+  }
+  
+  if (backToLecturesBtn) {
+    backToLecturesBtn.addEventListener('click', () => {
+      showLectureSelection();
+    });
+  }
+  
   // 초기 상태 설정
   if (lectureSelectionScreen) {
     lectureSelectionScreen.classList.remove('hidden');
