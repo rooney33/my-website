@@ -48,6 +48,9 @@ let scoreDisplay, questionCounter, totalQuestions;
 let timerText, timerProgressCircle;
 let feedbackModal, modalIcon, modalTitle, modalWord, modalMeaning, modalExample, nextBtn;
 let resultScreen, finalScore, maxScore, scorePercentage, restartBtn, backToLecturesBtn;
+let backToLectureBtn, themeToggle;
+let calendarContainer, selectedDateRecords, dateRecordsList, selectedDateTitle;
+let reviewWordsContainer, reviewCount, noReviewWords;
 
 // 네비게이션 기능 초기화
 function initNavigation() {
@@ -74,6 +77,10 @@ function initNavigation() {
         // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
         if (targetSection === 'vocab-quiz') {
           showLectureSelection();
+        }
+        // Voca Review 섹션으로 갈 때 단어 표시
+        if (targetSection === 'voca-review') {
+          displayReviewWords();
         }
       }
     });
@@ -104,27 +111,87 @@ function showLectureSelection() {
   displayStudyRecords();
 }
 
-// 학습 기록 표시
+// 학습 기록 표시 (캘린더 형태)
 function displayStudyRecords() {
   const records = getStudyRecords();
-  recordsList.innerHTML = '';
+  if (!calendarContainer) return;
   
-  if (records.length === 0) {
-    recordsList.innerHTML = '<div class="no-records">아직 학습 기록이 없습니다.</div>';
+  calendarContainer.innerHTML = '';
+  
+  // 최근 1년간의 데이터 생성
+  const today = new Date();
+  const oneYearAgo = new Date(today);
+  oneYearAgo.setFullYear(today.getFullYear() - 1);
+  
+  // 날짜별 단어 개수 집계
+  const dateCounts = {};
+  records.forEach(record => {
+    const date = new Date(record.date);
+    const dateKey = date.toISOString().split('T')[0];
+    if (!dateCounts[dateKey]) {
+      dateCounts[dateKey] = 0;
+    }
+    // 점수에서 단어 개수 추출 (예: "5/10" -> 5)
+    const wordCount = parseInt(record.score.split('/')[0]) || 0;
+    dateCounts[dateKey] += wordCount;
+  });
+  
+  // 캘린더 그리드 생성 (53주 x 7일)
+  const startDate = new Date(oneYearAgo);
+  // 일요일로 맞추기
+  startDate.setDate(startDate.getDate() - startDate.getDay());
+  
+  for (let week = 0; week < 53; week++) {
+    for (let day = 0; day < 7; day++) {
+      const currentDate = new Date(startDate);
+      currentDate.setDate(startDate.getDate() + (week * 7 + day));
+      
+      if (currentDate > today) continue;
+      
+      const dateKey = currentDate.toISOString().split('T')[0];
+      const count = dateCounts[dateKey] || 0;
+      
+      const dayElement = document.createElement('div');
+      dayElement.className = 'calendar-day';
+      dayElement.setAttribute('data-count', count);
+      dayElement.setAttribute('data-date', dateKey);
+      dayElement.setAttribute('title', `${dateKey}: ${count}개 단어`);
+      
+      dayElement.addEventListener('click', () => showDateRecords(dateKey, records));
+      
+      calendarContainer.appendChild(dayElement);
+    }
+  }
+}
+
+// 특정 날짜의 기록 표시
+function showDateRecords(dateKey, allRecords) {
+  if (!selectedDateRecords || !dateRecordsList || !selectedDateTitle) return;
+  
+  const dateRecords = allRecords.filter(r => {
+    const recordDate = new Date(r.date).toISOString().split('T')[0];
+    return recordDate === dateKey;
+  });
+  
+  if (dateRecords.length === 0) {
+    selectedDateRecords.classList.add('hidden');
     return;
   }
   
-  // 최근 10개만 표시
-  records.slice(0, 10).forEach(record => {
-    const recordItem = document.createElement('div');
-    recordItem.className = 'record-item';
-    recordItem.innerHTML = `
-      <span class="record-date">${record.date}</span>
-      <span class="record-lecture">${record.lecture}</span>
-      <span class="record-score">${record.score}점</span>
+  selectedDateTitle.textContent = `${dateKey} 학습 기록`;
+  dateRecordsList.innerHTML = '';
+  
+  dateRecords.forEach(record => {
+    const item = document.createElement('div');
+    item.className = 'date-record-item';
+    item.innerHTML = `
+      <div class="date-record-lecture">${record.lecture}</div>
+      <div class="date-record-score">${record.score}</div>
     `;
-    recordsList.appendChild(recordItem);
+    dateRecordsList.appendChild(item);
   });
+  
+  selectedDateRecords.classList.remove('hidden');
 }
 
 // 학습 기록 가져오기
@@ -151,6 +218,39 @@ function saveStudyRecord(lecture, score, maxScore) {
   }
   
   localStorage.setItem('vocabQuizRecords', JSON.stringify(records));
+}
+
+// 틀린 단어 저장
+function saveWrongWord(word, meaning, example, lecture) {
+  const wrongWords = getWrongWords();
+  
+  // 이미 존재하는지 확인 (중복 방지)
+  const exists = wrongWords.some(w => w.word === word && w.lecture === lecture);
+  if (exists) return;
+  
+  wrongWords.push({
+    word: word,
+    meaning: meaning,
+    example: example,
+    lecture: lecture,
+    date: new Date().toISOString().split('T')[0]
+  });
+  
+  localStorage.setItem('vocabWrongWords', JSON.stringify(wrongWords));
+}
+
+// 틀린 단어 가져오기
+function getWrongWords() {
+  const words = localStorage.getItem('vocabWrongWords');
+  return words ? JSON.parse(words) : [];
+}
+
+// 틀린 단어 삭제 (암기 완료)
+function removeWrongWord(word, lecture) {
+  const wrongWords = getWrongWords();
+  const filtered = wrongWords.filter(w => !(w.word === word && w.lecture === lecture));
+  localStorage.setItem('vocabWrongWords', JSON.stringify(filtered));
+  displayReviewWords();
 }
 
 // 퀴즈 시작
@@ -257,6 +357,8 @@ function startTimer() {
             btn.classList.add('correct');
           }
         });
+        // 시간 초과도 틀린 단어로 저장
+        saveWrongWord(question.word, question.meaning, question.example, currentLecture.lecture);
         showFeedback(false, question);
       }
     }
@@ -293,7 +395,7 @@ function selectOption(selectedOption, question) {
       loadQuestion();
     }, 1000);
   } else {
-    // 오답일 때는 모달 표시
+    // 오답일 때는 모달 표시 및 틀린 단어 저장
     allButtons.forEach(btn => {
       if (btn.textContent === selectedOption) {
         btn.classList.add('incorrect');
@@ -302,6 +404,8 @@ function selectOption(selectedOption, question) {
         btn.classList.add('correct');
       }
     });
+    // 틀린 단어 저장
+    saveWrongWord(question.word, question.meaning, question.example, currentLecture.lecture);
     showFeedback(false, question);
   }
 }
@@ -364,7 +468,70 @@ function showResult() {
   saveStudyRecord(currentLecture.lecture, score, maxScoreValue);
 }
 
-// 이벤트 리스너는 initVocabQuiz에서 설정됨
+// Voca Review 단어 표시
+function displayReviewWords() {
+  const wrongWords = getWrongWords();
+  
+  if (!reviewWordsContainer || !reviewCount || !noReviewWords) return;
+  
+  if (wrongWords.length === 0) {
+    reviewWordsContainer.innerHTML = '';
+    reviewCount.textContent = '0';
+    noReviewWords.classList.remove('hidden');
+    return;
+  }
+  
+  noReviewWords.classList.add('hidden');
+  reviewCount.textContent = wrongWords.length;
+  reviewWordsContainer.innerHTML = '';
+  
+  wrongWords.forEach((wordData, index) => {
+    const card = document.createElement('div');
+    card.className = 'review-word-card';
+    card.innerHTML = `
+      <div class="review-word-header">
+        <div>
+          <div class="review-word">${wordData.word}</div>
+          <div class="review-meaning">${wordData.meaning}</div>
+        </div>
+      </div>
+      <div class="review-example">${wordData.example}</div>
+      <div class="review-lecture">출처: ${wordData.lecture}</div>
+      <button class="memorized-btn" data-word="${wordData.word}" data-lecture="${wordData.lecture}">
+        암기 완료
+      </button>
+    `;
+    
+    const memorizedBtn = card.querySelector('.memorized-btn');
+    memorizedBtn.addEventListener('click', () => {
+      removeWrongWord(wordData.word, wordData.lecture);
+    });
+    
+    reviewWordsContainer.appendChild(card);
+  });
+}
+
+// 다크모드/라이트모드 토글
+function toggleTheme() {
+  const body = document.body;
+  const isLight = body.classList.contains('light-mode');
+  
+  if (isLight) {
+    body.classList.remove('light-mode');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    body.classList.add('light-mode');
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+// 테마 초기화
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+  }
+}
 
 // DOM 요소 초기화
 function initDOMElements() {
@@ -394,6 +561,15 @@ function initDOMElements() {
   scorePercentage = document.getElementById('score-percentage');
   restartBtn = document.getElementById('restart-btn');
   backToLecturesBtn = document.getElementById('back-to-lectures-btn');
+  backToLectureBtn = document.getElementById('back-to-lecture-btn');
+  themeToggle = document.getElementById('theme-toggle');
+  calendarContainer = document.getElementById('calendar-container');
+  selectedDateRecords = document.getElementById('selected-date-records');
+  dateRecordsList = document.getElementById('date-records-list');
+  selectedDateTitle = document.getElementById('selected-date-title');
+  reviewWordsContainer = document.getElementById('review-words-container');
+  reviewCount = document.getElementById('review-count');
+  noReviewWords = document.getElementById('no-review-words');
 }
 
 // 페이지 로드 시 챕터 선택 화면 표시
@@ -441,6 +617,24 @@ function initVocabQuiz() {
     });
   }
   
+  if (backToLectureBtn) {
+    backToLectureBtn.addEventListener('click', () => {
+      if (confirm('진행 중인 퀴즈를 중단하고 챕터 선택으로 돌아가시겠습니까?')) {
+        if (timerInterval) {
+          clearInterval(timerInterval);
+        }
+        showLectureSelection();
+      }
+    });
+  }
+  
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+  
+  // 테마 초기화
+  initTheme();
+  
   // 초기 상태 설정
   if (lectureSelectionScreen) {
     lectureSelectionScreen.classList.remove('hidden');
@@ -460,7 +654,11 @@ function initVocabQuiz() {
 
 // DOM 로드 완료 시 또는 이미 로드된 경우
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initVocabQuiz);
+  document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
+    initVocabQuiz();
+  });
 } else {
+  initTheme();
   initVocabQuiz();
 }
