@@ -1,15 +1,35 @@
-// 토익 필수 단어 데이터 (영어 단어와 한국어 뜻)
-const vocabData = [
-  { word: 'abandon', meaning: '포기하다', options: ['포기하다', '수용하다', '승인하다', '거부하다'] },
-  { word: 'abundant', meaning: '풍부한', options: ['부족한', '풍부한', '제한된', '희귀한'] },
-  { word: 'accomplish', meaning: '성취하다', options: ['실패하다', '시작하다', '성취하다', '지연하다'] },
-  { word: 'accurate', meaning: '정확한', options: ['부정확한', '정확한', '모호한', '불완전한'] },
-  { word: 'achieve', meaning: '달성하다', options: ['실패하다', '달성하다', '포기하다', '연기하다'] },
-  { word: 'acquire', meaning: '획득하다', options: ['잃다', '획득하다', '제거하다', '거부하다'] },
-  { word: 'adequate', meaning: '충분한', options: ['부족한', '충분한', '과도한', '제한된'] },
-  { word: 'adjacent', meaning: '인접한', options: ['먼', '인접한', '대립하는', '동일한'] },
-  { word: 'adjust', meaning: '조정하다', options: ['고정하다', '조정하다', '파괴하다', '무시하다'] },
-  { word: 'admit', meaning: '인정하다', options: ['부인하다', '인정하다', '거부하다', '회피하다'] }
+// 단어 데이터 - Lecture(챕터)별로 구성
+const vocaData = [
+  {
+    "lecture": "Day 1: CS 전공 기초",
+    "words": [
+      { "word": "Algorithm", "meaning": "알고리즘", "example": "Sorting algorithms are essential for efficient data processing." },
+      { "word": "Variable", "meaning": "변수", "example": "Declare a variable using 'let' or 'const'." },
+      { "word": "Function", "meaning": "함수", "example": "A function is a reusable block of code." },
+      { "word": "Array", "meaning": "배열", "example": "An array stores multiple values in a single variable." },
+      { "word": "Object", "meaning": "객체", "example": "Objects are used to store key-value pairs." }
+    ]
+  },
+  {
+    "lecture": "Day 2: 토익 빈출 숙어",
+    "words": [
+      { "word": "abandon", "meaning": "포기하다", "example": "Don't abandon your dreams." },
+      { "word": "abundant", "meaning": "풍부한", "example": "The region has abundant natural resources." },
+      { "word": "accomplish", "meaning": "성취하다", "example": "We need to accomplish our goals this year." },
+      { "word": "accurate", "meaning": "정확한", "example": "Please provide accurate information." },
+      { "word": "achieve", "meaning": "달성하다", "example": "She worked hard to achieve success." }
+    ]
+  },
+  {
+    "lecture": "Day 3: 비즈니스 영어",
+    "words": [
+      { "word": "negotiate", "meaning": "협상하다", "example": "We need to negotiate the contract terms." },
+      { "word": "deadline", "meaning": "마감일", "example": "The project deadline is next Friday." },
+      { "word": "budget", "meaning": "예산", "example": "We must stay within the allocated budget." },
+      { "word": "strategy", "meaning": "전략", "example": "A good strategy is crucial for success." },
+      { "word": "efficient", "meaning": "효율적인", "example": "This new system is more efficient." }
+    ]
+  }
 ];
 
 // 퀴즈 상태 관리
@@ -17,18 +37,37 @@ let currentQuestionIndex = 0;
 let score = 0;
 let shuffledQuestions = [];
 let isAnswered = false;
+let currentLecture = null;
+let timerInterval = null;
+let timeLeft = 20;
 
 // DOM 요소
+const lectureSelectionScreen = document.getElementById('lecture-selection-screen');
+const lectureGrid = document.getElementById('lecture-grid');
+const recordsList = document.getElementById('records-list');
+const quizContainer = document.getElementById('quiz-container');
 const wordCard = document.getElementById('word-card');
 const wordText = document.getElementById('word-text');
+const pronounceBtn = document.getElementById('pronounce-btn');
 const optionsContainer = document.getElementById('options-container');
 const scoreDisplay = document.getElementById('score');
 const questionCounter = document.getElementById('current-question');
-const feedbackMessage = document.getElementById('feedback-message');
+const totalQuestions = document.getElementById('total-questions');
+const timerText = document.getElementById('timer-text');
+const timerProgressCircle = document.getElementById('timer-progress');
+const feedbackModal = document.getElementById('feedback-modal');
+const modalIcon = document.getElementById('modal-icon');
+const modalTitle = document.getElementById('modal-title');
+const modalWord = document.getElementById('modal-word');
+const modalMeaning = document.getElementById('modal-meaning');
+const modalExample = document.getElementById('modal-example');
+const nextBtn = document.getElementById('next-btn');
 const resultScreen = document.getElementById('result-screen');
 const finalScore = document.getElementById('final-score');
+const maxScore = document.getElementById('max-score');
 const scorePercentage = document.getElementById('score-percentage');
 const restartBtn = document.getElementById('restart-btn');
+const backToLecturesBtn = document.getElementById('back-to-lectures-btn');
 
 // 네비게이션 기능
 const navLinks = document.querySelectorAll('.nav-link');
@@ -51,25 +90,106 @@ navLinks.forEach(link => {
     const targetElement = document.getElementById(targetSection);
     if (targetElement) {
       targetElement.classList.remove('hidden');
+      // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
+      if (targetSection === 'vocab-quiz') {
+        showLectureSelection();
+      }
     }
   });
 });
 
-// 퀴즈 초기화
-function initQuiz() {
-  // 문제 섞기
-  shuffledQuestions = [...vocabData].sort(() => Math.random() - 0.5);
+// 챕터 선택 화면 표시
+function showLectureSelection() {
+  lectureSelectionScreen.classList.remove('hidden');
+  quizContainer.classList.add('hidden');
+  resultScreen.classList.add('hidden');
+  feedbackModal.classList.add('hidden');
+  
+  // 챕터 카드 생성
+  lectureGrid.innerHTML = '';
+  vocaData.forEach((lecture, index) => {
+    const card = document.createElement('div');
+    card.className = 'lecture-card';
+    card.innerHTML = `
+      <h3>${lecture.lecture}</h3>
+      <div class="word-count">${lecture.words.length}개 단어</div>
+    `;
+    card.addEventListener('click', () => startQuiz(index));
+    lectureGrid.appendChild(card);
+  });
+  
+  // 학습 기록 표시
+  displayStudyRecords();
+}
+
+// 학습 기록 표시
+function displayStudyRecords() {
+  const records = getStudyRecords();
+  recordsList.innerHTML = '';
+  
+  if (records.length === 0) {
+    recordsList.innerHTML = '<div class="no-records">아직 학습 기록이 없습니다.</div>';
+    return;
+  }
+  
+  // 최근 10개만 표시
+  records.slice(0, 10).forEach(record => {
+    const recordItem = document.createElement('div');
+    recordItem.className = 'record-item';
+    recordItem.innerHTML = `
+      <span class="record-date">${record.date}</span>
+      <span class="record-lecture">${record.lecture}</span>
+      <span class="record-score">${record.score}점</span>
+    `;
+    recordsList.appendChild(recordItem);
+  });
+}
+
+// 학습 기록 가져오기
+function getStudyRecords() {
+  const records = localStorage.getItem('vocabQuizRecords');
+  return records ? JSON.parse(records) : [];
+}
+
+// 학습 기록 저장
+function saveStudyRecord(lecture, score, maxScore) {
+  const records = getStudyRecords();
+  const today = new Date().toLocaleDateString('ko-KR');
+  const percentage = Math.round((score / maxScore) * 100);
+  
+  records.unshift({
+    date: today,
+    lecture: lecture,
+    score: `${score}/${maxScore} (${percentage}%)`
+  });
+  
+  // 최대 50개까지만 저장
+  if (records.length > 50) {
+    records.pop();
+  }
+  
+  localStorage.setItem('vocabQuizRecords', JSON.stringify(records));
+}
+
+// 퀴즈 시작
+function startQuiz(lectureIndex) {
+  currentLecture = vocaData[lectureIndex];
   currentQuestionIndex = 0;
   score = 0;
   isAnswered = false;
   
-  // 결과 화면 숨기기
+  // 문제 섞기
+  shuffledQuestions = [...currentLecture.words].sort(() => Math.random() - 0.5);
+  
+  // 화면 전환
+  lectureSelectionScreen.classList.add('hidden');
+  quizContainer.classList.remove('hidden');
   resultScreen.classList.add('hidden');
   
-  // 퀴즈 컨테이너 표시
-  document.querySelector('.quiz-container').style.display = 'block';
-  
+  // 점수 및 문제 수 업데이트
   updateScore();
+  totalQuestions.textContent = shuffledQuestions.length;
+  
   loadQuestion();
 }
 
@@ -83,83 +203,137 @@ function loadQuestion() {
   const question = shuffledQuestions[currentQuestionIndex];
   isAnswered = false;
   
-  // 단어 카드 애니메이션
-  wordCard.classList.remove('slide-out', 'slide-in');
-  setTimeout(() => {
-    wordCard.classList.add('slide-in');
-  }, 10);
-  
   // 단어 표시
   wordText.textContent = question.word;
   
-  // 옵션 섞기
-  const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+  // 옵션 생성 (정답 + 오답 3개)
+  const allMeanings = vocaData.flatMap(l => l.words.map(w => w.meaning));
+  const wrongOptions = allMeanings
+    .filter(m => m !== question.meaning)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 3);
+  const options = [question.meaning, ...wrongOptions].sort(() => Math.random() - 0.5);
   
   // 옵션 버튼 생성
   optionsContainer.innerHTML = '';
-  shuffledOptions.forEach((option, index) => {
+  options.forEach((option) => {
     const button = document.createElement('button');
     button.className = 'option-btn';
     button.textContent = option;
-    button.addEventListener('click', () => selectOption(option, question.meaning, button));
+    button.addEventListener('click', () => selectOption(option, question));
     optionsContainer.appendChild(button);
   });
   
-  // 피드백 메시지 초기화
-  feedbackMessage.textContent = '';
-  feedbackMessage.className = 'feedback-message';
-  
   // 문제 번호 업데이트
   questionCounter.textContent = currentQuestionIndex + 1;
+  
+  // 타이머 시작
+  startTimer();
+}
+
+// 타이머 시작
+function startTimer() {
+  timeLeft = 20;
+  timerText.textContent = timeLeft;
+  
+  // 타이머 원형 진행바 초기화
+  const circumference = 2 * Math.PI * 45; // 반지름 45
+  timerProgressCircle.style.strokeDasharray = circumference;
+  timerProgressCircle.style.strokeDashoffset = 0;
+  timerProgressCircle.classList.remove('warning');
+  
+  // 기존 타이머 정리
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
+  
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerText.textContent = timeLeft;
+    
+    // 진행바 업데이트
+    const progress = (20 - timeLeft) / 20;
+    const offset = circumference * progress;
+    timerProgressCircle.style.strokeDashoffset = offset;
+    
+    // 5초 이하일 때 경고 색상
+    if (timeLeft <= 5) {
+      timerProgressCircle.classList.add('warning');
+    }
+    
+    // 시간 종료
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!isAnswered) {
+        // 시간 초과 처리
+        const question = shuffledQuestions[currentQuestionIndex];
+        showFeedback(false, question);
+      }
+    }
+  }, 1000);
 }
 
 // 옵션 선택
-function selectOption(selectedOption, correctAnswer, buttonElement) {
+function selectOption(selectedOption, question) {
   if (isAnswered) return;
   
   isAnswered = true;
-  const allButtons = optionsContainer.querySelectorAll('.option-btn');
+  clearInterval(timerInterval);
   
-  // 모든 버튼 비활성화
+  const allButtons = optionsContainer.querySelectorAll('.option-btn');
   allButtons.forEach(btn => {
     btn.disabled = true;
   });
   
-  // 정답 확인
-  if (selectedOption === correctAnswer) {
-    // 정답
-    buttonElement.classList.add('correct');
-    score += 10;
+  const isCorrect = selectedOption === question.meaning;
+  
+  if (isCorrect) {
+    score++;
     updateScore();
-    feedbackMessage.textContent = '정답입니다! ✓';
-    feedbackMessage.classList.add('correct');
-    
-    // 다음 문제로 이동
-    setTimeout(() => {
-      currentQuestionIndex++;
-      loadQuestion();
-    }, 1500);
-  } else {
-    // 오답
-    buttonElement.classList.add('incorrect');
-    
-    // 정답 버튼 찾아서 표시
-    allButtons.forEach(btn => {
-      if (btn.textContent === correctAnswer) {
-        btn.classList.add('correct');
-      }
-    });
-    
-    feedbackMessage.textContent = `오답입니다. 정답: ${correctAnswer}`;
-    feedbackMessage.classList.add('incorrect');
-    
-    // 다음 문제로 이동
-    setTimeout(() => {
-      currentQuestionIndex++;
-      loadQuestion();
-    }, 2000);
   }
+  
+  // 피드백 모달 표시
+  showFeedback(isCorrect, question, selectedOption);
 }
+
+// 피드백 모달 표시
+function showFeedback(isCorrect, question, selectedOption = null) {
+  // 모달 내용 설정
+  if (isCorrect) {
+    modalIcon.textContent = '✓';
+    modalIcon.className = 'modal-icon correct';
+    modalTitle.textContent = '정답입니다!';
+  } else {
+    modalIcon.textContent = '✗';
+    modalIcon.className = 'modal-icon incorrect';
+    modalTitle.textContent = '오답입니다';
+  }
+  
+  modalWord.textContent = question.word;
+  modalMeaning.textContent = question.meaning;
+  modalExample.textContent = question.example;
+  
+  // 모달 표시
+  feedbackModal.classList.remove('hidden');
+}
+
+// 다음 문제로
+nextBtn.addEventListener('click', () => {
+  feedbackModal.classList.add('hidden');
+  currentQuestionIndex++;
+  loadQuestion();
+});
+
+// 발음 듣기
+pronounceBtn.addEventListener('click', () => {
+  const word = wordText.textContent;
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9;
+    speechSynthesis.speak(utterance);
+  }
+});
 
 // 점수 업데이트
 function updateScore() {
@@ -168,14 +342,17 @@ function updateScore() {
 
 // 결과 화면 표시
 function showResult() {
-  document.querySelector('.quiz-container').style.display = 'none';
+  quizContainer.classList.add('hidden');
   resultScreen.classList.remove('hidden');
   
+  const maxScoreValue = shuffledQuestions.length;
   finalScore.textContent = score;
-  const percentage = (score / 100) * 100;
+  maxScore.textContent = maxScoreValue;
+  
+  const percentage = Math.round((score / maxScoreValue) * 100);
   scorePercentage.textContent = `${percentage}%`;
   
-  // 결과에 따른 메시지 추가
+  // 결과에 따른 메시지
   let message = '';
   if (percentage >= 90) {
     message = '완벽합니다! 🎉';
@@ -187,23 +364,23 @@ function showResult() {
     message = '다시 도전해보세요! 📚';
   }
   
-  if (!scorePercentage.querySelector('.result-message')) {
-    const messageEl = document.createElement('div');
-    messageEl.className = 'result-message';
-    messageEl.style.marginTop = '1rem';
-    messageEl.style.fontSize = '1.3rem';
-    messageEl.style.color = 'var(--accent)';
-    messageEl.textContent = message;
-    scorePercentage.appendChild(messageEl);
-  }
+  scorePercentage.innerHTML = `${percentage}%<br><div style="margin-top: 1rem; font-size: 1.3rem; color: var(--accent);">${message}</div>`;
+  
+  // 학습 기록 저장
+  saveStudyRecord(currentLecture.lecture, score, maxScoreValue);
 }
 
 // 다시 시작 버튼
 restartBtn.addEventListener('click', () => {
-  initQuiz();
+  startQuiz(vocaData.findIndex(l => l.lecture === currentLecture.lecture));
 });
 
-// 페이지 로드 시 퀴즈 시작
+// 챕터 선택으로 돌아가기
+backToLecturesBtn.addEventListener('click', () => {
+  showLectureSelection();
+});
+
+// 페이지 로드 시 챕터 선택 화면 표시
 document.addEventListener('DOMContentLoaded', () => {
-  initQuiz();
+  showLectureSelection();
 });
