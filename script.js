@@ -126,8 +126,21 @@ function displayStudyRecords() {
   // 날짜별 단어 개수 집계
   const dateCounts = {};
   records.forEach(record => {
-    const date = new Date(record.date);
-    const dateKey = date.toISOString().split('T')[0];
+    // 날짜가 이미 ISO 형식이거나, Date 객체로 변환 가능한 형식인지 확인
+    let dateKey;
+    if (record.date && record.date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      // 이미 ISO 형식 (YYYY-MM-DD)
+      dateKey = record.date;
+    } else {
+      // 기존 형식 호환성을 위해 Date 객체로 변환 시도
+      const date = new Date(record.date);
+      if (isNaN(date.getTime())) {
+        // 유효하지 않은 날짜는 스킵
+        return;
+      }
+      dateKey = date.toISOString().split('T')[0];
+    }
+    
     if (!dateCounts[dateKey]) {
       dateCounts[dateKey] = 0;
     }
@@ -139,14 +152,20 @@ function displayStudyRecords() {
   // 캘린더 그리드 생성 (53주 x 7일)
   const startDate = new Date(oneYearAgo);
   // 일요일로 맞추기
-  startDate.setDate(startDate.getDate() - startDate.getDay());
+  const startDayOfWeek = startDate.getDay();
+  startDate.setDate(startDate.getDate() - startDayOfWeek);
+  
+  // 시작 날짜의 타임스탬프 저장 (변경 방지)
+  const startTimestamp = startDate.getTime();
   
   for (let week = 0; week < 53; week++) {
     for (let day = 0; day < 7; day++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + (week * 7 + day));
+      const currentDate = new Date(startTimestamp + (week * 7 + day) * 24 * 60 * 60 * 1000);
       
       if (currentDate > today) continue;
+      
+      // 과거 1년 이전의 날짜는 표시하지 않음
+      if (currentDate < oneYearAgo) continue;
       
       const dateKey = currentDate.toISOString().split('T')[0];
       const count = dateCounts[dateKey] || 0;
@@ -169,8 +188,16 @@ function showDateRecords(dateKey, allRecords) {
   if (!selectedDateRecords || !dateRecordsList || !selectedDateTitle) return;
   
   const dateRecords = allRecords.filter(r => {
-    const recordDate = new Date(r.date).toISOString().split('T')[0];
-    return recordDate === dateKey;
+    // 날짜 형식 확인
+    if (r.date && r.date.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      return r.date === dateKey;
+    } else {
+      const recordDate = new Date(r.date);
+      if (isNaN(recordDate.getTime())) {
+        return false;
+      }
+      return recordDate.toISOString().split('T')[0] === dateKey;
+    }
   });
   
   if (dateRecords.length === 0) {
@@ -203,7 +230,8 @@ function getStudyRecords() {
 // 학습 기록 저장
 function saveStudyRecord(lecture, score, maxScore) {
   const records = getStudyRecords();
-  const today = new Date().toLocaleDateString('ko-KR');
+  // ISO 형식으로 날짜 저장 (YYYY-MM-DD)
+  const today = new Date().toISOString().split('T')[0];
   const percentage = Math.round((score / maxScore) * 100);
   
   records.unshift({
