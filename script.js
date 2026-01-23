@@ -265,8 +265,16 @@ function startTimer() {
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       if (!isAnswered) {
-        // 시간 초과 처리
+        // 시간 초과 처리 - 오답으로 처리하고 모달 표시
+        isAnswered = true;
         const question = shuffledQuestions[currentQuestionIndex];
+        const allButtons = optionsContainer.querySelectorAll('.option-btn');
+        allButtons.forEach(btn => {
+          btn.disabled = true;
+          if (btn.textContent === question.meaning) {
+            btn.classList.add('correct');
+          }
+        });
         showFeedback(false, question);
       }
     }
@@ -288,12 +296,32 @@ function selectOption(selectedOption, question) {
   const isCorrect = selectedOption === question.meaning;
   
   if (isCorrect) {
+    // 정답일 때는 버튼 색상만 변경하고 자동으로 다음 문제로
+    allButtons.forEach(btn => {
+      if (btn.textContent === question.meaning) {
+        btn.classList.add('correct');
+      }
+    });
     score++;
     updateScore();
+    
+    // 1초 후 자동으로 다음 문제로
+    setTimeout(() => {
+      currentQuestionIndex++;
+      loadQuestion();
+    }, 1000);
+  } else {
+    // 오답일 때는 모달 표시
+    allButtons.forEach(btn => {
+      if (btn.textContent === selectedOption) {
+        btn.classList.add('incorrect');
+      }
+      if (btn.textContent === question.meaning) {
+        btn.classList.add('correct');
+      }
+    });
+    showFeedback(false, question);
   }
-  
-  // 피드백 모달 표시
-  showFeedback(isCorrect, question, selectedOption);
 }
 
 // 피드백 모달 표시
@@ -381,6 +409,27 @@ backToLecturesBtn.addEventListener('click', () => {
 });
 
 // 페이지 로드 시 챕터 선택 화면 표시
-document.addEventListener('DOMContentLoaded', () => {
+function initVocabQuiz() {
+  // 초기 상태 설정
+  if (lectureSelectionScreen) {
+    lectureSelectionScreen.classList.remove('hidden');
+  }
+  if (quizContainer) {
+    quizContainer.classList.add('hidden');
+  }
+  if (resultScreen) {
+    resultScreen.classList.add('hidden');
+  }
+  if (feedbackModal) {
+    feedbackModal.classList.add('hidden');
+  }
+  
   showLectureSelection();
-});
+}
+
+// DOM 로드 완료 시 또는 이미 로드된 경우
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initVocabQuiz);
+} else {
+  initVocabQuiz();
+}
