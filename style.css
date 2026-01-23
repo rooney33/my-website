@@ -121,6 +121,10 @@ body {
   margin: 0 auto;
 }
 
+.lecture-selection-screen.hidden {
+  display: none;
+}
+
 .section-title {
   font-size: 2rem;
   text-align: center;
