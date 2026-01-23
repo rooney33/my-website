@@ -33,21 +33,80 @@
     <!-- Vocab Quiz Section -->
     <section id="vocab-quiz" class="section">
       <div class="container">
-        <div class="quiz-container">
+        <!-- Lecture Selection Screen -->
+        <div class="lecture-selection-screen" id="lecture-selection-screen">
+          <h2 class="section-title">학습할 챕터를 선택하세요</h2>
+          <div class="lecture-grid" id="lecture-grid">
+            <!-- Lectures will be dynamically generated -->
+          </div>
+          
+          <!-- Recent Study Records -->
+          <div class="study-records-section">
+            <h3 class="records-title">최근 학습 기록</h3>
+            <div class="records-list" id="records-list">
+              <!-- Records will be dynamically generated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container hidden" id="quiz-container">
           <div class="quiz-header">
             <div class="score-display">점수: <span id="score">0</span></div>
-            <div class="question-counter">문제 <span id="current-question">1</span> / 10</div>
+            <div class="timer-container">
+              <div class="timer-circle">
+                <svg class="timer-svg" viewBox="0 0 100 100">
+                  <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                  <circle class="timer-progress" cx="50" cy="50" r="45" id="timer-progress"></circle>
+                </svg>
+                <span class="timer-text" id="timer-text">20</span>
+              </div>
+            </div>
+            <div class="question-counter">문제 <span id="current-question">1</span> / <span id="total-questions">0</span></div>
           </div>
 
           <div class="word-card" id="word-card">
-            <h2 id="word-text">Loading...</h2>
+            <div class="word-header">
+              <h2 id="word-text">Loading...</h2>
+              <button class="pronounce-btn" id="pronounce-btn" title="발음 듣기">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+              </button>
+            </div>
           </div>
 
           <div class="options-container" id="options-container">
             <!-- Options will be dynamically generated -->
           </div>
+        </div>
 
-          <div class="feedback-message" id="feedback-message"></div>
+        <!-- Feedback Modal -->
+        <div class="modal-overlay hidden" id="feedback-modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="modal-icon" id="modal-icon">✓</span>
+              <h3 id="modal-title">정답입니다!</h3>
+            </div>
+            <div class="modal-body">
+              <div class="modal-word-info">
+                <div class="word-display">
+                  <strong id="modal-word">Word</strong>
+                </div>
+                <div class="meaning-display">
+                  <span id="modal-meaning">Meaning</span>
+                </div>
+              </div>
+              <div class="example-section">
+                <div class="example-label">예문:</div>
+                <div class="example-text" id="modal-example">Example sentence here.</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="next-btn" id="next-btn">Next</button>
+            </div>
+          </div>
         </div>
 
         <!-- Result Screen -->
@@ -55,10 +114,13 @@
           <div class="result-content">
             <h2>퀴즈 완료!</h2>
             <div class="final-score">
-              최종 점수: <span id="final-score">0</span> / 100
+              최종 점수: <span id="final-score">0</span> / <span id="max-score">0</span>
             </div>
             <div class="score-percentage" id="score-percentage"></div>
-            <button class="restart-btn" id="restart-btn">다시 시작</button>
+            <div class="result-buttons">
+              <button class="restart-btn" id="restart-btn">다시 시작</button>
+              <button class="back-to-lectures-btn" id="back-to-lectures-btn">챕터 선택으로</button>
+            </div>
           </div>
         </div>
       </div>
