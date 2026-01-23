@@ -14,9 +14,16 @@
       <ul class="nav-menu">
         <li><a href="#" class="nav-link" data-section="home">Home</a></li>
         <li><a href="#" class="nav-link active" data-section="vocab-quiz">Vocab Quiz</a></li>
+        <li><a href="#" class="nav-link" data-section="voca-review">Voca Review</a></li>
         <li><a href="#" class="nav-link" data-section="focus-timer">Focus Timer</a></li>
         <li><a href="#" class="nav-link" data-section="algo-viz">Algo Viz</a></li>
       </ul>
+      <button class="theme-toggle" id="theme-toggle" title="테마 변경">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+        </svg>
+      </button>
     </div>
   </nav>
 
@@ -40,17 +47,44 @@
             <!-- Lectures will be dynamically generated -->
           </div>
           
-          <!-- Recent Study Records -->
+          <!-- Recent Study Records - Calendar View -->
           <div class="study-records-section">
-            <h3 class="records-title">최근 학습 기록</h3>
-            <div class="records-list" id="records-list">
-              <!-- Records will be dynamically generated -->
+            <h3 class="records-title">학습 기록 캘린더</h3>
+            <div class="calendar-container" id="calendar-container">
+              <!-- Calendar will be dynamically generated -->
+            </div>
+            <div class="calendar-legend">
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: var(--grass-0)"></span>
+                <span>0개</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: var(--grass-1)"></span>
+                <span>1-5개</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: var(--grass-2)"></span>
+                <span>6-10개</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: var(--grass-3)"></span>
+                <span>11-20개</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background-color: var(--grass-4)"></span>
+                <span>21+개</span>
+              </div>
+            </div>
+            <div class="selected-date-records hidden" id="selected-date-records">
+              <h4 id="selected-date-title"></h4>
+              <div class="date-records-list" id="date-records-list"></div>
             </div>
           </div>
         </div>
 
         <!-- Quiz Container -->
         <div class="quiz-container hidden" id="quiz-container">
+          <button class="back-to-lecture-btn" id="back-to-lecture-btn">← LECTURE 선택</button>
           <div class="quiz-header">
             <div class="score-display">점수: <span id="score">0</span></div>
             <div class="timer-container">
@@ -131,6 +165,28 @@
       <div class="container">
         <h1>Focus Timer</h1>
         <p>곧 구현 예정입니다.</p>
+      </div>
+    </section>
+
+    <!-- Voca Review Section -->
+    <section id="voca-review" class="section hidden">
+      <div class="container">
+        <div class="review-header">
+          <h2>틀린 단어 복습</h2>
+          <p class="review-subtitle">틀렸던 단어들을 다시 학습해보세요</p>
+        </div>
+        <div class="review-stats" id="review-stats">
+          <div class="stat-item">
+            <span class="stat-number" id="review-count">0</span>
+            <span class="stat-label">복습할 단어</span>
+          </div>
+        </div>
+        <div class="review-words-container" id="review-words-container">
+          <!-- Review words will be dynamically generated -->
+        </div>
+        <div class="no-review-words hidden" id="no-review-words">
+          <p>복습할 단어가 없습니다. 퀴즈를 풀어보세요!</p>
+        </div>
       </div>
     </section>
 
