@@ -50,12 +50,17 @@
           <!-- Recent Study Records - Calendar View -->
           <div class="study-records-section">
             <h3 class="records-title">학습 기록 캘린더</h3>
-            <div class="calendar-container" id="calendar-container">
-              <!-- Calendar will be dynamically generated -->
+            <div class="calendar-wrapper">
+              <div class="calendar-months" id="calendar-months">
+                <!-- Month labels will be dynamically generated -->
+              </div>
+              <div class="calendar-container" id="calendar-container">
+                <!-- Calendar will be dynamically generated -->
+              </div>
             </div>
             <div class="calendar-legend">
               <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--grass-0)"></span>
+                <span class="legend-color legend-empty"></span>
                 <span>0개</span>
               </div>
               <div class="legend-item">
