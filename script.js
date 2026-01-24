@@ -89,12 +89,21 @@ navLinks.forEach(link => {
 
 // 챕터 선택 화면 표시
 function showLectureSelection() {
-  lectureSelectionScreen.classList.remove('hidden');
-  quizContainer.classList.add('hidden');
-  resultScreen.classList.add('hidden');
-  feedbackModal.classList.add('hidden');
+  if (lectureSelectionScreen) {
+    lectureSelectionScreen.classList.remove('hidden');
+  }
+  if (quizContainer) {
+    quizContainer.classList.add('hidden');
+  }
+  if (resultScreen) {
+    resultScreen.classList.add('hidden');
+  }
+  if (feedbackModal) {
+    feedbackModal.classList.add('hidden');
+  }
   
   // 챕터 카드 생성
+  if (!lectureGrid) return;
   lectureGrid.innerHTML = '';
   vocaData.forEach((lecture, index) => {
     const card = document.createElement('div');
