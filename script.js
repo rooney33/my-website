@@ -54,26 +54,26 @@ let reviewWordsContainer, reviewCount, noReviewWords;
 
 // 네비게이션 기능 초기화
 function initNavigation() {
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section');
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetSection = link.getAttribute('data-section');
-      
-      // 활성 링크 업데이트
-      navLinks.forEach(l => l.classList.remove('active'));
-      link.classList.add('active');
-      
-      // 섹션 표시/숨김
-      sections.forEach(section => {
-        section.classList.add('hidden');
-      });
-      
-      const targetElement = document.getElementById(targetSection);
-      if (targetElement) {
-        targetElement.classList.remove('hidden');
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetSection = link.getAttribute('data-section');
+    
+    // 활성 링크 업데이트
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    
+    // 섹션 표시/숨김
+    sections.forEach(section => {
+      section.classList.add('hidden');
+    });
+    
+    const targetElement = document.getElementById(targetSection);
+    if (targetElement) {
+      targetElement.classList.remove('hidden');
         // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
         if (targetSection === 'vocab-quiz') {
           showLectureSelection();
@@ -117,6 +117,10 @@ function displayStudyRecords() {
   if (!calendarContainer) return;
   
   calendarContainer.innerHTML = '';
+  const calendarMonths = document.getElementById('calendar-months');
+  if (calendarMonths) {
+    calendarMonths.innerHTML = '';
+  }
   
   // 최근 1년간의 데이터 생성
   const today = new Date();
@@ -158,6 +162,12 @@ function displayStudyRecords() {
   // 시작 날짜의 타임스탬프 저장 (변경 방지)
   const startTimestamp = startDate.getTime();
   
+  // 월 이름 배열
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+  // 월별 라벨 위치 계산
+  const monthPositions = {};
+  
   for (let week = 0; week < 53; week++) {
     for (let day = 0; day < 7; day++) {
       const currentDate = new Date(startTimestamp + (week * 7 + day) * 24 * 60 * 60 * 1000);
@@ -170,16 +180,51 @@ function displayStudyRecords() {
       const dateKey = currentDate.toISOString().split('T')[0];
       const count = dateCounts[dateKey] || 0;
       
+      // 월 라벨 위치 기록 (각 월의 첫 번째 주)
+      const month = currentDate.getMonth();
+      const year = currentDate.getFullYear();
+      const monthKey = `${year}-${month}`;
+      if (!monthPositions[monthKey] && currentDate.getDate() <= 7) {
+        monthPositions[monthKey] = { week, month };
+      }
+      
+      // 날짜 포맷 (툴팁용)
+      const monthNum = currentDate.getMonth() + 1;
+      const dayNum = currentDate.getDate();
+      const tooltipText = `${monthNum}월 ${dayNum}일 - ${count}개 학습`;
+      
       const dayElement = document.createElement('div');
       dayElement.className = 'calendar-day';
-      dayElement.setAttribute('data-count', count);
+      dayElement.setAttribute('data-count', Math.min(count, 21)); // 최대 21로 제한
       dayElement.setAttribute('data-date', dateKey);
-      dayElement.setAttribute('title', `${dateKey}: ${count}개 단어`);
+      dayElement.setAttribute('data-tooltip', tooltipText);
       
       dayElement.addEventListener('click', () => showDateRecords(dateKey, records));
       
       calendarContainer.appendChild(dayElement);
     }
+  }
+  
+  // 월 라벨 생성
+  if (calendarMonths) {
+    // 주 단위로 간격을 맞추기 위해 빈 라벨 추가
+    let lastWeek = -1;
+    const sortedMonths = Object.entries(monthPositions).sort((a, b) => a[1].week - b[1].week);
+    
+    sortedMonths.forEach(([key, value], index) => {
+      const monthLabel = document.createElement('span');
+      monthLabel.className = 'calendar-month-label';
+      monthLabel.textContent = monthNames[value.month];
+      
+      // 간격 계산 (각 주는 약 14px 너비)
+      const gapWeeks = value.week - (lastWeek + 1);
+      if (gapWeeks > 0) {
+        monthLabel.style.marginLeft = `${gapWeeks * 14}px`;
+      }
+      lastWeek = value.week;
+      
+      calendarMonths.appendChild(monthLabel);
+    });
   }
 }
 
@@ -632,7 +677,7 @@ function initVocabQuiz() {
   }
   
   if (restartBtn) {
-    restartBtn.addEventListener('click', () => {
+restartBtn.addEventListener('click', () => {
       if (currentLecture) {
         startQuiz(vocaData.findIndex(l => l.lecture === currentLecture.lecture));
       }
@@ -682,10 +727,10 @@ function initVocabQuiz() {
 
 // DOM 로드 완료 시 또는 이미 로드된 경우
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initVocabQuiz();
-  });
+});
 } else {
   initTheme();
   initVocabQuiz();
