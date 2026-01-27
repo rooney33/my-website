@@ -1,340 +1,458 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Personal Website</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">My Website</div>
-      <ul class="nav-menu">
-        <li><a href="#" class="nav-link" data-section="home">Home</a></li>
-        <li><a href="#" class="nav-link active" data-section="vocab-quiz">Vocab Quiz</a></li>
-        <li><a href="#" class="nav-link" data-section="voca-review">Voca Review</a></li>
-        <li><a href="#" class="nav-link" data-section="focus-timer">Focus Timer</a></li>
-        <li><a href="#" class="nav-link" data-section="algo-viz">Algo Viz</a></li>
-      </ul>
-      <button class="theme-toggle" id="theme-toggle" title="테마 변경">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="5"></circle>
-          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
-        </svg>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Home Section -->
-    <section id="home" class="section hidden">
-      <div class="container">
-        <h1>Welcome to My Website</h1>
-        <p>개인 웹사이트에 오신 것을 환영합니다.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Personal Website</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">My Website</div>
+        <ul class="nav-menu">
+          <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+          <li>
+            <a href="#" class="nav-link active" data-section="vocab-quiz"
+              >Vocab Quiz</a
+            >
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="voca-review"
+              >Voca Review</a
+            >
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="focus-timer"
+              >Focus Timer</a
+            >
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-section="algo-viz">Algo Viz</a>
+          </li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" title="테마 변경">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
+            ></path>
+          </svg>
+        </button>
       </div>
-    </section>
+    </nav>
 
-    <!-- Vocab Quiz Section -->
-    <section id="vocab-quiz" class="section">
-      <div class="quiz-layout">
-        <!-- Left Sidebar: Chapter List -->
-        <div class="chapter-sidebar">
-          <div class="sidebar-header">
-            <h3>챕터 목록</h3>
-            <button class="add-chapter-btn" id="add-chapter-btn" title="챕터 추가">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </button>
-          </div>
-          <div class="chapter-list" id="chapter-list">
-            <!-- Chapters will be dynamically generated -->
-          </div>
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Home Section -->
+      <section id="home" class="section hidden">
+        <div class="container">
+          <h1>Welcome to My Website</h1>
+          <p>개인 웹사이트에 오신 것을 환영합니다.</p>
         </div>
+      </section>
 
-        <!-- Main Content Area -->
-        <div class="quiz-main-content">
-          <!-- Lecture Selection Screen -->
-          <div class="lecture-selection-screen" id="lecture-selection-screen">
-            <!-- Add Word Section - 상단에 위치 -->
-            <div class="add-word-section">
-            <h3 class="add-word-title">✨ 단어 추가하기</h3>
-            <p class="add-word-subtitle">영어 단어만 입력하면 AI가 뜻과 예문을 찾아드립니다</p>
-            
-            <div class="add-word-search">
-              <div class="search-input-wrapper">
-                <input 
-                  type="text" 
-                  id="add-word-input" 
-                  class="add-word-input" 
-                  placeholder="영어 단어를 입력하세요..."
-                  autocomplete="off"
+      <!-- Vocab Quiz Section -->
+      <section id="vocab-quiz" class="section">
+        <div class="quiz-layout">
+          <!-- Left Sidebar: Chapter List -->
+          <div class="chapter-sidebar">
+            <div class="sidebar-header">
+              <h3>챕터 목록</h3>
+              <button
+                class="add-chapter-btn"
+                id="add-chapter-btn"
+                title="챕터 추가"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
                 >
-                <button class="search-word-btn" id="search-word-btn">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </div>
+            <div class="chapter-list" id="chapter-list">
+              <!-- Chapters will be dynamically generated -->
+            </div>
+          </div>
+
+          <!-- Main Content Area -->
+          <div class="quiz-main-content">
+            <!-- Lecture Selection Screen -->
+            <div class="lecture-selection-screen" id="lecture-selection-screen">
+              <!-- Add Word Section - 상단에 위치 -->
+              <div class="add-word-section">
+                <h3 class="add-word-title">✨ 단어 추가하기</h3>
+                <p class="add-word-subtitle">
+                  영어 단어만 입력하면 AI가 뜻과 예문을 찾아드립니다
+                </p>
+
+                <div class="add-word-search">
+                  <div class="search-input-wrapper">
+                    <input
+                      type="text"
+                      id="add-word-input"
+                      class="add-word-input"
+                      placeholder="영어 단어를 입력하세요..."
+                      autocomplete="off"
+                    />
+                    <button class="search-word-btn" id="search-word-btn">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                      </svg>
+                      검색
+                    </button>
+                  </div>
+                  <select id="add-word-lecture" class="add-word-select">
+                    <option value="">챕터 선택</option>
+                  </select>
+                </div>
+
+                <!-- Word Preview Card -->
+                <div class="word-preview-card hidden" id="word-preview-card">
+                  <div class="preview-loading" id="preview-loading">
+                    <div class="loading-spinner"></div>
+                    <p>단어를 검색하고 있습니다...</p>
+                  </div>
+
+                  <div class="preview-content hidden" id="preview-content">
+                    <div class="preview-header">
+                      <h4 class="preview-word" id="preview-word"></h4>
+                      <span
+                        class="preview-phonetic"
+                        id="preview-phonetic"
+                      ></span>
+                    </div>
+                    <div class="preview-meaning-wrapper">
+                      <label class="preview-label">뜻 (한국어):</label>
+                      <textarea
+                        class="preview-meaning-input"
+                        id="preview-meaning-input"
+                        rows="2"
+                        placeholder="한국어 뜻을 입력하세요..."
+                      ></textarea>
+                    </div>
+                    <div class="preview-example-wrapper">
+                      <label class="preview-label">예문:</label>
+                      <div class="preview-example" id="preview-example"></div>
+                    </div>
+                    <div class="preview-actions">
+                      <button
+                        class="preview-cancel-btn"
+                        id="preview-cancel-btn"
+                      >
+                        취소
+                      </button>
+                      <button class="preview-add-btn" id="preview-add-btn">
+                        추가하기
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="preview-error hidden" id="preview-error">
+                    <p>단어를 찾을 수 없습니다. 다시 시도해주세요.</p>
+                    <button class="preview-retry-btn" id="preview-retry-btn">
+                      다시 시도
+                    </button>
+                  </div>
+                </div>
+
+                <p class="add-word-info">
+                  💡 추가한 단어는 해당 챕터의 퀴즈에 자동으로 포함됩니다.
+                </p>
+              </div>
+
+              <!-- Add Chapter Modal -->
+              <div class="add-chapter-modal hidden" id="add-chapter-modal">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3>새 챕터 추가</h3>
+                    <button class="modal-close-btn" id="close-chapter-modal">
+                      ×
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <input
+                      type="text"
+                      id="new-chapter-name"
+                      class="modal-input"
+                      placeholder="챕터 이름 (예: Chapter 4: 새로운 주제)"
+                    />
+                    <button class="modal-submit-btn" id="submit-chapter-btn">
+                      추가
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Study Records - Calendar View -->
+              <div class="study-records-section">
+                <h3 class="records-title">학습 기록 캘린더</h3>
+                <div class="calendar-wrapper">
+                  <div class="calendar-months" id="calendar-months">
+                    <!-- Month labels will be dynamically generated -->
+                  </div>
+                  <div class="calendar-container" id="calendar-container">
+                    <!-- Calendar will be dynamically generated -->
+                  </div>
+                </div>
+                <div class="calendar-legend">
+                  <div class="legend-item">
+                    <span class="legend-color legend-empty"></span>
+                    <span>0개</span>
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background-color: var(--grass-1)"
+                    ></span>
+                    <span>1-5개</span>
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background-color: var(--grass-2)"
+                    ></span>
+                    <span>6-10개</span>
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background-color: var(--grass-3)"
+                    ></span>
+                    <span>11-20개</span>
+                  </div>
+                  <div class="legend-item">
+                    <span
+                      class="legend-color"
+                      style="background-color: var(--grass-4)"
+                    ></span>
+                    <span>21+개</span>
+                  </div>
+                </div>
+                <div
+                  class="selected-date-records hidden"
+                  id="selected-date-records"
+                >
+                  <h4 id="selected-date-title"></h4>
+                  <div class="date-records-list" id="date-records-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Container -->
+          <div class="quiz-container hidden" id="quiz-container">
+            <button class="back-to-lecture-btn" id="back-to-lecture-btn">
+              ← LECTURE 선택
+            </button>
+            <div class="quiz-header">
+              <div class="score-display">점수: <span id="score">0</span></div>
+              <div class="timer-container">
+                <div class="timer-circle">
+                  <svg class="timer-svg" viewBox="0 0 100 100">
+                    <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
+                    <circle
+                      class="timer-progress"
+                      cx="50"
+                      cy="50"
+                      r="45"
+                      id="timer-progress"
+                    ></circle>
                   </svg>
-                  검색
+                  <span class="timer-text" id="timer-text">20</span>
+                </div>
+              </div>
+              <div class="question-counter">
+                문제 <span id="current-question">1</span> /
+                <span id="total-questions">0</span>
+              </div>
+            </div>
+
+            <div class="word-card" id="word-card">
+              <div class="word-header">
+                <h2 id="word-text">Loading...</h2>
+                <button
+                  class="pronounce-btn"
+                  id="pronounce-btn"
+                  title="발음 듣기"
+                >
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                    <path
+                      d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+                    ></path>
+                  </svg>
                 </button>
               </div>
-              <select id="add-word-lecture" class="add-word-select">
-                <option value="">챕터 선택</option>
-              </select>
             </div>
 
-            <!-- Word Preview Card -->
-            <div class="word-preview-card hidden" id="word-preview-card">
-              <div class="preview-loading" id="preview-loading">
-                <div class="loading-spinner"></div>
-                <p>단어를 검색하고 있습니다...</p>
-              </div>
-              
-              <div class="preview-content hidden" id="preview-content">
-                <div class="preview-header">
-                  <h4 class="preview-word" id="preview-word"></h4>
-                  <span class="preview-phonetic" id="preview-phonetic"></span>
-                </div>
-                <div class="preview-meaning-wrapper">
-                  <label class="preview-label">뜻 (한국어):</label>
-                  <textarea 
-                    class="preview-meaning-input" 
-                    id="preview-meaning-input" 
-                    rows="2"
-                    placeholder="한국어 뜻을 입력하세요..."
-                  ></textarea>
-                </div>
-                <div class="preview-example-wrapper">
-                  <label class="preview-label">예문:</label>
-                  <div class="preview-example" id="preview-example"></div>
-                </div>
-                <div class="preview-actions">
-                  <button class="preview-cancel-btn" id="preview-cancel-btn">취소</button>
-                  <button class="preview-add-btn" id="preview-add-btn">추가하기</button>
-                </div>
-              </div>
-              
-              <div class="preview-error hidden" id="preview-error">
-                <p>단어를 찾을 수 없습니다. 다시 시도해주세요.</p>
-                <button class="preview-retry-btn" id="preview-retry-btn">다시 시도</button>
-              </div>
+            <div class="options-container" id="options-container">
+              <!-- Options will be dynamically generated -->
             </div>
-            
-            <p class="add-word-info">💡 추가한 단어는 해당 챕터의 퀴즈에 자동으로 포함됩니다.</p>
           </div>
 
-          <!-- Add Chapter Modal -->
-          <div class="add-chapter-modal hidden" id="add-chapter-modal">
+          <!-- Feedback Modal -->
+          <div class="modal-overlay hidden" id="feedback-modal">
             <div class="modal-content">
               <div class="modal-header">
-                <h3>새 챕터 추가</h3>
-                <button class="modal-close-btn" id="close-chapter-modal">×</button>
+                <span class="modal-icon" id="modal-icon">✓</span>
+                <h3 id="modal-title">정답입니다!</h3>
               </div>
               <div class="modal-body">
-                <input type="text" id="new-chapter-name" class="modal-input" placeholder="챕터 이름 (예: Chapter 4: 새로운 주제)">
-                <button class="modal-submit-btn" id="submit-chapter-btn">추가</button>
+                <div class="modal-word-info">
+                  <div class="word-display">
+                    <strong id="modal-word">Word</strong>
+                  </div>
+                  <div class="meaning-display">
+                    <span id="modal-meaning">Meaning</span>
+                  </div>
+                </div>
+                <div class="example-section">
+                  <div class="example-label">예문:</div>
+                  <div class="example-text" id="modal-example">
+                    Example sentence here.
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="next-btn" id="next-btn">Next</button>
               </div>
             </div>
           </div>
-          
-          <!-- Recent Study Records - Calendar View -->
-          <div class="study-records-section">
-            <h3 class="records-title">학습 기록 캘린더</h3>
-            <div class="calendar-wrapper">
-              <div class="calendar-months" id="calendar-months">
-                <!-- Month labels will be dynamically generated -->
+
+          <!-- Result Screen -->
+          <div class="result-screen hidden" id="result-screen">
+            <div class="result-content">
+              <h2>퀴즈 완료!</h2>
+              <div class="final-score">
+                최종 점수: <span id="final-score">0</span> /
+                <span id="max-score">0</span>
               </div>
-              <div class="calendar-container" id="calendar-container">
-                <!-- Calendar will be dynamically generated -->
-              </div>
-            </div>
-            <div class="calendar-legend">
-              <div class="legend-item">
-                <span class="legend-color legend-empty"></span>
-                <span>0개</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--grass-1)"></span>
-                <span>1-5개</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--grass-2)"></span>
-                <span>6-10개</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--grass-3)"></span>
-                <span>11-20개</span>
-              </div>
-              <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--grass-4)"></span>
-                <span>21+개</span>
+              <div class="score-percentage" id="score-percentage"></div>
+              <div class="result-buttons">
+                <button class="restart-btn" id="restart-btn">다시 시작</button>
+                <button class="back-to-lectures-btn" id="back-to-lectures-btn">
+                  챕터 선택으로
+                </button>
               </div>
             </div>
-            <div class="selected-date-records hidden" id="selected-date-records">
-              <h4 id="selected-date-title"></h4>
-              <div class="date-records-list" id="date-records-list"></div>
-            </div>
-          </div>
           </div>
         </div>
+      </section>
 
-        <!-- Quiz Container -->
-        <div class="quiz-container hidden" id="quiz-container">
-          <button class="back-to-lecture-btn" id="back-to-lecture-btn">← LECTURE 선택</button>
-          <div class="quiz-header">
-            <div class="score-display">점수: <span id="score">0</span></div>
-            <div class="timer-container">
-              <div class="timer-circle">
-                <svg class="timer-svg" viewBox="0 0 100 100">
-                  <circle class="timer-bg" cx="50" cy="50" r="45"></circle>
-                  <circle class="timer-progress" cx="50" cy="50" r="45" id="timer-progress"></circle>
-                </svg>
-                <span class="timer-text" id="timer-text">20</span>
-              </div>
-            </div>
-            <div class="question-counter">문제 <span id="current-question">1</span> / <span id="total-questions">0</span></div>
-          </div>
+      <!-- Focus Timer Section -->
+      <section id="focus-timer" class="section hidden">
+        <div class="container">
+          <h1>Focus Timer</h1>
+          <p>곧 구현 예정입니다.</p>
+        </div>
+      </section>
 
-          <div class="word-card" id="word-card">
-            <div class="word-header">
-              <h2 id="word-text">Loading...</h2>
-              <button class="pronounce-btn" id="pronounce-btn" title="발음 듣기">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-                </svg>
+      <!-- Voca Review Section -->
+      <section id="voca-review" class="section hidden">
+        <div class="review-layout">
+          <!-- Left: Test Button -->
+          <div class="review-left-panel">
+            <div class="review-actions">
+              <button class="review-quiz-btn" id="review-quiz-btn">
+                틀린 단어 퀴즈 시작 (10개)
               </button>
             </div>
           </div>
 
-          <div class="options-container" id="options-container">
-            <!-- Options will be dynamically generated -->
-          </div>
-        </div>
-
-        <!-- Feedback Modal -->
-        <div class="modal-overlay hidden" id="feedback-modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <span class="modal-icon" id="modal-icon">✓</span>
-              <h3 id="modal-title">정답입니다!</h3>
-            </div>
-            <div class="modal-body">
-              <div class="modal-word-info">
-                <div class="word-display">
-                  <strong id="modal-word">Word</strong>
-                </div>
-                <div class="meaning-display">
-                  <span id="modal-meaning">Meaning</span>
+          <!-- Right: Word Lists -->
+          <div class="review-main-content">
+            <!-- 틀린 단어 섹션 -->
+            <div class="review-section">
+              <div class="review-header">
+                <h2>틀린 단어 복습</h2>
+                <p class="review-subtitle">틀렸던 단어들을 다시 학습해보세요</p>
+              </div>
+              <div class="review-stats" id="review-stats">
+                <div class="stat-item">
+                  <span class="stat-number" id="review-count">0</span>
+                  <span class="stat-label">복습할 단어</span>
                 </div>
               </div>
-              <div class="example-section">
-                <div class="example-label">예문:</div>
-                <div class="example-text" id="modal-example">Example sentence here.</div>
+              <div class="review-words-container" id="review-words-container">
+                <!-- Review words will be dynamically generated -->
+              </div>
+              <div class="no-review-words hidden" id="no-review-words">
+                <p>복습할 단어가 없습니다. 퀴즈를 풀어보세요!</p>
               </div>
             </div>
-            <div class="modal-footer">
-              <button class="next-btn" id="next-btn">Next</button>
-            </div>
-          </div>
-        </div>
 
-        <!-- Result Screen -->
-        <div class="result-screen hidden" id="result-screen">
-          <div class="result-content">
-            <h2>퀴즈 완료!</h2>
-            <div class="final-score">
-              최종 점수: <span id="final-score">0</span> / <span id="max-score">0</span>
-            </div>
-            <div class="score-percentage" id="score-percentage"></div>
-            <div class="result-buttons">
-              <button class="restart-btn" id="restart-btn">다시 시작</button>
-              <button class="back-to-lectures-btn" id="back-to-lectures-btn">챕터 선택으로</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Focus Timer Section -->
-    <section id="focus-timer" class="section hidden">
-      <div class="container">
-        <h1>Focus Timer</h1>
-        <p>곧 구현 예정입니다.</p>
-      </div>
-    </section>
-
-    <!-- Voca Review Section -->
-    <section id="voca-review" class="section hidden">
-      <div class="review-layout">
-        <!-- Left: Test Button -->
-        <div class="review-left-panel">
-          <div class="review-actions">
-            <button class="review-quiz-btn" id="review-quiz-btn">틀린 단어 퀴즈 시작 (10개)</button>
-          </div>
-        </div>
-
-        <!-- Right: Word Lists -->
-        <div class="review-main-content">
-          <!-- 틀린 단어 섹션 -->
-          <div class="review-section">
-            <div class="review-header">
-              <h2>틀린 단어 복습</h2>
-              <p class="review-subtitle">틀렸던 단어들을 다시 학습해보세요</p>
-            </div>
-            <div class="review-stats" id="review-stats">
-              <div class="stat-item">
-                <span class="stat-number" id="review-count">0</span>
-                <span class="stat-label">복습할 단어</span>
+            <!-- 외운 단어 섹션 -->
+            <div class="review-section">
+              <div class="review-header">
+                <h2>📚 내가 외운 단어들!</h2>
+                <p class="review-subtitle">암기 완료한 단어들을 확인하세요</p>
+              </div>
+              <div class="review-stats" id="memorized-stats">
+                <div class="stat-item">
+                  <span class="stat-number" id="memorized-count">0</span>
+                  <span class="stat-label">외운 단어</span>
+                </div>
+              </div>
+              <div
+                class="review-words-container"
+                id="memorized-words-container"
+              >
+                <!-- Memorized words will be dynamically generated -->
+              </div>
+              <div class="no-review-words hidden" id="no-memorized-words">
+                <p>아직 외운 단어가 없습니다.</p>
               </div>
             </div>
-            <div class="review-words-container" id="review-words-container">
-              <!-- Review words will be dynamically generated -->
-            </div>
-            <div class="no-review-words hidden" id="no-review-words">
-              <p>복습할 단어가 없습니다. 퀴즈를 풀어보세요!</p>
-            </div>
-          </div>
-
-          <!-- 외운 단어 섹션 -->
-          <div class="review-section">
-            <div class="review-header">
-              <h2>📚 내가 외운 단어들!</h2>
-              <p class="review-subtitle">암기 완료한 단어들을 확인하세요</p>
-            </div>
-            <div class="review-stats" id="memorized-stats">
-              <div class="stat-item">
-                <span class="stat-number" id="memorized-count">0</span>
-                <span class="stat-label">외운 단어</span>
-              </div>
-            </div>
-            <div class="review-words-container" id="memorized-words-container">
-              <!-- Memorized words will be dynamically generated -->
-            </div>
-            <div class="no-review-words hidden" id="no-memorized-words">
-              <p>아직 외운 단어가 없습니다.</p>
-            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Algo Viz Section -->
-    <section id="algo-viz" class="section hidden">
-      <div class="container">
-        <h1>Algo Viz</h1>
-        <p>곧 구현 예정입니다.</p>
-      </div>
-    </section>
-  </main>
+      <!-- Algo Viz Section -->
+      <section id="algo-viz" class="section hidden">
+        <div class="container">
+          <h1>Algo Viz</h1>
+          <p>곧 구현 예정입니다.</p>
+        </div>
+      </section>
+    </main>
 
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
