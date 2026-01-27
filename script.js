@@ -2361,16 +2361,9 @@ async function searchWord() {
   }
 
   wordPreviewCard.classList.remove("hidden");
-  // 로딩 상태 초기화 - 확실하게
-  if (previewLoading) {
-    previewLoading.classList.remove("hidden");
-  }
-  if (previewContent) {
-    previewContent.classList.add("hidden");
-  }
-  if (previewError) {
-    previewError.classList.add("hidden");
-  }
+  previewLoading.classList.remove("hidden");
+  previewContent.classList.add("hidden");
+  previewError.classList.add("hidden");
 
   try {
     // 네이버 영한사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
