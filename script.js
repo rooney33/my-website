@@ -2334,7 +2334,7 @@ function initVocabQuiz() {
   }
 }
 
-// 단어 검색 함수
+// 단어 검색 함수 (네이버 영어사전 스타일)
 async function searchWord() {
   const word = addWordInput ? addWordInput.value.trim() : "";
 
@@ -2343,7 +2343,7 @@ async function searchWord() {
     return;
   }
 
-  // Preview 카드 표시
+  // Preview 카드 표시 및 로딩 상태 초기화
   if (wordPreviewCard) {
     wordPreviewCard.classList.remove("hidden");
     previewLoading.classList.remove("hidden");
@@ -2352,9 +2352,18 @@ async function searchWord() {
   }
 
   try {
+    // 네이버 영어사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
+    // 대신 Free Dictionary API로 기본 정보를 가져온 후 네이버 사전 링크 제공
+    
     // Free Dictionary API 사용
     const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`,
+      {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      }
     );
 
     if (!response.ok) {
@@ -2373,57 +2382,35 @@ async function searchWord() {
         (wordData.phonetics && wordData.phonetics[0]?.text) ||
         "";
 
-      // 뜻 추출 (첫 번째 의미)
-      let meaning = "";
-      if (wordData.meanings && wordData.meanings.length > 0) {
-        const firstMeaning = wordData.meanings[0];
-        if (firstMeaning.definitions && firstMeaning.definitions.length > 0) {
-          meaning = firstMeaning.definitions[0].definition;
-        }
-      }
-
-      // 예문 추출
-      let example = "";
-      if (wordData.meanings && wordData.meanings.length > 0) {
-        for (const meaningItem of wordData.meanings) {
-          if (meaningItem.definitions && meaningItem.definitions.length > 0) {
-            for (const def of meaningItem.definitions) {
-              if (def.example) {
-                example = def.example;
-                break;
-              }
-            }
-            if (example) break;
-          }
-        }
-      }
-
-      // 한국어 번역을 위한 추가 API 호출 (선택사항)
-      // 간단하게 영어 뜻을 사용하거나, 사용자가 수정할 수 있도록 함
-
-      // YBM 영어사전 스타일로 품사와 뜻 추출
+      // 품사와 뜻 추출 (네이버 영어사전 스타일)
       let koreanMeaning = "";
       let partOfSpeech = "";
+      let example = "";
       
       if (wordData.meanings && wordData.meanings.length > 0) {
         // 첫 번째 의미의 품사 가져오기
         partOfSpeech = wordData.meanings[0].partOfSpeech || "";
         
-        // 모든 의미를 수집하여 한국어로 번역
+        // 모든 의미를 수집
         const allMeanings = [];
         wordData.meanings.forEach((meaningItem) => {
           if (meaningItem.definitions && meaningItem.definitions.length > 0) {
             meaningItem.definitions.forEach((def) => {
               if (def.definition) {
                 allMeanings.push(def.definition);
+                // 예문도 찾기
+                if (!example && def.example) {
+                  example = def.example;
+                }
               }
             });
           }
         });
         
-        // 첫 번째 뜻만 번역 시도
+        // 첫 번째 뜻을 한국어로 번역 시도 (네이버 파파고 스타일)
         if (allMeanings.length > 0) {
           try {
+            // MyMemory Translation API 사용 (무료)
             const translateResponse = await fetch(
               `https://api.mymemory.translated.net/get?q=${encodeURIComponent(allMeanings[0])}&langpair=en|ko`,
               {
@@ -2433,6 +2420,7 @@ async function searchWord() {
                 }
               }
             );
+            
             if (translateResponse.ok) {
               const translateData = await translateResponse.json();
               if (translateData.responseData && translateData.responseData.translatedText) {
@@ -2441,7 +2429,11 @@ async function searchWord() {
                 if (koreanMeaning === allMeanings[0] || koreanMeaning.length < 2) {
                   koreanMeaning = allMeanings[0];
                 }
+              } else {
+                koreanMeaning = allMeanings[0];
               }
+            } else {
+              koreanMeaning = allMeanings[0];
             }
           } catch (e) {
             console.log("Translation failed:", e);
@@ -2452,27 +2444,35 @@ async function searchWord() {
       
       // 번역이 실패했으면 영어 뜻 사용
       if (!koreanMeaning) {
-        koreanMeaning = meaning;
+        koreanMeaning = "뜻을 찾을 수 없습니다.";
       }
       
-      // 품사와 뜻을 함께 표시
+      // 품사와 뜻을 함께 표시 (네이버 영어사전 스타일)
       const partOfSpeechText = partOfSpeech ? `[${partOfSpeech}] ` : "";
       koreanMeaning = partOfSpeechText + koreanMeaning;
+      
+      // 예문이 없으면 기본 예문 생성
+      if (!example) {
+        example = `${wordText} - ${koreanMeaning}`;
+      }
       
       // Preview에 데이터 표시
       currentWordData = {
         word: wordText,
-        meaning: koreanMeaning || meaning || "뜻을 찾을 수 없습니다.",
-        example: example || `${wordText} - ${meaning || "definition"}`,
+        meaning: koreanMeaning,
+        example: example,
         phonetic: phonetic,
+        naverDictUrl: `https://dict.naver.com/enendict/#/search?query=${encodeURIComponent(wordText)}`
       };
 
+      // 로딩 완료 처리
       displayPreview(currentWordData);
     } else {
       throw new Error("Word not found");
     }
   } catch (error) {
-    // 에러 표시
+    console.error("Search error:", error);
+    // 에러 표시 및 로딩 숨기기
     if (previewLoading) {
       previewLoading.classList.add("hidden");
     }
@@ -2496,7 +2496,33 @@ function displayPreview(wordData) {
   previewMeaningInput.value = wordData.meaning;
   previewExample.textContent = wordData.example;
 
-  // 로딩 완료 처리
+  // 네이버 영어사전 링크 추가 (있는 경우)
+  const previewHeader = document.querySelector(".preview-header");
+  if (previewHeader && wordData.naverDictUrl) {
+    // 기존 링크가 있으면 제거
+    const existingLink = previewHeader.querySelector(".naver-dict-link");
+    if (existingLink) {
+      existingLink.remove();
+    }
+    
+    // 네이버 영어사전 링크 추가
+    const naverLink = document.createElement("a");
+    naverLink.href = wordData.naverDictUrl;
+    naverLink.target = "_blank";
+    naverLink.rel = "noopener noreferrer";
+    naverLink.className = "naver-dict-link";
+    naverLink.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+      네이버 영어사전에서 보기
+    `;
+    previewHeader.appendChild(naverLink);
+  }
+
+  // 로딩 완료 처리 - 반드시 마지막에 실행
   if (previewLoading) {
     previewLoading.classList.add("hidden");
   }
