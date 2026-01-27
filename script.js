@@ -2361,7 +2361,8 @@ async function searchWord() {
   }
 
   wordPreviewCard.classList.remove("hidden");
-  previewLoading.classList.remove("hidden");
+  // 로딩창은 표시하지 않음 - 결과나 에러만 표시
+  previewLoading.classList.add("hidden");
   previewContent.classList.add("hidden");
   previewError.classList.add("hidden");
 
@@ -2568,12 +2569,7 @@ async function searchWord() {
         naverDictUrl: `https://en.dict.naver.com/#/search?query=${encodeURIComponent(wordText)}`,
       };
 
-      // 로딩창 즉시 제거
-      if (previewLoading) {
-        previewLoading.classList.add("hidden");
-      }
-      
-      // Preview 표시
+      // Preview 표시 (로딩창은 이미 숨겨져 있음)
       displayPreview(currentWordData);
     } else {
       throw new Error("Word not found");
@@ -2595,11 +2591,11 @@ async function searchWord() {
 
 // Preview 표시
 function displayPreview(wordData) {
-  // 먼저 로딩창을 즉시 제거
+  // 로딩창은 숨김 상태 유지
   if (previewLoading) {
     previewLoading.classList.add("hidden");
   }
-  
+
   if (!previewWord || !previewMeaningInput || !previewExample) {
     console.error("Preview elements not found");
     return;
@@ -2691,7 +2687,7 @@ function addWordFromPreview() {
   // 사용자 단어 저장
   const userWords = JSON.parse(localStorage.getItem("vocabUserWords") || "[]");
 
-  // 중복 확인
+  // 중복 확인 (같은 챕터에 같은 단어가 있는지)
   const exists = userWords.some(
     (w) =>
       w.word.toLowerCase() === currentWordData.word.toLowerCase() &&
@@ -2699,8 +2695,26 @@ function addWordFromPreview() {
   );
 
   if (exists) {
-    alert("이미 추가된 단어입니다.");
+    alert(`"${currentWordData.word}"는 이미 ${lecture}에 추가된 단어입니다.`);
     return;
+  }
+  
+  // 다른 챕터에 같은 단어가 있는지도 확인 (참고용)
+  const existsInOtherLecture = userWords.some(
+    (w) =>
+      w.word.toLowerCase() === currentWordData.word.toLowerCase() &&
+      w.lecture !== lecture,
+  );
+  
+  if (existsInOtherLecture) {
+    const otherLecture = userWords.find(
+      (w) => w.word.toLowerCase() === currentWordData.word.toLowerCase() && w.lecture !== lecture
+    )?.lecture;
+    if (confirm(`"${currentWordData.word}"는 이미 "${otherLecture}"에 추가되어 있습니다.\n그래도 ${lecture}에 추가하시겠습니까?`)) {
+      // 계속 진행
+    } else {
+      return;
+    }
   }
 
   // 사용자가 수정한 뜻 가져오기
