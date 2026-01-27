@@ -1272,6 +1272,7 @@ body.light-mode .legend-empty {
   align-items: baseline;
   gap: 1rem;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .preview-word {
@@ -1285,6 +1286,33 @@ body.light-mode .legend-empty {
   font-size: 1.1rem;
   color: var(--text-secondary);
   font-style: italic;
+}
+
+.naver-dict-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-left: auto;
+  margin-top: 0.5rem;
+}
+
+.naver-dict-link:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+}
+
+.naver-dict-link svg {
+  width: 16px;
+  height: 16px;
 }
 
 .preview-meaning-wrapper {
