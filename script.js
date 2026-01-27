@@ -1171,7 +1171,7 @@ let calendarContainer, selectedDateRecords, dateRecordsList, selectedDateTitle;
 let reviewWordsContainer, reviewCount, noReviewWords, reviewQuizBtn;
 let memorizedWordsContainer, memorizedCount, noMemorizedWords;
 let addWordLecture, addWordInput, addWordBtn, searchWordBtn;
-let wordPreviewCard, previewLoading, previewContent, previewError;
+let wordPreviewCard, previewContent, previewError;
 let previewWord, previewPhonetic, previewMeaningInput, previewExample;
 let previewCancelBtn, previewAddBtn, previewRetryBtn;
 let currentWordData = null;
@@ -2075,7 +2075,6 @@ function initDOMElements() {
   addWordInput = document.getElementById("add-word-input");
   searchWordBtn = document.getElementById("search-word-btn");
   wordPreviewCard = document.getElementById("word-preview-card");
-  previewLoading = document.getElementById("preview-loading");
   previewContent = document.getElementById("preview-content");
   previewError = document.getElementById("preview-error");
   previewWord = document.getElementById("preview-word");
@@ -2355,14 +2354,13 @@ async function searchWord() {
     return;
   }
 
-  if (!previewLoading || !previewContent || !previewError) {
+  if (!previewContent || !previewError) {
     console.error("Preview elements not initialized");
     return;
   }
 
   wordPreviewCard.classList.remove("hidden");
-  // 로딩창은 표시하지 않음 - 결과나 에러만 표시
-  previewLoading.classList.add("hidden");
+  // 결과나 에러만 표시
   previewContent.classList.add("hidden");
   previewError.classList.add("hidden");
 
@@ -2576,10 +2574,7 @@ async function searchWord() {
     }
   } catch (error) {
     console.error("Search error:", error);
-    // 에러 표시 및 로딩 숨기기 - 확실하게 처리
-    if (previewLoading) {
-      previewLoading.classList.add("hidden");
-    }
+    // 에러 표시
     if (previewContent) {
       previewContent.classList.add("hidden");
     }
@@ -2591,11 +2586,6 @@ async function searchWord() {
 
 // Preview 표시
 function displayPreview(wordData) {
-  // 로딩창은 숨김 상태 유지
-  if (previewLoading) {
-    previewLoading.classList.add("hidden");
-  }
-
   if (!previewWord || !previewMeaningInput || !previewExample) {
     console.error("Preview elements not found");
     return;
