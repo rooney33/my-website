@@ -1843,3 +1843,393 @@ body.light-mode .legend-empty {
 .word-card.slide-in {
   animation: slideIn 0.3s ease-in;
 }
+
+/* ============================================
+   Focus Timer Styles
+   ============================================ */
+
+.timer-layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  align-items: flex-start;
+}
+
+.timer-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.timer-side {
+  width: 400px;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Mode Selection */
+.mode-selection {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 1rem 2rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.mode-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.mode-btn.active {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Timer Display */
+.timer-display {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+  border-radius: 20px;
+  border: 2px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.timer-time {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.timer-label {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Timer Controls */
+.timer-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.control-btn {
+  padding: 1rem 2.5rem;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background-color: var(--accent);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.control-btn:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Fortune Cookie */
+.fortune-cookie {
+  padding: 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  border: 2px solid var(--border);
+  text-align: center;
+}
+
+.fortune-cookie h3 {
+  font-size: 1.5rem;
+  color: var(--accent-title);
+  margin-bottom: 1rem;
+}
+
+.fortune-text {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin: 1.5rem 0;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+}
+
+.fortune-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  background-color: transparent;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.fortune-btn:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Today's Stats */
+.today-stats {
+  padding: 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  border: 2px solid var(--border);
+  text-align: center;
+}
+
+.today-stats h3 {
+  font-size: 1.3rem;
+  color: var(--accent-title);
+  margin-bottom: 1rem;
+}
+
+.stats-time {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Study Calendar */
+.study-calendar {
+  padding: 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  border: 2px solid var(--border);
+}
+
+.study-calendar h3 {
+  font-size: 1.3rem;
+  color: var(--accent-title);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-weekday {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.5rem;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.calendar-day.empty {
+  background-color: transparent;
+  border: none;
+}
+
+.calendar-day.today {
+  border-color: var(--accent);
+  border-width: 3px;
+  box-shadow: 0 0 0 2px var(--bg-primary), 0 0 0 4px var(--accent);
+}
+
+.calendar-day.goal-achieved {
+  background-color: rgba(76, 175, 80, 0.2);
+  border-color: #4caf50;
+}
+
+.calendar-day.moderate {
+  background-color: rgba(255, 235, 59, 0.2);
+  border-color: #ffeb3b;
+}
+
+.calendar-day.low {
+  background-color: rgba(33, 150, 243, 0.2);
+  border-color: #2196f3;
+}
+
+.day-emoji {
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.calendar-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--border);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.legend-emoji {
+  font-size: 1.5rem;
+}
+
+/* Study Input Modal */
+.study-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.study-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+}
+
+.modal-btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.modal-btn:not(.secondary) {
+  background-color: var(--accent);
+  color: white;
+}
+
+.modal-btn:not(.secondary):hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+.modal-btn.secondary {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 2px solid var(--border);
+}
+
+.modal-btn.secondary:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--accent);
+}
+
+/* Responsive Design for Timer */
+@media (max-width: 1024px) {
+  .timer-layout {
+    flex-direction: column;
+  }
+
+  .timer-side {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .timer-layout {
+    padding: 1rem;
+  }
+
+  .timer-time {
+    font-size: 4rem;
+  }
+
+  .timer-controls {
+    flex-direction: column;
+  }
+
+  .control-btn {
+    width: 100%;
+  }
+
+  .mode-selection {
+    flex-direction: column;
+  }
+
+  .calendar-grid {
+    gap: 0.25rem;
+  }
+
+  .calendar-day {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+}
+
+/* Light mode adjustments for timer */
+body.light-mode .timer-day.goal-achieved {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+body.light-mode .timer-day.moderate {
+  background-color: rgba(255, 235, 59, 0.1);
+}
+
+body.light-mode .timer-day.low {
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
