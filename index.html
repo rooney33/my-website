@@ -378,9 +378,91 @@
 
       <!-- Focus Timer Section -->
       <section id="focus-timer" class="section hidden">
-        <div class="container">
-          <h1>Focus Timer</h1>
-          <p>곧 구현 예정입니다.</p>
+        <div class="timer-layout">
+          <!-- Left: Main Timer Area -->
+          <div class="timer-main">
+            <!-- Mode Selection -->
+            <div class="mode-selection">
+              <button class="mode-btn active" id="focus-mode-btn" data-mode="focus">
+                집중 모드 (Focus)
+              </button>
+              <button class="mode-btn" id="rest-mode-btn" data-mode="rest">
+                휴식 모드 (Rest)
+              </button>
+            </div>
+
+            <!-- Timer Display -->
+            <div class="timer-display">
+              <div class="timer-time" id="timer-time">25:00</div>
+              <div class="timer-label" id="timer-label">집중 시간</div>
+            </div>
+
+            <!-- Control Buttons -->
+            <div class="timer-controls">
+              <button class="control-btn" id="start-btn">시작</button>
+              <button class="control-btn" id="pause-btn" disabled>일시정지</button>
+              <button class="control-btn" id="stop-btn" disabled>정지</button>
+            </div>
+
+            <!-- Fortune Cookie -->
+            <div class="fortune-cookie">
+              <h3>오늘의 응원</h3>
+              <p class="fortune-text" id="fortune-text">로딩 중...</p>
+              <button class="fortune-btn" id="new-fortune-btn">새로운 포춘쿠키 열기</button>
+            </div>
+          </div>
+
+          <!-- Right: Calendar & Stats -->
+          <div class="timer-side">
+            <!-- Today's Stats -->
+            <div class="today-stats">
+              <h3>오늘의 누적 공부 시간</h3>
+              <div class="stats-time" id="today-time">0시간 0분</div>
+            </div>
+
+            <!-- Study Calendar -->
+            <div class="study-calendar">
+              <h3>이달의 공부 캘린더</h3>
+              <div class="calendar-grid" id="calendar-grid">
+                <!-- Calendar will be generated dynamically -->
+              </div>
+              <div class="calendar-legend">
+                <div class="legend-item">
+                  <span class="legend-emoji">😄</span>
+                  <span>목표 달성 (6시간 이상)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-emoji">🍀</span>
+                  <span>적당함 (3-6시간)</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-emoji">💧</span>
+                  <span>부족함 (3시간 미만)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Study Input Modal -->
+        <div class="modal-overlay hidden" id="study-modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>방금 무엇을 공부했나요?</h3>
+            </div>
+            <div class="modal-body">
+              <textarea
+                id="study-input"
+                class="study-input"
+                placeholder="예: JavaScript 기초 문법, React 컴포넌트 만들기..."
+                rows="4"
+              ></textarea>
+            </div>
+            <div class="modal-footer">
+              <button class="modal-btn" id="save-study-btn">저장</button>
+              <button class="modal-btn secondary" id="skip-study-btn">건너뛰기</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -454,5 +536,6 @@
     </main>
 
     <script src="script.js"></script>
+    <script src="timer.js"></script>
   </body>
 </html>
