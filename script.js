@@ -2420,12 +2420,15 @@ async function searchWord() {
           }
         }
         
-        // 첫 번째 뜻을 한국어로 번역 시도 (네이버 파파고 스타일)
+        // 첫 번째 뜻을 한국어로 번역 시도 (네이버 영어사전 스타일 - 간결하게)
         if (allMeanings.length > 0) {
           try {
+            // 첫 번째 정의만 사용 (간결하게)
+            const firstDefinition = allMeanings[0];
+            
             // MyMemory Translation API 사용 (무료)
             const translateResponse = await fetch(
-              `https://api.mymemory.translated.net/get?q=${encodeURIComponent(allMeanings[0])}&langpair=en|ko`,
+              `https://api.mymemory.translated.net/get?q=${encodeURIComponent(firstDefinition)}&langpair=en|ko`,
               {
                 method: 'GET',
                 headers: {
@@ -2437,16 +2440,29 @@ async function searchWord() {
             if (translateResponse.ok) {
               const translateData = await translateResponse.json();
               if (translateData.responseData && translateData.responseData.translatedText) {
-                koreanMeaning = translateData.responseData.translatedText;
-                // 번역 품질이 낮으면 영어 뜻 사용
-                if (koreanMeaning === allMeanings[0] || koreanMeaning.length < 2) {
-                  koreanMeaning = allMeanings[0];
+                let translated = translateData.responseData.translatedText;
+                
+                // 번역 품질 검증
+                if (translated === firstDefinition || translated.length < 2) {
+                  koreanMeaning = firstDefinition;
+                } else {
+                  // 한글 뜻을 간결하게 처리
+                  // 너무 긴 경우 첫 번째 문장만 사용하거나, 50자 이내로 제한
+                  if (translated.length > 50) {
+                    // 첫 번째 문장만 사용하거나, 쉼표/마침표 기준으로 자르기
+                    const firstSentence = translated.split(/[.,;]/)[0].trim();
+                    koreanMeaning = firstSentence.length > 0 && firstSentence.length <= 50 
+                      ? firstSentence 
+                      : translated.substring(0, 47) + "...";
+                  } else {
+                    koreanMeaning = translated;
+                  }
                 }
               } else {
-                koreanMeaning = allMeanings[0];
+                koreanMeaning = firstDefinition;
               }
             } else {
-              koreanMeaning = allMeanings[0];
+              koreanMeaning = firstDefinition;
             }
           } catch (e) {
             console.log("Translation failed:", e);
@@ -2460,9 +2476,20 @@ async function searchWord() {
         koreanMeaning = "뜻을 찾을 수 없습니다.";
       }
       
-      // 품사와 뜻을 함께 표시 (네이버 영어사전 스타일)
+      // 품사와 뜻을 함께 표시 (네이버 영어사전 스타일 - 간결하게)
       const partOfSpeechText = partOfSpeech ? `[${partOfSpeech}] ` : "";
-      koreanMeaning = partOfSpeechText + koreanMeaning;
+      
+      // 한글 뜻이 너무 길면 자르기 (최대 50자)
+      let finalMeaning = koreanMeaning;
+      if (finalMeaning.length > 50) {
+        // 첫 번째 문장이나 의미 단위로 자르기
+        const firstPart = finalMeaning.split(/[.,;]/)[0].trim();
+        finalMeaning = firstPart.length > 0 && firstPart.length <= 50 
+          ? firstPart 
+          : finalMeaning.substring(0, 47) + "...";
+      }
+      
+      koreanMeaning = partOfSpeechText + finalMeaning;
       
       // 예문 검증: 예문이 실제 예문인지 확인 (뜻이 아닌 실제 문장인지)
       if (!example || example.trim() === "" || example.length < 10) {
