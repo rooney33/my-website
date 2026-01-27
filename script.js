@@ -1171,9 +1171,10 @@ let calendarContainer, selectedDateRecords, dateRecordsList, selectedDateTitle;
 let reviewWordsContainer, reviewCount, noReviewWords, reviewQuizBtn;
 let addWordLecture, addWordInput, addWordBtn, searchWordBtn;
 let wordPreviewCard, previewLoading, previewContent, previewError;
-let previewWord, previewPhonetic, previewMeaning, previewExample;
+let previewWord, previewPhonetic, previewMeaningInput, previewExample;
 let previewCancelBtn, previewAddBtn, previewRetryBtn;
 let currentWordData = null;
+let chapterList, addChapterBtn, addChapterModal, closeChapterModal, submitChapterBtn, newChapterName;
 
 // 네비게이션 기능 초기화
 function initNavigation() {
@@ -1210,6 +1211,34 @@ function initNavigation() {
   });
 }
 
+// 챕터 목록 업데이트 (사이드바)
+function updateChapterList() {
+  if (!chapterList) return;
+  
+  chapterList.innerHTML = "";
+  vocaData.forEach((lecture, index) => {
+    const userWords = getUserAddedWords(lecture.lecture);
+    const totalWords = lecture.words.length + userWords.length;
+    
+    const listItem = document.createElement("div");
+    listItem.className = "chapter-list-item";
+    listItem.innerHTML = `
+      <div class="chapter-item-content">
+        <div class="chapter-item-title">${lecture.lecture}</div>
+        <div class="chapter-item-count">${totalWords}개</div>
+      </div>
+      <button class="chapter-test-btn" data-index="${index}">TEST</button>
+    `;
+    
+    const testBtn = listItem.querySelector(".chapter-test-btn");
+    testBtn.addEventListener("click", () => {
+      startQuiz(index);
+    });
+    
+    chapterList.appendChild(listItem);
+  });
+}
+
 // 챕터 선택 화면 표시
 function showLectureSelection() {
   if (lectureSelectionScreen) {
@@ -1225,22 +1254,8 @@ function showLectureSelection() {
     feedbackModal.classList.add("hidden");
   }
 
-  // 챕터 카드 생성
-  if (!lectureGrid) return;
-  lectureGrid.innerHTML = "";
-  vocaData.forEach((lecture, index) => {
-    const userWords = getUserAddedWords(lecture.lecture);
-    const totalWords = lecture.words.length + userWords.length;
-
-    const card = document.createElement("div");
-    card.className = "lecture-card";
-    card.innerHTML = `
-      <h3>${lecture.lecture}</h3>
-      <div class="word-count">${totalWords}개 단어${userWords.length > 0 ? ` (추가: ${userWords.length})` : ""}</div>
-    `;
-    card.addEventListener("click", () => startQuiz(index));
-    lectureGrid.appendChild(card);
-  });
+  // 챕터 목록 업데이트
+  updateChapterList();
 
   // 단어 추가 챕터 선택 드롭다운 채우기
   if (addWordLecture) {
@@ -1724,6 +1739,18 @@ function selectOption(selectedOption, question) {
     score++;
     updateScore();
 
+    // Voca Review 테스트인 경우 맞힌 단어를 암기완료 처리
+    if (currentLecture && currentLecture.lecture === "틀린 단어 복습") {
+      // 틀린 단어장에서 제거하고 암기한 단어장에 추가
+      const wrongWords = getWrongWords();
+      const wordToRemove = wrongWords.find(
+        (w) => w.word === question.word
+      );
+      if (wordToRemove) {
+        removeWrongWord(question.word, wordToRemove.lecture);
+      }
+    }
+
     // 1초 후 자동으로 다음 문제로
     setTimeout(() => {
       currentQuestionIndex++;
@@ -1920,11 +1947,17 @@ function initDOMElements() {
   previewError = document.getElementById("preview-error");
   previewWord = document.getElementById("preview-word");
   previewPhonetic = document.getElementById("preview-phonetic");
-  previewMeaning = document.getElementById("preview-meaning");
+  previewMeaningInput = document.getElementById("preview-meaning-input");
   previewExample = document.getElementById("preview-example");
   previewCancelBtn = document.getElementById("preview-cancel-btn");
   previewAddBtn = document.getElementById("preview-add-btn");
   previewRetryBtn = document.getElementById("preview-retry-btn");
+  chapterList = document.getElementById("chapter-list");
+  addChapterBtn = document.getElementById("add-chapter-btn");
+  addChapterModal = document.getElementById("add-chapter-modal");
+  closeChapterModal = document.getElementById("close-chapter-modal");
+  submitChapterBtn = document.getElementById("submit-chapter-btn");
+  newChapterName = document.getElementById("new-chapter-name");
 }
 
 // 단어 검색 함수
@@ -1994,10 +2027,26 @@ async function searchWord() {
       // 한국어 번역을 위한 추가 API 호출 (선택사항)
       // 간단하게 영어 뜻을 사용하거나, 사용자가 수정할 수 있도록 함
 
+      // 한국어 번역 시도 (MyMemory Translation API 사용 - 무료)
+      let koreanMeaning = "";
+      try {
+        const translateResponse = await fetch(
+          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(meaning)}&langpair=en|ko`
+        );
+        if (translateResponse.ok) {
+          const translateData = await translateResponse.json();
+          if (translateData.responseData && translateData.responseData.translatedText) {
+            koreanMeaning = translateData.responseData.translatedText;
+          }
+        }
+      } catch (e) {
+        console.log("Translation failed, using English meaning");
+      }
+      
       // Preview에 데이터 표시
       currentWordData = {
         word: wordText,
-        meaning: meaning || "뜻을 찾을 수 없습니다.",
+        meaning: koreanMeaning || meaning || "뜻을 찾을 수 없습니다.",
         example: example || `${wordText} - ${meaning || "definition"}`,
         phonetic: phonetic,
       };
@@ -2016,13 +2065,13 @@ async function searchWord() {
 
 // Preview 표시
 function displayPreview(wordData) {
-  if (!previewWord || !previewMeaning || !previewExample) return;
+  if (!previewWord || !previewMeaningInput || !previewExample) return;
 
   previewWord.textContent = wordData.word;
   previewPhonetic.textContent = wordData.phonetic
     ? `[${wordData.phonetic}]`
     : "";
-  previewMeaning.textContent = wordData.meaning;
+  previewMeaningInput.value = wordData.meaning;
   previewExample.textContent = wordData.example;
 
   previewLoading.classList.add("hidden");
@@ -2067,9 +2116,12 @@ function addWordFromPreview() {
     return;
   }
 
+  // 사용자가 수정한 뜻 가져오기
+  const finalMeaning = previewMeaningInput ? previewMeaningInput.value.trim() : currentWordData.meaning;
+  
   userWords.push({
     word: currentWordData.word,
-    meaning: currentWordData.meaning,
+    meaning: finalMeaning || currentWordData.meaning,
     example: currentWordData.example,
     lecture: lecture,
     date: new Date().toISOString().split("T")[0],
