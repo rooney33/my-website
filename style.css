@@ -15,16 +15,18 @@
   --accent-hover: #ff7ba3;
   --accent-light: #ff9fc7;
   --accent-dark: #ff3d6b;
+  --accent-title: #ff3d6b;
+  --accent-button: #ff9fc7;
   --success: #4caf50;
   --error: #f44336;
   --border: #404040;
   
-  /* Grass colors for calendar */
+  /* Grass colors for calendar (연한 노란색) */
   --grass-0: #ebedf0;
-  --grass-1: #9be9a8;
-  --grass-2: #40c463;
-  --grass-3: #30a14e;
-  --grass-4: #216e39;
+  --grass-1: #fff9c4;
+  --grass-2: #fff59d;
+  --grass-3: #ffeb3b;
+  --grass-4: #fdd835;
 }
 
 /* Light mode */
@@ -39,11 +41,13 @@ body.light-mode {
   --accent-hover: #ffb8d9;
   --accent-light: #ffd0e6;
   --accent-dark: #ff8ab5;
+  --accent-title: #ff8ab5;
+  --accent-button: #ffd0e6;
   --grass-0: #ebedf0;
-  --grass-1: #9be9a8;
-  --grass-2: #40c463;
-  --grass-3: #30a14e;
-  --grass-4: #216e39;
+  --grass-1: #fff9c4;
+  --grass-2: #fff59d;
+  --grass-3: #ffeb3b;
+  --grass-4: #fdd835;
 }
 
 /* Light mode box-shadow overrides (연한 핑크) */
@@ -124,7 +128,7 @@ p, span, div {
 .nav-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--accent);
+  color: var(--accent-title);
 }
 
 .nav-menu {
@@ -246,12 +250,12 @@ p, span, div {
 
 .sidebar-header h3 {
   font-size: 1.3rem;
-  color: var(--accent);
+  color: var(--accent-title);
   margin: 0;
 }
 
 .add-chapter-btn {
-  background-color: var(--accent);
+  background-color: var(--accent-button);
   color: white;
   border: none;
   width: 32px;
@@ -266,7 +270,7 @@ p, span, div {
 }
 
 .add-chapter-btn:hover {
-  background-color: var(--accent-hover);
+  background-color: var(--accent-light);
   transform: scale(1.1);
 }
 
@@ -296,7 +300,7 @@ p, span, div {
 .chapter-item-title {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--accent-title);
   margin-bottom: 0.25rem;
   word-break: break-word;
   line-height: 1.4;
@@ -309,7 +313,7 @@ p, span, div {
 
 .chapter-test-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
+  background-color: var(--accent-button);
   color: white;
   border: none;
   padding: 0.75rem;
@@ -323,9 +327,9 @@ p, span, div {
 }
 
 .chapter-test-btn:hover {
-  background-color: var(--accent-hover);
+  background-color: var(--accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 159, 199, 0.3);
 }
 
 /* Quiz Main Content */
@@ -347,7 +351,7 @@ p, span, div {
   font-size: 2rem;
   text-align: center;
   margin-bottom: 2rem;
-  color: var(--accent);
+  color: var(--accent-title);
 }
 
 .lecture-grid {
@@ -394,7 +398,7 @@ p, span, div {
 .records-title {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--accent);
+  color: var(--accent-title);
 }
 
 /* Calendar View */
@@ -1030,7 +1034,7 @@ body.light-mode .legend-empty {
 
 .review-header h2 {
   font-size: 2rem;
-  color: var(--accent);
+  color: var(--accent-title);
   margin-bottom: 0.5rem;
 }
 
