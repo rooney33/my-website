@@ -1,6 +1,5 @@
 // Focus Timer 기능
-// 목표 시간 설정 (시간 단위)
-const GOAL_TIME = 6; // 6시간
+// 목표 시간은 날짜별로 localStorage에 저장됨
 
 // 포춘쿠키 응원 문구 배열
 const fortuneMessages = [
@@ -36,6 +35,7 @@ let startBtn, pauseBtn, stopBtn;
 let fortuneText, newFortuneBtn;
 let todayTime, calendarGrid;
 let studyModal, studyInput, saveStudyBtn, skipStudyBtn;
+let goalTimeInput, saveGoalBtn, goalDisplay;
 
 // 초기화
 function initTimer() {
@@ -55,6 +55,9 @@ function initTimer() {
   studyInput = document.getElementById("study-input");
   saveStudyBtn = document.getElementById("save-study-btn");
   skipStudyBtn = document.getElementById("skip-study-btn");
+  goalTimeInput = document.getElementById("goal-time-input");
+  saveGoalBtn = document.getElementById("save-goal-btn");
+  goalDisplay = document.getElementById("goal-display");
 
   // 이벤트 리스너 설정
   if (focusModeBtn) {
@@ -81,10 +84,21 @@ function initTimer() {
   if (skipStudyBtn) {
     skipStudyBtn.addEventListener("click", skipStudySession);
   }
+  if (saveGoalBtn) {
+    saveGoalBtn.addEventListener("click", saveGoalTime);
+  }
+  if (goalTimeInput) {
+    goalTimeInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        saveGoalTime();
+      }
+    });
+  }
 
   // 초기 상태 설정
   updateTimerDisplay();
   showNewFortune();
+  loadTodayGoal();
   updateTodayStats();
   generateCalendar();
 }
@@ -248,6 +262,52 @@ function skipStudySession() {
   switchMode("focus");
 }
 
+// 오늘의 목표 시간 불러오기
+function loadTodayGoal() {
+  const today = new Date().toISOString().split("T")[0];
+  const goalData = JSON.parse(localStorage.getItem("focusTimerGoals") || "{}");
+  const todayGoal = goalData[today] || 6; // 기본값 6시간
+
+  if (goalTimeInput) {
+    goalTimeInput.value = todayGoal;
+  }
+  updateGoalDisplay(todayGoal);
+}
+
+// 목표 시간 저장
+function saveGoalTime() {
+  const goalTime = parseFloat(goalTimeInput ? goalTimeInput.value : 6);
+  
+  if (isNaN(goalTime) || goalTime <= 0) {
+    alert("올바른 목표 시간을 입력해주세요. (0.5시간 이상)");
+    return;
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+  const goalData = JSON.parse(localStorage.getItem("focusTimerGoals") || "{}");
+  goalData[today] = goalTime;
+  localStorage.setItem("focusTimerGoals", JSON.stringify(goalData));
+
+  updateGoalDisplay(goalTime);
+  generateCalendar(); // 캘린더 다시 생성하여 이모티콘 업데이트
+  
+  alert(`✅ 오늘의 목표 시간이 ${goalTime}시간으로 설정되었습니다!`);
+}
+
+// 목표 시간 표시 업데이트
+function updateGoalDisplay(goalTime) {
+  if (goalDisplay) {
+    goalDisplay.textContent = `목표: ${goalTime}시간`;
+  }
+}
+
+// 오늘의 목표 시간 가져오기
+function getTodayGoal() {
+  const today = new Date().toISOString().split("T")[0];
+  const goalData = JSON.parse(localStorage.getItem("focusTimerGoals") || "{}");
+  return goalData[today] || 6; // 기본값 6시간
+}
+
 // 오늘의 통계 업데이트
 function updateTodayStats() {
   const today = new Date().toISOString().split("T")[0];
@@ -295,11 +355,13 @@ function generateCalendar() {
 
   // 날짜 셀
   const studyData = JSON.parse(localStorage.getItem("focusTimerData") || "{}");
+  const goalData = JSON.parse(localStorage.getItem("focusTimerGoals") || "{}");
 
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     const dayData = studyData[dateStr];
     const totalHours = dayData ? dayData.totalMinutes / 60 : 0;
+    const dayGoal = goalData[dateStr] || 6; // 해당 날짜의 목표 시간 (기본값 6시간)
 
     const dayCell = document.createElement("div");
     dayCell.className = "calendar-day";
@@ -310,20 +372,22 @@ function generateCalendar() {
       dayCell.classList.add("today");
     }
 
-    // 이모티콘 표시
+    // 이모티콘 표시 (목표 시간 대비 비율)
     let emoji = "";
-    if (totalHours >= GOAL_TIME) {
-      emoji = "😄";
-      dayCell.classList.add("goal-achieved");
-    } else if (totalHours >= 3) {
-      emoji = "🍀";
-      dayCell.classList.add("moderate");
-    } else if (totalHours > 0) {
-      emoji = "💧";
-      dayCell.classList.add("low");
-    }
+    if (totalHours > 0) {
+      const percentage = (totalHours / dayGoal) * 100;
+      
+      if (percentage >= 80) {
+        emoji = "😄";
+        dayCell.classList.add("goal-achieved");
+      } else if (percentage >= 50) {
+        emoji = "🍀";
+        dayCell.classList.add("moderate");
+      } else {
+        emoji = "💧";
+        dayCell.classList.add("low");
+      }
 
-    if (emoji) {
       const emojiSpan = document.createElement("span");
       emojiSpan.className = "day-emoji";
       emojiSpan.textContent = emoji;
