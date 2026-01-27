@@ -2561,6 +2561,17 @@ async function searchWord() {
   } catch (error) {
     console.error("Search error:", error);
     // 에러 표시 및 로딩 숨기기 - 확실하게 처리
+    // 즉시 실행
+    if (previewLoading) {
+      previewLoading.classList.add("hidden");
+    }
+    if (previewContent) {
+      previewContent.classList.add("hidden");
+    }
+    if (previewError) {
+      previewError.classList.remove("hidden");
+    }
+    // 추가 보장
     setTimeout(() => {
       if (previewLoading) {
         previewLoading.classList.add("hidden");
@@ -2634,6 +2645,18 @@ function displayPreview(wordData) {
   }
 
   // 로딩 완료 처리 - 반드시 마지막에 실행 (확실하게)
+  // 즉시 실행하고 추가로 setTimeout으로도 보장
+  if (previewLoading) {
+    previewLoading.classList.add("hidden");
+  }
+  if (previewError) {
+    previewError.classList.add("hidden");
+  }
+  if (previewContent) {
+    previewContent.classList.remove("hidden");
+  }
+  
+  // 추가 보장을 위한 setTimeout
   setTimeout(() => {
     if (previewLoading) {
       previewLoading.classList.add("hidden");
@@ -2644,7 +2667,7 @@ function displayPreview(wordData) {
     if (previewContent) {
       previewContent.classList.remove("hidden");
     }
-  }, 50);
+  }, 100);
 }
 
 // Preview 숨기기
