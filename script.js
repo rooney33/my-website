@@ -2420,48 +2420,92 @@ async function searchWord() {
           }
         }
         
-        // 첫 번째 뜻을 한국어로 번역 시도 (네이버 영어사전 스타일 - 간결하게)
+        // 첫 번째 뜻을 한국어로 번역 시도 (영한사전 스타일 - 간결하게)
         if (allMeanings.length > 0) {
           try {
             // 첫 번째 정의만 사용 (간결하게)
             const firstDefinition = allMeanings[0];
             
-            // MyMemory Translation API 사용 (무료)
-            const translateResponse = await fetch(
-              `https://api.mymemory.translated.net/get?q=${encodeURIComponent(firstDefinition)}&langpair=en|ko`,
-              {
-                method: 'GET',
-                headers: {
-                  'Accept': 'application/json'
-                }
-              }
-            );
+            // 여러 번역 API를 순차적으로 시도
+            let translationSuccess = false;
             
-            if (translateResponse.ok) {
-              const translateData = await translateResponse.json();
-              if (translateData.responseData && translateData.responseData.translatedText) {
-                let translated = translateData.responseData.translatedText;
-                
-                // 번역 품질 검증
-                if (translated === firstDefinition || translated.length < 2) {
-                  koreanMeaning = firstDefinition;
-                } else {
-                  // 한글 뜻을 간결하게 처리
-                  // 너무 긴 경우 첫 번째 문장만 사용하거나, 50자 이내로 제한
-                  if (translated.length > 50) {
-                    // 첫 번째 문장만 사용하거나, 쉼표/마침표 기준으로 자르기
-                    const firstSentence = translated.split(/[.,;]/)[0].trim();
-                    koreanMeaning = firstSentence.length > 0 && firstSentence.length <= 50 
-                      ? firstSentence 
-                      : translated.substring(0, 47) + "...";
-                  } else {
-                    koreanMeaning = translated;
+            // 1차 시도: MyMemory Translation API
+            try {
+              const translateResponse = await fetch(
+                `https://api.mymemory.translated.net/get?q=${encodeURIComponent(firstDefinition)}&langpair=en|ko`,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Accept': 'application/json'
                   }
                 }
-              } else {
-                koreanMeaning = firstDefinition;
+              );
+              
+              if (translateResponse.ok) {
+                const translateData = await translateResponse.json();
+                if (translateData.responseData && translateData.responseData.translatedText) {
+                  let translated = translateData.responseData.translatedText;
+                  
+                  // 번역 품질 검증
+                  if (translated !== firstDefinition && translated.length >= 2) {
+                    // 한글 뜻을 간결하게 처리
+                    if (translated.length > 50) {
+                      const firstSentence = translated.split(/[.,;]/)[0].trim();
+                      koreanMeaning = firstSentence.length > 0 && firstSentence.length <= 50 
+                        ? firstSentence 
+                        : translated.substring(0, 47) + "...";
+                    } else {
+                      koreanMeaning = translated;
+                    }
+                    translationSuccess = true;
+                  }
+                }
               }
-            } else {
+            } catch (e1) {
+              console.log("MyMemory API failed:", e1);
+            }
+            
+            // 2차 시도: LibreTranslate API (무료)
+            if (!translationSuccess) {
+              try {
+                const libreResponse = await fetch(
+                  `https://libretranslate.de/translate`,
+                  {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      q: firstDefinition,
+                      source: 'en',
+                      target: 'ko',
+                      format: 'text'
+                    })
+                  }
+                );
+                
+                if (libreResponse.ok) {
+                  const libreData = await libreResponse.json();
+                  if (libreData.translatedText) {
+                    let translated = libreData.translatedText;
+                    if (translated.length > 50) {
+                      const firstSentence = translated.split(/[.,;]/)[0].trim();
+                      koreanMeaning = firstSentence.length > 0 && firstSentence.length <= 50 
+                        ? firstSentence 
+                        : translated.substring(0, 47) + "...";
+                    } else {
+                      koreanMeaning = translated;
+                    }
+                    translationSuccess = true;
+                  }
+                }
+              } catch (e2) {
+                console.log("LibreTranslate API failed:", e2);
+              }
+            }
+            
+            // 모든 번역 API 실패 시 영어 뜻 사용
+            if (!translationSuccess) {
               koreanMeaning = firstDefinition;
             }
           } catch (e) {
@@ -2509,23 +2553,25 @@ async function searchWord() {
         naverDictUrl: `https://dict.naver.com/enendict/#/search?query=${encodeURIComponent(wordText)}`
       };
 
-      // 로딩 완료 처리
+      // 로딩 완료 처리 - 반드시 마지막에 실행
       displayPreview(currentWordData);
     } else {
       throw new Error("Word not found");
     }
   } catch (error) {
     console.error("Search error:", error);
-    // 에러 표시 및 로딩 숨기기
-    if (previewLoading) {
-      previewLoading.classList.add("hidden");
-    }
-    if (previewContent) {
-      previewContent.classList.add("hidden");
-    }
-    if (previewError) {
-      previewError.classList.remove("hidden");
-    }
+    // 에러 표시 및 로딩 숨기기 - 확실하게 처리
+    setTimeout(() => {
+      if (previewLoading) {
+        previewLoading.classList.add("hidden");
+      }
+      if (previewContent) {
+        previewContent.classList.add("hidden");
+      }
+      if (previewError) {
+        previewError.classList.remove("hidden");
+      }
+    }, 100);
   }
 }
 
@@ -2587,16 +2633,18 @@ function displayPreview(wordData) {
     }
   }
 
-  // 로딩 완료 처리 - 반드시 마지막에 실행
-  if (previewLoading) {
-    previewLoading.classList.add("hidden");
-  }
-  if (previewError) {
-    previewError.classList.add("hidden");
-  }
-  if (previewContent) {
-    previewContent.classList.remove("hidden");
-  }
+  // 로딩 완료 처리 - 반드시 마지막에 실행 (확실하게)
+  setTimeout(() => {
+    if (previewLoading) {
+      previewLoading.classList.add("hidden");
+    }
+    if (previewError) {
+      previewError.classList.add("hidden");
+    }
+    if (previewContent) {
+      previewContent.classList.remove("hidden");
+    }
+  }, 50);
 }
 
 // Preview 숨기기
