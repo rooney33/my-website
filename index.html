@@ -39,16 +39,29 @@
 
     <!-- Vocab Quiz Section -->
     <section id="vocab-quiz" class="section">
-      <div class="container">
-        <!-- Lecture Selection Screen -->
-        <div class="lecture-selection-screen" id="lecture-selection-screen">
-          <h2 class="section-title">학습할 챕터를 선택하세요</h2>
-          <div class="lecture-grid" id="lecture-grid">
-            <!-- Lectures will be dynamically generated -->
+      <div class="quiz-layout">
+        <!-- Left Sidebar: Chapter List -->
+        <div class="chapter-sidebar">
+          <div class="sidebar-header">
+            <h3>챕터 목록</h3>
+            <button class="add-chapter-btn" id="add-chapter-btn" title="챕터 추가">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
           </div>
-          
-          <!-- Add Word Section -->
-          <div class="add-word-section">
+          <div class="chapter-list" id="chapter-list">
+            <!-- Chapters will be dynamically generated -->
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="quiz-main-content">
+          <!-- Lecture Selection Screen -->
+          <div class="lecture-selection-screen" id="lecture-selection-screen">
+            <!-- Add Word Section - 상단에 위치 -->
+            <div class="add-word-section">
             <h3 class="add-word-title">✨ 단어 추가하기</h3>
             <p class="add-word-subtitle">영어 단어만 입력하면 AI가 뜻과 예문을 찾아드립니다</p>
             
@@ -86,8 +99,19 @@
                   <h4 class="preview-word" id="preview-word"></h4>
                   <span class="preview-phonetic" id="preview-phonetic"></span>
                 </div>
-                <div class="preview-meaning" id="preview-meaning"></div>
-                <div class="preview-example" id="preview-example"></div>
+                <div class="preview-meaning-wrapper">
+                  <label class="preview-label">뜻 (한국어):</label>
+                  <textarea 
+                    class="preview-meaning-input" 
+                    id="preview-meaning-input" 
+                    rows="2"
+                    placeholder="한국어 뜻을 입력하세요..."
+                  ></textarea>
+                </div>
+                <div class="preview-example-wrapper">
+                  <label class="preview-label">예문:</label>
+                  <div class="preview-example" id="preview-example"></div>
+                </div>
                 <div class="preview-actions">
                   <button class="preview-cancel-btn" id="preview-cancel-btn">취소</button>
                   <button class="preview-add-btn" id="preview-add-btn">추가하기</button>
@@ -101,6 +125,20 @@
             </div>
             
             <p class="add-word-info">💡 추가한 단어는 해당 챕터의 퀴즈에 자동으로 포함됩니다.</p>
+          </div>
+
+          <!-- Add Chapter Modal -->
+          <div class="add-chapter-modal hidden" id="add-chapter-modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>새 챕터 추가</h3>
+                <button class="modal-close-btn" id="close-chapter-modal">×</button>
+              </div>
+              <div class="modal-body">
+                <input type="text" id="new-chapter-name" class="modal-input" placeholder="챕터 이름 (예: Chapter 4: 새로운 주제)">
+                <button class="modal-submit-btn" id="submit-chapter-btn">추가</button>
+              </div>
+            </div>
           </div>
           
           <!-- Recent Study Records - Calendar View -->
@@ -140,6 +178,7 @@
               <h4 id="selected-date-title"></h4>
               <div class="date-records-list" id="date-records-list"></div>
             </div>
+          </div>
           </div>
         </div>
 
