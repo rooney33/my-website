@@ -2361,9 +2361,16 @@ async function searchWord() {
   }
 
   wordPreviewCard.classList.remove("hidden");
-  previewLoading.classList.remove("hidden");
-  previewContent.classList.add("hidden");
-  previewError.classList.add("hidden");
+  // 로딩 상태 초기화 - 확실하게
+  if (previewLoading) {
+    previewLoading.classList.remove("hidden");
+  }
+  if (previewContent) {
+    previewContent.classList.add("hidden");
+  }
+  if (previewError) {
+    previewError.classList.add("hidden");
+  }
 
   try {
     // 네이버 영한사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
@@ -2568,7 +2575,12 @@ async function searchWord() {
         naverDictUrl: `https://en.dict.naver.com/#/search?query=${encodeURIComponent(wordText)}`,
       };
 
-      // Preview 표시 (로딩창은 displayPreview에서 제거)
+      // 로딩창 즉시 제거
+      if (previewLoading) {
+        previewLoading.classList.add("hidden");
+      }
+      
+      // Preview 표시
       displayPreview(currentWordData);
     } else {
       throw new Error("Word not found");
@@ -2576,7 +2588,6 @@ async function searchWord() {
   } catch (error) {
     console.error("Search error:", error);
     // 에러 표시 및 로딩 숨기기 - 확실하게 처리
-    // 즉시 실행
     if (previewLoading) {
       previewLoading.classList.add("hidden");
     }
@@ -2586,18 +2597,6 @@ async function searchWord() {
     if (previewError) {
       previewError.classList.remove("hidden");
     }
-    // 추가 보장
-    setTimeout(() => {
-      if (previewLoading) {
-        previewLoading.classList.add("hidden");
-      }
-      if (previewContent) {
-        previewContent.classList.add("hidden");
-      }
-      if (previewError) {
-        previewError.classList.remove("hidden");
-      }
-    }, 100);
   }
 }
 
@@ -2665,30 +2664,13 @@ function displayPreview(wordData) {
     }
   }
 
-  // 로딩 완료 처리 - 반드시 마지막에 실행 (확실하게)
-  // 즉시 실행하고 추가로 setTimeout으로도 보장
-  if (previewLoading) {
-    previewLoading.classList.add("hidden");
-  }
+  // 로딩 완료 처리 - 이미 위에서 제거했으므로 여기서는 content만 표시
   if (previewError) {
     previewError.classList.add("hidden");
   }
   if (previewContent) {
     previewContent.classList.remove("hidden");
   }
-
-  // 추가 보장을 위한 setTimeout
-  setTimeout(() => {
-    if (previewLoading) {
-      previewLoading.classList.add("hidden");
-    }
-    if (previewError) {
-      previewError.classList.add("hidden");
-    }
-    if (previewContent) {
-      previewContent.classList.remove("hidden");
-    }
-  }, 100);
 }
 
 // Preview 숨기기
