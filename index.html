@@ -273,25 +273,55 @@
 
     <!-- Voca Review Section -->
     <section id="voca-review" class="section hidden">
-      <div class="container">
-        <div class="review-header">
-          <h2>틀린 단어 복습</h2>
-          <p class="review-subtitle">틀렸던 단어들을 다시 학습해보세요</p>
-        </div>
-        <div class="review-stats" id="review-stats">
-          <div class="stat-item">
-            <span class="stat-number" id="review-count">0</span>
-            <span class="stat-label">복습할 단어</span>
+      <div class="review-layout">
+        <!-- Left: Test Button -->
+        <div class="review-left-panel">
+          <div class="review-actions">
+            <button class="review-quiz-btn" id="review-quiz-btn">틀린 단어 퀴즈 시작 (10개)</button>
           </div>
         </div>
-        <div class="review-actions">
-          <button class="review-quiz-btn" id="review-quiz-btn">틀린 단어 퀴즈 시작 (10개)</button>
-        </div>
-        <div class="review-words-container" id="review-words-container">
-          <!-- Review words will be dynamically generated -->
-        </div>
-        <div class="no-review-words hidden" id="no-review-words">
-          <p>복습할 단어가 없습니다. 퀴즈를 풀어보세요!</p>
+
+        <!-- Right: Word Lists -->
+        <div class="review-main-content">
+          <!-- 틀린 단어 섹션 -->
+          <div class="review-section">
+            <div class="review-header">
+              <h2>틀린 단어 복습</h2>
+              <p class="review-subtitle">틀렸던 단어들을 다시 학습해보세요</p>
+            </div>
+            <div class="review-stats" id="review-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="review-count">0</span>
+                <span class="stat-label">복습할 단어</span>
+              </div>
+            </div>
+            <div class="review-words-container" id="review-words-container">
+              <!-- Review words will be dynamically generated -->
+            </div>
+            <div class="no-review-words hidden" id="no-review-words">
+              <p>복습할 단어가 없습니다. 퀴즈를 풀어보세요!</p>
+            </div>
+          </div>
+
+          <!-- 외운 단어 섹션 -->
+          <div class="review-section">
+            <div class="review-header">
+              <h2>📚 내가 외운 단어들!</h2>
+              <p class="review-subtitle">암기 완료한 단어들을 확인하세요</p>
+            </div>
+            <div class="review-stats" id="memorized-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="memorized-count">0</span>
+                <span class="stat-label">외운 단어</span>
+              </div>
+            </div>
+            <div class="review-words-container" id="memorized-words-container">
+              <!-- Memorized words will be dynamically generated -->
+            </div>
+            <div class="no-review-words hidden" id="no-memorized-words">
+              <p>아직 외운 단어가 없습니다.</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
