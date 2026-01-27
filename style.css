@@ -1515,31 +1515,95 @@ body.light-mode .legend-empty {
   box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
 }
 
+/* Review Layout */
+.review-layout {
+  display: flex;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+.review-left-panel {
+  width: 250px;
+  min-width: 250px;
+  position: sticky;
+  top: 100px;
+}
+
+.review-main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.review-section {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 15px;
+  border: 2px solid var(--border);
+}
+
 .review-actions {
-  margin: 2rem 0;
-  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .review-quiz-btn {
-  background-color: var(--accent);
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  border-radius: 10px;
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
 }
 
 .review-quiz-btn:hover {
-  background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 6px 20px rgba(74, 158, 255, 0.4);
+}
+
+.memorized-card {
+  border-left: 4px solid var(--success);
+}
+
+.delete-memorized-btn {
+  background-color: var(--error);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  width: 100%;
+}
+
+.delete-memorized-btn:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(244, 67, 54, 0.3);
 }
 
 @media (max-width: 768px) {
+  .review-layout {
+    flex-direction: column;
+  }
+
+  .review-left-panel {
+    width: 100%;
+    min-width: auto;
+    position: relative;
+    top: 0;
+  }
+
   .add-word-section {
     padding: 1.5rem;
   }
