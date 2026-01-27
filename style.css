@@ -11,8 +11,8 @@
   --bg-card: #3a3a3a;
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
-  --accent: #4a9eff;
-  --accent-hover: #6bb3ff;
+  --accent: #ff6b9d;
+  --accent-hover: #ff8fb3;
   --success: #4caf50;
   --error: #f44336;
   --border: #404040;
@@ -33,11 +33,45 @@ body.light-mode {
   --text-primary: #24292f;
   --text-secondary: #57606a;
   --border: #d0d7de;
+  --accent: #ffb3d1;
+  --accent-hover: #ffcce0;
   --grass-0: #ebedf0;
   --grass-1: #9be9a8;
   --grass-2: #40c463;
   --grass-3: #30a14e;
   --grass-4: #216e39;
+}
+
+/* Light mode box-shadow overrides (연한 핑크) */
+body.light-mode .chapter-test-btn:hover,
+body.light-mode .restart-btn:hover,
+body.light-mode .back-to-lectures-btn:hover,
+body.light-mode .next-btn:hover,
+body.light-mode .review-quiz-btn:hover,
+body.light-mode .preview-add-btn:hover,
+body.light-mode .search-word-btn:hover,
+body.light-mode .add-chapter-btn:hover {
+  box-shadow: 0 4px 12px rgba(255, 179, 209, 0.3);
+}
+
+body.light-mode .lecture-card:hover {
+  box-shadow: 0 10px 25px rgba(255, 179, 209, 0.2);
+}
+
+body.light-mode .word-card:hover {
+  box-shadow: 0 5px 15px rgba(255, 179, 209, 0.2);
+}
+
+body.light-mode .option-btn:hover {
+  box-shadow: 0 5px 15px rgba(255, 179, 209, 0.3);
+}
+
+body.light-mode .option-btn.selected {
+  box-shadow: 0 0 0 4px rgba(255, 179, 209, 0.15);
+}
+
+body.light-mode .review-quiz-btn:hover {
+  box-shadow: 0 6px 20px rgba(255, 179, 209, 0.4);
 }
 
 body {
@@ -287,7 +321,7 @@ p, span, div {
 .chapter-test-btn:hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
 }
 
 /* Quiz Main Content */
@@ -332,7 +366,7 @@ p, span, div {
 .lecture-card:hover {
   border-color: var(--accent);
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(74, 158, 255, 0.2);
+  box-shadow: 0 10px 25px rgba(255, 107, 157, 0.2);
 }
 
 .lecture-card h3 {
@@ -746,7 +780,7 @@ body.light-mode .legend-empty {
   background-color: var(--bg-card);
   border-color: var(--accent);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 158, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
 }
 
 .option-btn:disabled {
@@ -902,7 +936,7 @@ body.light-mode .legend-empty {
 .next-btn:hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
 }
 
 /* Result Screen */
@@ -972,7 +1006,7 @@ body.light-mode .legend-empty {
 .back-to-lectures-btn:hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
 }
 
 .back-to-lectures-btn {
@@ -1049,7 +1083,7 @@ body.light-mode .legend-empty {
 .review-word-card:hover {
   border-color: var(--accent);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 158, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
 }
 
 .review-word-header {
@@ -1170,7 +1204,7 @@ body.light-mode .legend-empty {
 .add-word-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
   background-color: var(--bg-secondary);
 }
 
@@ -1193,7 +1227,7 @@ body.light-mode .legend-empty {
 
 .search-word-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(74, 158, 255, 0.4);
+  box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
 }
 
 .search-word-btn:active {
@@ -1215,7 +1249,7 @@ body.light-mode .legend-empty {
 .add-word-select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
 }
 
 /* Word Preview Card */
@@ -1225,7 +1259,7 @@ body.light-mode .legend-empty {
   background-color: var(--bg-card);
   border-radius: 16px;
   border: 2px solid var(--accent);
-  box-shadow: 0 8px 25px rgba(74, 158, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(255, 107, 157, 0.2);
   animation: slideUp 0.3s ease;
 }
 
@@ -1307,7 +1341,7 @@ body.light-mode .legend-empty {
   background-color: var(--accent);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
 }
 
 .naver-dict-link svg {
@@ -1343,7 +1377,7 @@ body.light-mode .legend-empty {
 .preview-meaning-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
 }
 
 .preview-example-wrapper {
@@ -1520,7 +1554,7 @@ body.light-mode .legend-empty {
 .modal-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.15);
+  box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.15);
 }
 
 .modal-submit-btn {
@@ -1540,7 +1574,7 @@ body.light-mode .legend-empty {
 .modal-submit-btn:hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(255, 107, 157, 0.3);
 }
 
 /* Review Layout */
@@ -1593,7 +1627,7 @@ body.light-mode .legend-empty {
 
 .review-quiz-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(74, 158, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
 }
 
 .memorized-card {
