@@ -1,37 +1,1144 @@
 // 단어 데이터 - Lecture(챕터)별로 구성
 const vocaData = [
+  // -----------------------------------------------------------
+  // 1. TOEIC & Business English
+  // -----------------------------------------------------------
   {
-    "lecture": "Day 1: CS 전공 기초",
-    "words": [
-      { "word": "Algorithm", "meaning": "알고리즘", "example": "Sorting algorithms are essential for efficient data processing." },
-      { "word": "Variable", "meaning": "변수", "example": "Declare a variable using 'let' or 'const'." },
-      { "word": "Function", "meaning": "함수", "example": "A function is a reusable block of code." },
-      { "word": "Array", "meaning": "배열", "example": "An array stores multiple values in a single variable." },
-      { "word": "Object", "meaning": "객체", "example": "Objects are used to store key-value pairs." }
-    ]
+    lecture: "Chapter 1: TOEIC",
+    words: [
+      {
+        word: "Accommodate",
+        meaning: "수용하다, 편의를 봐주다",
+        example: "The hall can accommodate 500 people.",
+      },
+      {
+        word: "Affordable",
+        meaning: "감당할 수 있는, 저렴한",
+        example: "They offer affordable housing options.",
+      },
+      {
+        word: "Agenda",
+        meaning: "안건, 의제",
+        example: "The first item on the agenda is the budget.",
+      },
+      {
+        word: "Applicant",
+        meaning: "지원자",
+        example: "We have many qualified applicants.",
+      },
+      {
+        word: "Authorization",
+        meaning: "허가, 승인",
+        example: "You need authorization to enter.",
+      },
+      {
+        word: "Banquet",
+        meaning: "연회",
+        example: "The annual banquet will be held tonight.",
+      },
+      {
+        word: "Beneficial",
+        meaning: "유익한",
+        example: "The deal was beneficial to both parties.",
+      },
+      {
+        word: "Collaboration",
+        meaning: "협력",
+        example: "The project was a successful collaboration.",
+      },
+      {
+        word: "Commence",
+        meaning: "시작하다",
+        example: "The ceremony will commence at noon.",
+      },
+      {
+        word: "Compensate",
+        meaning: "보상하다",
+        example: "Workers were compensated for their overtime.",
+      },
+      {
+        word: "Complimentary",
+        meaning: "무료의",
+        example: "Guests receive a complimentary breakfast.",
+      },
+      {
+        word: "Comply",
+        meaning: "준수하다, 따르다",
+        example: "All staff must comply with the rules.",
+      },
+      {
+        word: "Confidential",
+        meaning: "기밀의",
+        example: "Keep these documents confidential.",
+      },
+      {
+        word: "Consistently",
+        meaning: "일관되게, 지속적으로",
+        example: "He consistently meets his targets.",
+      },
+      {
+        word: "Deficit",
+        meaning: "적자",
+        example: "We aim to reduce the budget deficit.",
+      },
+      {
+        word: "Designate",
+        meaning: "지정하다",
+        example: "Please park in the designated area.",
+      },
+      {
+        word: "Discrepancy",
+        meaning: "불일치, 차이",
+        example: "There is a discrepancy in the figures.",
+      },
+      {
+        word: "Eligible",
+        meaning: "자격이 있는",
+        example: "You are eligible for a promotion.",
+      },
+      {
+        word: "Endorse",
+        meaning: "지지하다, 홍보하다",
+        example: "The celebrity endorsed the product.",
+      },
+      {
+        word: "Exceed",
+        meaning: "초과하다",
+        example: "Do not exceed the speed limit.",
+      },
+      {
+        word: "Extension",
+        meaning: "연장, 내선 번호",
+        example: "Can I have an extension on the deadline?",
+      },
+      {
+        word: "Fluctuation",
+        meaning: "변동, 오르내림",
+        example: "Market fluctuations are normal.",
+      },
+      {
+        word: "Implement",
+        meaning: "시행하다",
+        example: "We will implement the new policy soon.",
+      },
+      {
+        word: "Incentive",
+        meaning: "장려금, 혜택",
+        example: "Sales staff receive cash incentives.",
+      },
+      {
+        word: "Itinerary",
+        meaning: "여행 일정",
+        example: "Check your itinerary for flight details.",
+      },
+      {
+        word: "Liability",
+        meaning: "법적 책임, 부채",
+        example: "The company denied liability for the damage.",
+      },
+      {
+        word: "Mandatory",
+        meaning: "의무적인",
+        example: "Attendance is mandatory for all employees.",
+      },
+      {
+        word: "Merger",
+        meaning: "합병",
+        example: "The merger created a global giant.",
+      },
+      {
+        word: "Negotiation",
+        meaning: "협상",
+        example: "The contract is under negotiation.",
+      },
+      {
+        word: "Outstanding",
+        meaning: "뛰어난, 미지불된",
+        example: "He has an outstanding balance on his account.",
+      },
+      {
+        word: "Permanent",
+        meaning: "영구적인",
+        example: "She is looking for a permanent job.",
+      },
+      {
+        word: "Postpone",
+        meaning: "연기하다",
+        example: "The meeting was postponed until Monday.",
+      },
+      {
+        word: "Productivity",
+        meaning: "생산성",
+        example: "New software improved productivity.",
+      },
+      {
+        word: "Prohibit",
+        meaning: "금지하다",
+        example: "Smoking is prohibited in the building.",
+      },
+      {
+        word: "Promote",
+        meaning: "승진시키다, 홍보하다",
+        example: "He was promoted to manager.",
+      },
+      {
+        word: "Punctual",
+        meaning: "시간을 엄수하는",
+        example: "Please be punctual for the interview.",
+      },
+      {
+        word: "Recruit",
+        meaning: "채용하다",
+        example: "We are recruiting new engineers.",
+      },
+      {
+        word: "Reimburse",
+        meaning: "환급하다, 변제하다",
+        example: "The company will reimburse travel expenses.",
+      },
+      {
+        word: "Renovation",
+        meaning: "개조, 보수",
+        example: "The office is closed for renovation.",
+      },
+      {
+        word: "Resignation",
+        meaning: "사임, 사직",
+        example: "He handed in his resignation yesterday.",
+      },
+      {
+        word: "Revenue",
+        meaning: "수익, 매출",
+        example: "Advertising revenue has increased.",
+      },
+      {
+        word: "Specification",
+        meaning: "사양, 설명서",
+        example: "The product meets all specifications.",
+      },
+      {
+        word: "Substantial",
+        meaning: "상당한",
+        example: "There was a substantial increase in sales.",
+      },
+      {
+        word: "Tentative",
+        meaning: "잠정적인",
+        example: "We have a tentative agreement.",
+      },
+      {
+        word: "Termination",
+        meaning: "종료, 해고",
+        example: "Termination of the contract requires notice.",
+      },
+      {
+        word: "Unanimous",
+        meaning: "만장일치의",
+        example: "The board made a unanimous decision.",
+      },
+      {
+        word: "Vacancy",
+        meaning: "공석, 빈방",
+        example: "There is a vacancy in the sales department.",
+      },
+      {
+        word: "Valid",
+        meaning: "유효한",
+        example: "This coupon is valid for one month.",
+      },
+      {
+        word: "Warranty",
+        meaning: "보증(서)",
+        example: "The laptop is under warranty.",
+      },
+      {
+        word: "Withdraw",
+        meaning: "철회하다, 인출하다",
+        example: "He decided to withdraw his application.",
+      },
+    ],
   },
+  // -----------------------------------------------------------
+  // 2. Data Structures & Algorithms
+  // -----------------------------------------------------------
   {
-    "lecture": "Day 2: 토익 빈출 숙어",
-    "words": [
-      { "word": "abandon", "meaning": "포기하다", "example": "Don't abandon your dreams." },
-      { "word": "abundant", "meaning": "풍부한", "example": "The region has abundant natural resources." },
-      { "word": "accomplish", "meaning": "성취하다", "example": "We need to accomplish our goals this year." },
-      { "word": "accurate", "meaning": "정확한", "example": "Please provide accurate information." },
-      { "word": "achieve", "meaning": "달성하다", "example": "She worked hard to achieve success." }
-    ]
+    lecture: "Chapter 2: Data Structures & Algorithms",
+    words: [
+      {
+        word: "Algorithm",
+        meaning: "알고리즘",
+        example: "Sorting algorithms are essential for data processing.",
+      },
+      {
+        word: "Data Structure",
+        meaning: "자료구조",
+        example: "Stacks and queues are basic data structures.",
+      },
+      {
+        word: "Time Complexity",
+        meaning: "시간 복잡도",
+        example: "We express time complexity using Big O notation.",
+      },
+      {
+        word: "Space Complexity",
+        meaning: "공간 복잡도",
+        example: "Recursion often increases space complexity.",
+      },
+      {
+        word: "Recursion",
+        meaning: "재귀",
+        example: "Recursion is a function calling itself.",
+      },
+      {
+        word: "Linked List",
+        meaning: "연결 리스트",
+        example: "Linked lists allow dynamic memory allocation.",
+      },
+      {
+        word: "Stack",
+        meaning: "스택 (LIFO)",
+        example: "Undo operations usually use a stack.",
+      },
+      {
+        word: "Queue",
+        meaning: "큐 (FIFO)",
+        example: "Printers use a queue to manage jobs.",
+      },
+      {
+        word: "Hash Table",
+        meaning: "해시 테이블",
+        example: "Hash tables offer fast data retrieval.",
+      },
+      {
+        word: "Binary Search Tree",
+        meaning: "이진 탐색 트리",
+        example: "BST allows for efficient searching.",
+      },
+      {
+        word: "Graph",
+        meaning: "그래프",
+        example: "Social networks can be modeled as graphs.",
+      },
+      {
+        word: "Depth-First Search",
+        meaning: "깊이 우선 탐색 (DFS)",
+        example: "DFS explores as far as possible along each branch.",
+      },
+      {
+        word: "Breadth-First Search",
+        meaning: "너비 우선 탐색 (BFS)",
+        example: "BFS visits neighbor nodes first.",
+      },
+      {
+        word: "Dynamic Programming",
+        meaning: "동적 계획법",
+        example: "DP breaks problems into simpler subproblems.",
+      },
+      {
+        word: "Sorting",
+        meaning: "정렬",
+        example: "Quick sort is a widely used sorting algorithm.",
+      },
+      {
+        word: "Bubble Sort",
+        meaning: "버블 정렬",
+        example: "Bubble sort is simple but inefficient.",
+      },
+      {
+        word: "Merge Sort",
+        meaning: "병합 정렬",
+        example: "Merge sort uses a divide and conquer strategy.",
+      },
+      {
+        word: "Heap",
+        meaning: "힙 (자료구조)",
+        example: "Heaps are used to implement priority queues.",
+      },
+      {
+        word: "Priority Queue",
+        meaning: "우선순위 큐",
+        example: "A priority queue processes high-priority elements first.",
+      },
+      {
+        word: "Adjacency Matrix",
+        meaning: "인접 행렬",
+        example: "Graphs can be represented using an adjacency matrix.",
+      },
+      {
+        word: "Adjacency List",
+        meaning: "인접 리스트",
+        example: "Adjacency lists save space for sparse graphs.",
+      },
+      {
+        word: "Shortest Path",
+        meaning: "최단 경로",
+        example: "Dijkstra's algorithm finds the shortest path.",
+      },
+      {
+        word: "Minimum Spanning Tree",
+        meaning: "최소 신장 트리",
+        example: "Kruskal's algorithm finds the MST.",
+      },
+      {
+        word: "Greedy Algorithm",
+        meaning: "탐욕 알고리즘",
+        example: "Greedy algorithms make the locally optimal choice.",
+      },
+      {
+        word: "Backtracking",
+        meaning: "백트래킹",
+        example: "Backtracking is used to solve Sudoku puzzles.",
+      },
+      {
+        word: "Divide and Conquer",
+        meaning: "분할 정복",
+        example: "Merge sort is a divide and conquer algorithm.",
+      },
+      {
+        word: "Pointer",
+        meaning: "포인터",
+        example: "Pointers store memory addresses.",
+      },
+      { word: "Array", meaning: "배열", example: "Arrays have a fixed size." },
+      {
+        word: "String Manipulation",
+        meaning: "문자열 조작",
+        example: "String manipulation is common in coding tests.",
+      },
+      {
+        word: "Bitwise Operation",
+        meaning: "비트 연산",
+        example: "Bitwise operations are fast and efficient.",
+      },
+      {
+        word: "Binary Search",
+        meaning: "이진 탐색",
+        example: "Binary search requires a sorted array.",
+      },
+      {
+        word: "Two Pointers",
+        meaning: "투 포인터",
+        example: "The two pointers technique optimizes loop usage.",
+      },
+      {
+        word: "Sliding Window",
+        meaning: "슬라이딩 윈도우",
+        example: "Sliding window is useful for subarray problems.",
+      },
+      {
+        word: "Memoization",
+        meaning: "메모이제이션",
+        example: "Memoization caches results of function calls.",
+      },
+      {
+        word: "Topological Sort",
+        meaning: "위상 정렬",
+        example: "Topological sort is used for scheduling tasks.",
+      },
+      {
+        word: "Trie",
+        meaning: "트라이 (자료구조)",
+        example: "Tries are used for autocomplete features.",
+      },
+      {
+        word: "Union-Find",
+        meaning: "유니온 파인드",
+        example: "Union-Find tracks disjoint sets.",
+      },
+      {
+        word: "Segment Tree",
+        meaning: "세그먼트 트리",
+        example: "Segment trees are used for range queries.",
+      },
+      {
+        word: "Floyd-Warshall",
+        meaning: "플로이드-워셜",
+        example: "Floyd-Warshall finds all-pairs shortest paths.",
+      },
+      {
+        word: "Big O Notation",
+        meaning: "빅오 표기법",
+        example: "Big O describes the worst-case scenario.",
+      },
+    ],
   },
-  {
-    "lecture": "Day 3: 비즈니스 영어",
-    "words": [
-      { "word": "negotiate", "meaning": "협상하다", "example": "We need to negotiate the contract terms." },
-      { "word": "deadline", "meaning": "마감일", "example": "The project deadline is next Friday." },
-      { "word": "budget", "meaning": "예산", "example": "We must stay within the allocated budget." },
-      { "word": "strategy", "meaning": "전략", "example": "A good strategy is crucial for success." },
-      { "word": "efficient", "meaning": "효율적인", "example": "This new system is more efficient." }
-    ]
-  }
-];
 
+  // -----------------------------------------------------------
+  // 3. ADsP & Data Science
+  // -----------------------------------------------------------
+  {
+    lecture: "Chapter 3: ADsP & 데이터 분석",
+    words: [
+      {
+        word: "Data Mining",
+        meaning: "데이터 마이닝",
+        example: "Data mining discovers patterns in large datasets.",
+      },
+      {
+        word: "Big Data",
+        meaning: "빅데이터",
+        example: "Big data requires specialized processing tools.",
+      },
+      {
+        word: "CRM",
+        meaning: "고객 관계 관리",
+        example: "CRM helps manage customer interactions.",
+      },
+      {
+        word: "SCM",
+        meaning: "공급망 관리",
+        example: "SCM optimizes the flow of goods.",
+      },
+      {
+        word: "ERP",
+        meaning: "전사적 자원 관리",
+        example: "ERP integrates core business processes.",
+      },
+      {
+        word: "Descriptive Statistics",
+        meaning: "기술 통계",
+        example: "Descriptive statistics summarize data features.",
+      },
+      {
+        word: "Inference Statistics",
+        meaning: "추론 통계",
+        example: "Inference statistics make predictions about populations.",
+      },
+      {
+        word: "Variable",
+        meaning: "변수",
+        example: "Age is a continuous variable.",
+      },
+      {
+        word: "Qualitative Data",
+        meaning: "질적 데이터",
+        example: "Colors and names are qualitative data.",
+      },
+      {
+        word: "Quantitative Data",
+        meaning: "양적 데이터",
+        example: "Height and weight are quantitative data.",
+      },
+      {
+        word: "Mean",
+        meaning: "평균",
+        example: "The mean is the average of the numbers.",
+      },
+      {
+        word: "Median",
+        meaning: "중앙값",
+        example: "The median is the middle value in a sorted list.",
+      },
+      {
+        word: "Mode",
+        meaning: "최빈값",
+        example: "The mode is the most frequent value.",
+      },
+      {
+        word: "Variance",
+        meaning: "분산",
+        example: "Variance measures how far numbers are spread out.",
+      },
+      {
+        word: "Standard Deviation",
+        meaning: "표준편차",
+        example: "Low standard deviation means data is clustered.",
+      },
+      {
+        word: "Correlation",
+        meaning: "상관관계",
+        example: "Correlation does not imply causation.",
+      },
+      {
+        word: "Hypothesis Testing",
+        meaning: "가설 검정",
+        example: "Hypothesis testing evaluates an assumption.",
+      },
+      {
+        word: "Null Hypothesis",
+        meaning: "귀무 가설",
+        example: "We aim to reject the null hypothesis.",
+      },
+      {
+        word: "Alternative Hypothesis",
+        meaning: "대립 가설",
+        example: "The alternative hypothesis suggests a difference.",
+      },
+      {
+        word: "P-value",
+        meaning: "유의 확률 (P값)",
+        example: "A low P-value indicates statistical significance.",
+      },
+      {
+        word: "Regression Analysis",
+        meaning: "회귀 분석",
+        example: "Regression analysis predicts continuous outcomes.",
+      },
+      {
+        word: "Classification",
+        meaning: "분류",
+        example: "Spam detection is a classification problem.",
+      },
+      {
+        word: "Clustering",
+        meaning: "군집화",
+        example: "K-means is a clustering algorithm.",
+      },
+      {
+        word: "Decision Tree",
+        meaning: "의사결정 나무",
+        example: "Decision trees are easy to interpret.",
+      },
+      {
+        word: "Neural Network",
+        meaning: "신경망",
+        example: "Neural networks mimic the human brain.",
+      },
+      {
+        word: "Support Vector Machine",
+        meaning: "서포트 벡터 머신 (SVM)",
+        example: "SVM is used for classification tasks.",
+      },
+      {
+        word: "Ensemble",
+        meaning: "앙상블",
+        example: "Ensemble methods combine multiple models.",
+      },
+      {
+        word: "Random Forest",
+        meaning: "랜덤 포레스트",
+        example: "Random forest avoids overfitting.",
+      },
+      {
+        word: "Overfitting",
+        meaning: "과적합",
+        example: "Overfitting performs well on training data only.",
+      },
+      {
+        word: "Underfitting",
+        meaning: "과소적합",
+        example: "Underfitting fails to capture trends.",
+      },
+      {
+        word: "Validation Set",
+        meaning: "검증 세트",
+        example: "Tune hyperparameters using the validation set.",
+      },
+      {
+        word: "Test Set",
+        meaning: "테스트 세트",
+        example: "Evaluate the final model on the test set.",
+      },
+      {
+        word: "Confusion Matrix",
+        meaning: "오차 행렬",
+        example: "A confusion matrix shows true positives and negatives.",
+      },
+      {
+        word: "Accuracy",
+        meaning: "정확도",
+        example: "Accuracy is the ratio of correct predictions.",
+      },
+      {
+        word: "Precision",
+        meaning: "정밀도",
+        example: "Precision minimizes false positives.",
+      },
+      {
+        word: "Recall",
+        meaning: "재현율",
+        example: "Recall finds all positive instances.",
+      },
+      {
+        word: "F1 Score",
+        meaning: "F1 점수",
+        example: "F1 score balances precision and recall.",
+      },
+      {
+        word: "Time Series",
+        meaning: "시계열",
+        example: "Stock prices are time series data.",
+      },
+      {
+        word: "Trend",
+        meaning: "추세",
+        example: "Identify the long-term trend.",
+      },
+      {
+        word: "Seasonality",
+        meaning: "계절성",
+        example: "Ice cream sales show seasonality.",
+      },
+      {
+        word: "Visualization",
+        meaning: "시각화",
+        example: "Data visualization helps insights.",
+      },
+      {
+        word: "Histogram",
+        meaning: "히스토그램",
+        example: "A histogram shows data distribution.",
+      },
+      {
+        word: "Scatter Plot",
+        meaning: "산점도",
+        example: "Use a scatter plot to see correlations.",
+      },
+      {
+        word: "Box Plot",
+        meaning: "상자 그림",
+        example: "Box plots display outliers.",
+      },
+      {
+        word: "SQL",
+        meaning: "SQL",
+        example: "SQL is standard for relational databases.",
+      },
+      {
+        word: "DBMS",
+        meaning: "데이터베이스 관리 시스템",
+        example: "Oracle is a popular DBMS.",
+      },
+      {
+        word: "ETL",
+        meaning: "추출, 변환, 적재",
+        example: "ETL processes move data to warehouses.",
+      },
+      {
+        word: "Data Warehouse",
+        meaning: "데이터 웨어하우스",
+        example: "Warehouses store historical data.",
+      },
+      {
+        word: "Unstructured Data",
+        meaning: "비정형 데이터",
+        example: "Images and text are unstructured data.",
+      },
+      {
+        word: "Association Rule",
+        meaning: "연관 규칙",
+        example: "Market basket analysis uses association rules.",
+      },
+    ],
+  },
+  // -----------------------------------------------------------
+  // 4. AI & Deep Learning (Specialization)
+  // -----------------------------------------------------------
+  {
+    lecture: "Chapter 4: AI & Deep Learning ",
+    words: [
+      {
+        word: "Perceptron",
+        meaning: "퍼셉트론 (인공신경망의 기본 단위)",
+        example: "A perceptron mimics a biological neuron.",
+      },
+      {
+        word: "Multilayer Perceptron (MLP)",
+        meaning: "다층 퍼셉트론",
+        example: "MLP consists of input, hidden, and output layers.",
+      },
+      {
+        word: "Feedforward",
+        meaning: "순전파",
+        example: "Data flows in one direction during feedforward.",
+      },
+      {
+        word: "Backpropagation",
+        meaning: "역전파",
+        example: "Backpropagation is used to calculate gradients.",
+      },
+      {
+        word: "Gradient Descent",
+        meaning: "경사 하강법",
+        example: "Gradient descent minimizes the error function.",
+      },
+      {
+        word: "Stochastic Gradient Descent (SGD)",
+        meaning: "확률적 경사 하강법",
+        example: "SGD updates weights using a single sample.",
+      },
+      {
+        word: "Learning Rate",
+        meaning: "학습률",
+        example: "A learning rate scheduler adjusts the rate during training.",
+      },
+      {
+        word: "Epoch",
+        meaning: "에포크 (전체 데이터 학습 주기)",
+        example: "The model was trained for 100 epochs.",
+      },
+      {
+        word: "Mini-batch",
+        meaning: "미니 배치",
+        example: "Training with mini-batches is more efficient.",
+      },
+      {
+        word: "Activation Function",
+        meaning: "활성화 함수",
+        example: "ReLU is a popular activation function.",
+      },
+      {
+        word: "Sigmoid",
+        meaning: "시그모이드 함수",
+        example: "Sigmoid outputs values between 0 and 1.",
+      },
+      {
+        word: "Softmax",
+        meaning: "소프트맥스 함수",
+        example: "Softmax is used for multi-class classification.",
+      },
+      {
+        word: "ReLU (Rectified Linear Unit)",
+        meaning: "ReLU 함수",
+        example: "ReLU solves the vanishing gradient problem.",
+      },
+      {
+        word: "Loss Function",
+        meaning: "손실 함수",
+        example: "Cross-entropy is a common loss function.",
+      },
+      {
+        word: "Optimizer",
+        meaning: "최적화 알고리즘",
+        example: "Adam is a widely used optimizer.",
+      },
+      {
+        word: "Overfitting",
+        meaning: "과적합",
+        example: "Dropout helps prevent overfitting.",
+      },
+      {
+        word: "Underfitting",
+        meaning: "과소적합",
+        example: "Underfitting occurs when the model is too simple.",
+      },
+      {
+        word: "Regularization",
+        meaning: "정규화 (L1, L2)",
+        example: "L2 regularization adds a penalty term.",
+      },
+      {
+        word: "Dropout",
+        meaning: "드롭아웃",
+        example: "Dropout randomly deactivates neurons.",
+      },
+      {
+        word: "Batch Normalization",
+        meaning: "배치 정규화",
+        example: "Batch normalization accelerates training.",
+      },
+      {
+        word: "CNN (Convolutional Neural Network)",
+        meaning: "합성곱 신경망",
+        example: "CNNs are excellent for image recognition.",
+      },
+      {
+        word: "Pooling",
+        meaning: "풀링 (Max/Average)",
+        example: "Max pooling reduces the feature map size.",
+      },
+      {
+        word: "Padding",
+        meaning: "패딩",
+        example: "Padding preserves the spatial dimensions.",
+      },
+      {
+        word: "Stride",
+        meaning: "스트라이드 (보폭)",
+        example: "Increasing stride reduces output size.",
+      },
+      {
+        word: "RNN (Recurrent Neural Network)",
+        meaning: "순환 신경망",
+        example: "RNNs process sequential data like text.",
+      },
+      {
+        word: "LSTM (Long Short-Term Memory)",
+        meaning: "LSTM",
+        example: "LSTM overcomes the vanishing gradient problem in RNNs.",
+      },
+      {
+        word: "Transformer",
+        meaning: "트랜스포머",
+        example: "Transformers rely on attention mechanisms.",
+      },
+      {
+        word: "Attention Mechanism",
+        meaning: "어텐션 메커니즘",
+        example: "Attention allows the model to focus on key parts.",
+      },
+      {
+        word: "Self-Attention",
+        meaning: "셀프 어텐션",
+        example: "Self-attention relates different positions of a sequence.",
+      },
+      {
+        word: "BERT",
+        meaning: "BERT (구글의 언어 모델)",
+        example: "BERT is pre-trained on a large corpus.",
+      },
+      {
+        word: "GPT",
+        meaning: "GPT (생성형 사전학습 변환기)",
+        example: "GPT models are good at text generation.",
+      },
+      {
+        word: "LLM (Large Language Model)",
+        meaning: "거대 언어 모델",
+        example: "ChatGPT is based on an LLM.",
+      },
+      {
+        word: "Tokenization",
+        meaning: "토큰화",
+        example: "Tokenization splits text into smaller units.",
+      },
+      {
+        word: "Embedding",
+        meaning: "임베딩",
+        example: "Word embeddings represent words as vectors.",
+      },
+      {
+        word: "Fine-tuning",
+        meaning: "파인 튜닝 (미세 조정)",
+        example: "We fine-tuned the model on our dataset.",
+      },
+      {
+        word: "Transfer Learning",
+        meaning: "전이 학습",
+        example: "Transfer learning saves training time.",
+      },
+      {
+        word: "Hyperparameter",
+        meaning: "하이퍼파라미터",
+        example: "Grid search helps find optimal hyperparameters.",
+      },
+      {
+        word: "Tensor",
+        meaning: "텐서",
+        example: "PyTorch operations are performed on tensors.",
+      },
+      {
+        word: "Inference",
+        meaning: "추론",
+        example: "The model is deployed for real-time inference.",
+      },
+      {
+        word: "GPU Acceleration",
+        meaning: "GPU 가속",
+        example: "CUDA enables GPU acceleration for deep learning.",
+      },
+    ],
+  },
+
+  // -----------------------------------------------------------
+  // 5. Computer Networks (CS Major)
+  // -----------------------------------------------------------
+  {
+    lecture: "Chapter 5: Computer Networks",
+    words: [
+      {
+        word: "OSI 7 Layer",
+        meaning: "OSI 7계층",
+        example: "The OSI model standardizes communication functions.",
+      },
+      {
+        word: "Application Layer",
+        meaning: "응용 계층 (L7)",
+        example: "HTTP operates at the application layer.",
+      },
+      {
+        word: "Transport Layer",
+        meaning: "전송 계층 (L4)",
+        example: "TCP and UDP are transport layer protocols.",
+      },
+      {
+        word: "Network Layer",
+        meaning: "네트워크 계층 (L3)",
+        example: "IP addressing happens at the network layer.",
+      },
+      {
+        word: "Data Link Layer",
+        meaning: "데이터 링크 계층 (L2)",
+        example: "Ethernet is a data link layer technology.",
+      },
+      {
+        word: "Physical Layer",
+        meaning: "물리 계층 (L1)",
+        example: "Cables and signals are part of the physical layer.",
+      },
+      {
+        word: "Encapsulation",
+        meaning: "캡슐화",
+        example: "Data is encapsulated with headers.",
+      },
+      {
+        word: "Packet",
+        meaning: "패킷",
+        example: "Data is transmitted in small packets.",
+      },
+      {
+        word: "Frame",
+        meaning: "프레임",
+        example: "Frames are the data units of the data link layer.",
+      },
+      {
+        word: "TCP (Transmission Control Protocol)",
+        meaning: "TCP",
+        example: "TCP ensures reliable data transmission.",
+      },
+      {
+        word: "UDP (User Datagram Protocol)",
+        meaning: "UDP",
+        example: "Streaming services often use UDP for speed.",
+      },
+      {
+        word: "Three-way Handshake",
+        meaning: "3방향 핸드셰이크",
+        example: "TCP connection is established via a 3-way handshake.",
+      },
+      {
+        word: "IP Address",
+        meaning: "IP 주소",
+        example: "IPv4 addresses consist of four numbers.",
+      },
+      {
+        word: "MAC Address",
+        meaning: "MAC 주소 (물리 주소)",
+        example: "Every network card has a unique MAC address.",
+      },
+      {
+        word: "Port Number",
+        meaning: "포트 번호",
+        example: "Web servers typically listen on port 80.",
+      },
+      {
+        word: "Socket",
+        meaning: "소켓",
+        example: "A socket is an endpoint for communication.",
+      },
+      {
+        word: "DNS (Domain Name System)",
+        meaning: "DNS",
+        example: "DNS translates domain names to IP addresses.",
+      },
+      {
+        word: "DHCP",
+        meaning: "DHCP (동적 호스트 구성 프로토콜)",
+        example: "DHCP automatically assigns IP addresses.",
+      },
+      {
+        word: "ARP (Address Resolution Protocol)",
+        meaning: "ARP",
+        example: "ARP maps IP addresses to MAC addresses.",
+      },
+      {
+        word: "HTTP / HTTPS",
+        meaning: "HTTP / HTTPS",
+        example: "HTTPS encrypts the communication channel.",
+      },
+      {
+        word: "SSL / TLS",
+        meaning: "SSL / TLS (보안 프로토콜)",
+        example: "TLS ensures secure internet communication.",
+      },
+      {
+        word: "Router",
+        meaning: "라우터",
+        example: "Routers forward data packets between networks.",
+      },
+      {
+        word: "Switch",
+        meaning: "스위치",
+        example: "A switch connects devices within a LAN.",
+      },
+      {
+        word: "Gateway",
+        meaning: "게이트웨이",
+        example: "A gateway acts as an entrance to another network.",
+      },
+      {
+        word: "Subnet Mask",
+        meaning: "서브넷 마스크",
+        example: "The subnet mask defines the network size.",
+      },
+      {
+        word: "Local Area Network (LAN)",
+        meaning: "근거리 통신망",
+        example: "Wi-Fi is a common LAN technology.",
+      },
+      {
+        word: "Wide Area Network (WAN)",
+        meaning: "광역 통신망",
+        example: "The Internet is the largest WAN.",
+      },
+      {
+        word: "Bandwidth",
+        meaning: "대역폭",
+        example: "High bandwidth allows faster downloads.",
+      },
+      {
+        word: "Throughput",
+        meaning: "처리량",
+        example: "Throughput is the actual rate of data transfer.",
+      },
+      {
+        word: "Latency",
+        meaning: "지연 시간",
+        example: "Low latency is important for online gaming.",
+      },
+      {
+        word: "RTT (Round Trip Time)",
+        meaning: "왕복 시간",
+        example: "Ping measures the RTT to a server.",
+      },
+      {
+        word: "Jitter",
+        meaning: "지터 (지연 변이)",
+        example: "High jitter can disrupt VoIP calls.",
+      },
+      {
+        word: "Congestion Control",
+        meaning: "혼잡 제어",
+        example: "TCP uses congestion control to prevent traffic jams.",
+      },
+      {
+        word: "Flow Control",
+        meaning: "흐름 제어",
+        example: "Flow control manages the data transmission rate.",
+      },
+      {
+        word: "Firewall",
+        meaning: "방화벽",
+        example: "A firewall blocks unauthorized access.",
+      },
+      {
+        word: "Proxy Server",
+        meaning: "프록시 서버",
+        example: "A proxy can hide your IP address.",
+      },
+      {
+        word: "VPN (Virtual Private Network)",
+        meaning: "가상 사설망",
+        example: "VPNs provide secure remote access.",
+      },
+      {
+        word: "NAT (Network Address Translation)",
+        meaning: "NAT",
+        example: "NAT allows multiple devices to share one public IP.",
+      },
+      {
+        word: "Packet Loss",
+        meaning: "패킷 손실",
+        example: "Packet loss causes lag in video calls.",
+      },
+      {
+        word: "Ping",
+        meaning: "핑",
+        example: "Use ping to test network connectivity.",
+      },
+    ],
+  },
+];
 // 퀴즈 상태 관리
 let currentQuestionIndex = 0;
 let score = 0;
@@ -46,40 +1153,52 @@ let lectureSelectionScreen, lectureGrid, recordsList, quizContainer;
 let wordCard, wordText, pronounceBtn, optionsContainer;
 let scoreDisplay, questionCounter, totalQuestions;
 let timerText, timerProgressCircle;
-let feedbackModal, modalIcon, modalTitle, modalWord, modalMeaning, modalExample, nextBtn;
-let resultScreen, finalScore, maxScore, scorePercentage, restartBtn, backToLecturesBtn;
+let feedbackModal,
+  modalIcon,
+  modalTitle,
+  modalWord,
+  modalMeaning,
+  modalExample,
+  nextBtn;
+let resultScreen,
+  finalScore,
+  maxScore,
+  scorePercentage,
+  restartBtn,
+  backToLecturesBtn;
 let backToLectureBtn, themeToggle;
 let calendarContainer, selectedDateRecords, dateRecordsList, selectedDateTitle;
-let reviewWordsContainer, reviewCount, noReviewWords;
+let reviewWordsContainer, reviewCount, noReviewWords, reviewQuizBtn;
+let addWordLecture, addWordInput, addWordMeaning, addWordExample, addWordBtn;
 
 // 네비게이션 기능 초기화
 function initNavigation() {
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll(".nav-link");
+  const sections = document.querySelectorAll(".section");
 
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetSection = link.getAttribute('data-section');
-    
-    // 활성 링크 업데이트
-    navLinks.forEach(l => l.classList.remove('active'));
-    link.classList.add('active');
-    
-    // 섹션 표시/숨김
-    sections.forEach(section => {
-      section.classList.add('hidden');
-    });
-    
-    const targetElement = document.getElementById(targetSection);
-    if (targetElement) {
-      targetElement.classList.remove('hidden');
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetSection = link.getAttribute("data-section");
+
+      // 활성 링크 업데이트
+      navLinks.forEach((l) => l.classList.remove("active"));
+      link.classList.add("active");
+
+      // 섹션 표시/숨김
+      sections.forEach((section) => {
+        section.classList.add("hidden");
+      });
+
+      const targetElement = document.getElementById(targetSection);
+      if (targetElement) {
+        targetElement.classList.remove("hidden");
         // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
-        if (targetSection === 'vocab-quiz') {
+        if (targetSection === "vocab-quiz") {
           showLectureSelection();
         }
         // Voca Review 섹션으로 갈 때 단어 표시
-        if (targetSection === 'voca-review') {
+        if (targetSection === "voca-review") {
           displayReviewWords();
         }
       }
@@ -90,32 +1209,46 @@ navLinks.forEach(link => {
 // 챕터 선택 화면 표시
 function showLectureSelection() {
   if (lectureSelectionScreen) {
-    lectureSelectionScreen.classList.remove('hidden');
+    lectureSelectionScreen.classList.remove("hidden");
   }
   if (quizContainer) {
-    quizContainer.classList.add('hidden');
+    quizContainer.classList.add("hidden");
   }
   if (resultScreen) {
-    resultScreen.classList.add('hidden');
+    resultScreen.classList.add("hidden");
   }
   if (feedbackModal) {
-    feedbackModal.classList.add('hidden');
+    feedbackModal.classList.add("hidden");
   }
-  
+
   // 챕터 카드 생성
   if (!lectureGrid) return;
-  lectureGrid.innerHTML = '';
+  lectureGrid.innerHTML = "";
   vocaData.forEach((lecture, index) => {
-    const card = document.createElement('div');
-    card.className = 'lecture-card';
+    const userWords = getUserAddedWords(lecture.lecture);
+    const totalWords = lecture.words.length + userWords.length;
+
+    const card = document.createElement("div");
+    card.className = "lecture-card";
     card.innerHTML = `
       <h3>${lecture.lecture}</h3>
-      <div class="word-count">${lecture.words.length}개 단어</div>
+      <div class="word-count">${totalWords}개 단어${userWords.length > 0 ? ` (추가: ${userWords.length})` : ""}</div>
     `;
-    card.addEventListener('click', () => startQuiz(index));
+    card.addEventListener("click", () => startQuiz(index));
     lectureGrid.appendChild(card);
   });
-  
+
+  // 단어 추가 챕터 선택 드롭다운 채우기
+  if (addWordLecture) {
+    addWordLecture.innerHTML = '<option value="">챕터 선택</option>';
+    vocaData.forEach((lecture) => {
+      const option = document.createElement("option");
+      option.value = lecture.lecture;
+      option.textContent = lecture.lecture;
+      addWordLecture.appendChild(option);
+    });
+  }
+
   // 학습 기록 표시
   displayStudyRecords();
 }
@@ -124,21 +1257,21 @@ function showLectureSelection() {
 function displayStudyRecords() {
   const records = getStudyRecords();
   if (!calendarContainer) return;
-  
-  calendarContainer.innerHTML = '';
-  const calendarMonths = document.getElementById('calendar-months');
+
+  calendarContainer.innerHTML = "";
+  const calendarMonths = document.getElementById("calendar-months");
   if (calendarMonths) {
-    calendarMonths.innerHTML = '';
+    calendarMonths.innerHTML = "";
   }
-  
+
   // 최근 1년간의 데이터 생성
   const today = new Date();
   const oneYearAgo = new Date(today);
   oneYearAgo.setFullYear(today.getFullYear() - 1);
-  
+
   // 날짜별 단어 개수 집계
   const dateCounts = {};
-  records.forEach(record => {
+  records.forEach((record) => {
     // 날짜가 이미 ISO 형식이거나, Date 객체로 변환 가능한 형식인지 확인
     let dateKey;
     if (record.date && record.date.match(/^\d{4}-\d{2}-\d{2}$/)) {
@@ -151,44 +1284,59 @@ function displayStudyRecords() {
         // 유효하지 않은 날짜는 스킵
         return;
       }
-      dateKey = date.toISOString().split('T')[0];
+      dateKey = date.toISOString().split("T")[0];
     }
-    
+
     if (!dateCounts[dateKey]) {
       dateCounts[dateKey] = 0;
     }
     // 점수에서 단어 개수 추출 (예: "5/10" -> 5)
-    const wordCount = parseInt(record.score.split('/')[0]) || 0;
+    const wordCount = parseInt(record.score.split("/")[0]) || 0;
     dateCounts[dateKey] += wordCount;
   });
-  
+
   // 캘린더 그리드 생성 (53주 x 7일)
   const startDate = new Date(oneYearAgo);
   // 일요일로 맞추기
   const startDayOfWeek = startDate.getDay();
   startDate.setDate(startDate.getDate() - startDayOfWeek);
-  
+
   // 시작 날짜의 타임스탬프 저장 (변경 방지)
   const startTimestamp = startDate.getTime();
-  
+
   // 월 이름 배열
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
   // 월별 라벨 위치 계산
   const monthPositions = {};
-  
+
   for (let week = 0; week < 53; week++) {
     for (let day = 0; day < 7; day++) {
-      const currentDate = new Date(startTimestamp + (week * 7 + day) * 24 * 60 * 60 * 1000);
-      
+      const currentDate = new Date(
+        startTimestamp + (week * 7 + day) * 24 * 60 * 60 * 1000,
+      );
+
       if (currentDate > today) continue;
-      
+
       // 과거 1년 이전의 날짜는 표시하지 않음
       if (currentDate < oneYearAgo) continue;
-      
-      const dateKey = currentDate.toISOString().split('T')[0];
+
+      const dateKey = currentDate.toISOString().split("T")[0];
       const count = dateCounts[dateKey] || 0;
-      
+
       // 월 라벨 위치 기록 (각 월의 첫 번째 주)
       const month = currentDate.getMonth();
       const year = currentDate.getFullYear();
@@ -196,42 +1344,46 @@ function displayStudyRecords() {
       if (!monthPositions[monthKey] && currentDate.getDate() <= 7) {
         monthPositions[monthKey] = { week, month };
       }
-      
+
       // 날짜 포맷 (툴팁용)
       const monthNum = currentDate.getMonth() + 1;
       const dayNum = currentDate.getDate();
       const tooltipText = `${monthNum}월 ${dayNum}일 - ${count}개 학습`;
-      
-      const dayElement = document.createElement('div');
-      dayElement.className = 'calendar-day';
-      dayElement.setAttribute('data-count', Math.min(count, 21)); // 최대 21로 제한
-      dayElement.setAttribute('data-date', dateKey);
-      dayElement.setAttribute('data-tooltip', tooltipText);
-      
-      dayElement.addEventListener('click', () => showDateRecords(dateKey, records));
-      
+
+      const dayElement = document.createElement("div");
+      dayElement.className = "calendar-day";
+      dayElement.setAttribute("data-count", Math.min(count, 21)); // 최대 21로 제한
+      dayElement.setAttribute("data-date", dateKey);
+      dayElement.setAttribute("data-tooltip", tooltipText);
+
+      dayElement.addEventListener("click", () =>
+        showDateRecords(dateKey, records),
+      );
+
       calendarContainer.appendChild(dayElement);
     }
   }
-  
+
   // 월 라벨 생성
   if (calendarMonths) {
     // 주 단위로 간격을 맞추기 위해 빈 라벨 추가
     let lastWeek = -1;
-    const sortedMonths = Object.entries(monthPositions).sort((a, b) => a[1].week - b[1].week);
-    
+    const sortedMonths = Object.entries(monthPositions).sort(
+      (a, b) => a[1].week - b[1].week,
+    );
+
     sortedMonths.forEach(([key, value], index) => {
-      const monthLabel = document.createElement('span');
-      monthLabel.className = 'calendar-month-label';
+      const monthLabel = document.createElement("span");
+      monthLabel.className = "calendar-month-label";
       monthLabel.textContent = monthNames[value.month];
-      
+
       // 간격 계산 (각 주는 약 14px 너비)
       const gapWeeks = value.week - (lastWeek + 1);
       if (gapWeeks > 0) {
         monthLabel.style.marginLeft = `${gapWeeks * 14}px`;
       }
       lastWeek = value.week;
-      
+
       calendarMonths.appendChild(monthLabel);
     });
   }
@@ -240,8 +1392,8 @@ function displayStudyRecords() {
 // 특정 날짜의 기록 표시
 function showDateRecords(dateKey, allRecords) {
   if (!selectedDateRecords || !dateRecordsList || !selectedDateTitle) return;
-  
-  const dateRecords = allRecords.filter(r => {
+
+  const dateRecords = allRecords.filter((r) => {
     // 날짜 형식 확인
     if (r.date && r.date.match(/^\d{4}-\d{2}-\d{2}$/)) {
       return r.date === dateKey;
@@ -250,34 +1402,34 @@ function showDateRecords(dateKey, allRecords) {
       if (isNaN(recordDate.getTime())) {
         return false;
       }
-      return recordDate.toISOString().split('T')[0] === dateKey;
+      return recordDate.toISOString().split("T")[0] === dateKey;
     }
   });
-  
+
   if (dateRecords.length === 0) {
-    selectedDateRecords.classList.add('hidden');
+    selectedDateRecords.classList.add("hidden");
     return;
   }
-  
+
   selectedDateTitle.textContent = `${dateKey} 학습 기록`;
-  dateRecordsList.innerHTML = '';
-  
-  dateRecords.forEach(record => {
-    const item = document.createElement('div');
-    item.className = 'date-record-item';
+  dateRecordsList.innerHTML = "";
+
+  dateRecords.forEach((record) => {
+    const item = document.createElement("div");
+    item.className = "date-record-item";
     item.innerHTML = `
       <div class="date-record-lecture">${record.lecture}</div>
       <div class="date-record-score">${record.score}</div>
     `;
     dateRecordsList.appendChild(item);
   });
-  
-  selectedDateRecords.classList.remove('hidden');
+
+  selectedDateRecords.classList.remove("hidden");
 }
 
 // 학습 기록 가져오기
 function getStudyRecords() {
-  const records = localStorage.getItem('vocabQuizRecords');
+  const records = localStorage.getItem("vocabQuizRecords");
   return records ? JSON.parse(records) : [];
 }
 
@@ -285,75 +1437,165 @@ function getStudyRecords() {
 function saveStudyRecord(lecture, score, maxScore) {
   const records = getStudyRecords();
   // ISO 형식으로 날짜 저장 (YYYY-MM-DD)
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
   const percentage = Math.round((score / maxScore) * 100);
-  
+
   records.unshift({
     date: today,
     lecture: lecture,
-    score: `${score}/${maxScore} (${percentage}%)`
+    score: `${score}/${maxScore} (${percentage}%)`,
   });
-  
+
   // 최대 50개까지만 저장
   if (records.length > 50) {
     records.pop();
   }
-  
-  localStorage.setItem('vocabQuizRecords', JSON.stringify(records));
+
+  localStorage.setItem("vocabQuizRecords", JSON.stringify(records));
 }
 
 // 틀린 단어 저장
 function saveWrongWord(word, meaning, example, lecture) {
   const wrongWords = getWrongWords();
-  
+
   // 이미 존재하는지 확인 (중복 방지)
-  const exists = wrongWords.some(w => w.word === word && w.lecture === lecture);
+  const exists = wrongWords.some(
+    (w) => w.word === word && w.lecture === lecture,
+  );
   if (exists) return;
-  
+
   wrongWords.push({
     word: word,
     meaning: meaning,
     example: example,
     lecture: lecture,
-    date: new Date().toISOString().split('T')[0]
+    date: new Date().toISOString().split("T")[0],
   });
-  
-  localStorage.setItem('vocabWrongWords', JSON.stringify(wrongWords));
+
+  localStorage.setItem("vocabWrongWords", JSON.stringify(wrongWords));
 }
 
 // 틀린 단어 가져오기
 function getWrongWords() {
-  const words = localStorage.getItem('vocabWrongWords');
+  const words = localStorage.getItem("vocabWrongWords");
   return words ? JSON.parse(words) : [];
 }
 
-// 틀린 단어 삭제 (암기 완료)
+// 암기한 단어 저장
+function saveMemorizedWord(word, meaning, example, lecture) {
+  const memorizedWords = getMemorizedWords();
+
+  // 이미 존재하는지 확인 (중복 방지)
+  const exists = memorizedWords.some(
+    (w) => w.word === word && w.lecture === lecture,
+  );
+  if (exists) return;
+
+  memorizedWords.push({
+    word: word,
+    meaning: meaning,
+    example: example,
+    lecture: lecture,
+    date: new Date().toISOString().split("T")[0],
+  });
+
+  localStorage.setItem("vocabMemorizedWords", JSON.stringify(memorizedWords));
+}
+
+// 암기한 단어 가져오기
+function getMemorizedWords() {
+  const words = localStorage.getItem("vocabMemorizedWords");
+  return words ? JSON.parse(words) : [];
+}
+
+// 틀린 단어 삭제 (암기 완료) - 암기한 단어장에 저장 후 삭제
 function removeWrongWord(word, lecture) {
   const wrongWords = getWrongWords();
-  const filtered = wrongWords.filter(w => !(w.word === word && w.lecture === lecture));
-  localStorage.setItem('vocabWrongWords', JSON.stringify(filtered));
-  displayReviewWords();
+  const wordData = wrongWords.find(
+    (w) => w.word === word && w.lecture === lecture,
+  );
+
+  if (wordData) {
+    // 암기한 단어장에 저장
+    saveMemorizedWord(
+      wordData.word,
+      wordData.meaning,
+      wordData.example,
+      wordData.lecture,
+    );
+
+    // 틀린 단어장에서 삭제
+    const filtered = wrongWords.filter(
+      (w) => !(w.word === word && w.lecture === lecture),
+    );
+    localStorage.setItem("vocabWrongWords", JSON.stringify(filtered));
+    displayReviewWords();
+  }
+}
+
+// 사용자 추가 단어 가져오기
+function getUserAddedWords(lectureName) {
+  const userWords = localStorage.getItem("vocabUserWords");
+  if (!userWords) return [];
+
+  const allUserWords = JSON.parse(userWords);
+  return allUserWords.filter((w) => w.lecture === lectureName);
 }
 
 // 퀴즈 시작
-function startQuiz(lectureIndex) {
-  currentLecture = vocaData[lectureIndex];
+function startQuiz(lectureIndex, isReviewQuiz = false) {
+  if (isReviewQuiz) {
+    // Review 퀴즈: 틀린 단어 중 무작위 10개
+    const wrongWords = getWrongWords();
+    if (wrongWords.length === 0) {
+      alert("복습할 단어가 없습니다.");
+      return;
+    }
+
+    // 무작위로 최대 10개 선택
+    const shuffled = [...wrongWords].sort(() => Math.random() - 0.5);
+    const selectedWords = shuffled.slice(0, Math.min(10, shuffled.length));
+
+    currentLecture = {
+      lecture: "틀린 단어 복습",
+      words: selectedWords,
+    };
+  } else {
+    // 일반 퀴즈: 선택한 챕터의 단어들
+    const originalLecture = vocaData[lectureIndex];
+    const userWords = getUserAddedWords(originalLecture.lecture);
+
+    // 원본 단어 + 사용자 추가 단어 합치기
+    const allWords = [...originalLecture.words, ...userWords];
+
+    currentLecture = {
+      lecture: originalLecture.lecture,
+      words: allWords,
+    };
+  }
+
   currentQuestionIndex = 0;
   score = 0;
   isAnswered = false;
-  
+
+  // 단어가 10개 이상이면 무작위로 10개만 선택
+  let wordsToTest = [...currentLecture.words];
+  if (wordsToTest.length > 10) {
+    wordsToTest = wordsToTest.sort(() => Math.random() - 0.5).slice(0, 10);
+  }
+
   // 문제 섞기
-  shuffledQuestions = [...currentLecture.words].sort(() => Math.random() - 0.5);
-  
+  shuffledQuestions = wordsToTest.sort(() => Math.random() - 0.5);
+
   // 화면 전환
-  lectureSelectionScreen.classList.add('hidden');
-  quizContainer.classList.remove('hidden');
-  resultScreen.classList.add('hidden');
-  
+  lectureSelectionScreen.classList.add("hidden");
+  quizContainer.classList.remove("hidden");
+  resultScreen.classList.add("hidden");
+
   // 점수 및 문제 수 업데이트
   updateScore();
   totalQuestions.textContent = shuffledQuestions.length;
-  
+
   loadQuestion();
 }
 
@@ -363,34 +1605,36 @@ function loadQuestion() {
     showResult();
     return;
   }
-  
+
   const question = shuffledQuestions[currentQuestionIndex];
   isAnswered = false;
-  
+
   // 단어 표시
   wordText.textContent = question.word;
-  
+
   // 옵션 생성 (정답 + 오답 3개)
-  const allMeanings = vocaData.flatMap(l => l.words.map(w => w.meaning));
+  const allMeanings = vocaData.flatMap((l) => l.words.map((w) => w.meaning));
   const wrongOptions = allMeanings
-    .filter(m => m !== question.meaning)
+    .filter((m) => m !== question.meaning)
     .sort(() => Math.random() - 0.5)
     .slice(0, 3);
-  const options = [question.meaning, ...wrongOptions].sort(() => Math.random() - 0.5);
-  
+  const options = [question.meaning, ...wrongOptions].sort(
+    () => Math.random() - 0.5,
+  );
+
   // 옵션 버튼 생성
-  optionsContainer.innerHTML = '';
+  optionsContainer.innerHTML = "";
   options.forEach((option) => {
-    const button = document.createElement('button');
-    button.className = 'option-btn';
+    const button = document.createElement("button");
+    button.className = "option-btn";
     button.textContent = option;
-    button.addEventListener('click', () => selectOption(option, question));
+    button.addEventListener("click", () => selectOption(option, question));
     optionsContainer.appendChild(button);
   });
-  
+
   // 문제 번호 업데이트
   questionCounter.textContent = currentQuestionIndex + 1;
-  
+
   // 타이머 시작
   startTimer();
 }
@@ -399,32 +1643,32 @@ function loadQuestion() {
 function startTimer() {
   timeLeft = 20;
   timerText.textContent = timeLeft;
-  
+
   // 타이머 원형 진행바 초기화
   const circumference = 2 * Math.PI * 45; // 반지름 45
   timerProgressCircle.style.strokeDasharray = circumference;
   timerProgressCircle.style.strokeDashoffset = 0;
-  timerProgressCircle.classList.remove('warning');
-  
+  timerProgressCircle.classList.remove("warning");
+
   // 기존 타이머 정리
   if (timerInterval) {
     clearInterval(timerInterval);
   }
-  
+
   timerInterval = setInterval(() => {
     timeLeft--;
     timerText.textContent = timeLeft;
-    
+
     // 진행바 업데이트
     const progress = (20 - timeLeft) / 20;
     const offset = circumference * progress;
     timerProgressCircle.style.strokeDashoffset = offset;
-    
+
     // 5초 이하일 때 경고 색상
     if (timeLeft <= 5) {
-      timerProgressCircle.classList.add('warning');
+      timerProgressCircle.classList.add("warning");
     }
-    
+
     // 시간 종료
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
@@ -432,15 +1676,20 @@ function startTimer() {
         // 시간 초과 처리 - 오답으로 처리하고 모달 표시
         isAnswered = true;
         const question = shuffledQuestions[currentQuestionIndex];
-        const allButtons = optionsContainer.querySelectorAll('.option-btn');
-        allButtons.forEach(btn => {
+        const allButtons = optionsContainer.querySelectorAll(".option-btn");
+        allButtons.forEach((btn) => {
           btn.disabled = true;
           if (btn.textContent === question.meaning) {
-            btn.classList.add('correct');
+            btn.classList.add("correct");
           }
         });
         // 시간 초과도 틀린 단어로 저장
-        saveWrongWord(question.word, question.meaning, question.example, currentLecture.lecture);
+        saveWrongWord(
+          question.word,
+          question.meaning,
+          question.example,
+          currentLecture.lecture,
+        );
         showFeedback(false, question);
       }
     }
@@ -450,27 +1699,27 @@ function startTimer() {
 // 옵션 선택
 function selectOption(selectedOption, question) {
   if (isAnswered) return;
-  
+
   isAnswered = true;
   clearInterval(timerInterval);
-  
-  const allButtons = optionsContainer.querySelectorAll('.option-btn');
-  allButtons.forEach(btn => {
+
+  const allButtons = optionsContainer.querySelectorAll(".option-btn");
+  allButtons.forEach((btn) => {
     btn.disabled = true;
   });
-  
+
   const isCorrect = selectedOption === question.meaning;
-  
+
   if (isCorrect) {
     // 정답일 때는 버튼 색상만 변경하고 자동으로 다음 문제로
-    allButtons.forEach(btn => {
+    allButtons.forEach((btn) => {
       if (btn.textContent === question.meaning) {
-        btn.classList.add('correct');
+        btn.classList.add("correct");
       }
     });
     score++;
     updateScore();
-    
+
     // 1초 후 자동으로 다음 문제로
     setTimeout(() => {
       currentQuestionIndex++;
@@ -478,16 +1727,21 @@ function selectOption(selectedOption, question) {
     }, 1000);
   } else {
     // 오답일 때는 모달 표시 및 틀린 단어 저장
-    allButtons.forEach(btn => {
+    allButtons.forEach((btn) => {
       if (btn.textContent === selectedOption) {
-        btn.classList.add('incorrect');
+        btn.classList.add("incorrect");
       }
       if (btn.textContent === question.meaning) {
-        btn.classList.add('correct');
+        btn.classList.add("correct");
       }
     });
     // 틀린 단어 저장
-    saveWrongWord(question.word, question.meaning, question.example, currentLecture.lecture);
+    saveWrongWord(
+      question.word,
+      question.meaning,
+      question.example,
+      currentLecture.lecture,
+    );
     showFeedback(false, question);
   }
 }
@@ -496,21 +1750,21 @@ function selectOption(selectedOption, question) {
 function showFeedback(isCorrect, question, selectedOption = null) {
   // 모달 내용 설정
   if (isCorrect) {
-    modalIcon.textContent = '✓';
-    modalIcon.className = 'modal-icon correct';
-    modalTitle.textContent = '정답입니다!';
+    modalIcon.textContent = "✓";
+    modalIcon.className = "modal-icon correct";
+    modalTitle.textContent = "정답입니다!";
   } else {
-    modalIcon.textContent = '✗';
-    modalIcon.className = 'modal-icon incorrect';
-    modalTitle.textContent = '오답입니다';
+    modalIcon.textContent = "✗";
+    modalIcon.className = "modal-icon incorrect";
+    modalTitle.textContent = "오답입니다";
   }
-  
+
   modalWord.textContent = question.word;
   modalMeaning.textContent = question.meaning;
   modalExample.textContent = question.example;
-  
+
   // 모달 표시
-  feedbackModal.classList.remove('hidden');
+  feedbackModal.classList.remove("hidden");
 }
 
 // 이벤트 리스너는 initVocabQuiz에서 설정됨
@@ -522,30 +1776,30 @@ function updateScore() {
 
 // 결과 화면 표시
 function showResult() {
-  quizContainer.classList.add('hidden');
-  resultScreen.classList.remove('hidden');
-  
+  quizContainer.classList.add("hidden");
+  resultScreen.classList.remove("hidden");
+
   const maxScoreValue = shuffledQuestions.length;
   finalScore.textContent = score;
   maxScore.textContent = maxScoreValue;
-  
+
   const percentage = Math.round((score / maxScoreValue) * 100);
   scorePercentage.textContent = `${percentage}%`;
-  
+
   // 결과에 따른 메시지
-  let message = '';
+  let message = "";
   if (percentage >= 90) {
-    message = '완벽합니다! 🎉';
+    message = "완벽합니다! 🎉";
   } else if (percentage >= 70) {
-    message = '잘하셨습니다! 👍';
+    message = "잘하셨습니다! 👍";
   } else if (percentage >= 50) {
-    message = '좋은 시도였습니다! 💪';
+    message = "좋은 시도였습니다! 💪";
   } else {
-    message = '다시 도전해보세요! 📚';
+    message = "다시 도전해보세요! 📚";
   }
-  
+
   scorePercentage.innerHTML = `${percentage}%<br><div style="margin-top: 1rem; font-size: 1.3rem; color: var(--accent);">${message}</div>`;
-  
+
   // 학습 기록 저장
   saveStudyRecord(currentLecture.lecture, score, maxScoreValue);
 }
@@ -553,23 +1807,23 @@ function showResult() {
 // Voca Review 단어 표시
 function displayReviewWords() {
   const wrongWords = getWrongWords();
-  
+
   if (!reviewWordsContainer || !reviewCount || !noReviewWords) return;
-  
+
   if (wrongWords.length === 0) {
-    reviewWordsContainer.innerHTML = '';
-    reviewCount.textContent = '0';
-    noReviewWords.classList.remove('hidden');
+    reviewWordsContainer.innerHTML = "";
+    reviewCount.textContent = "0";
+    noReviewWords.classList.remove("hidden");
     return;
   }
-  
-  noReviewWords.classList.add('hidden');
+
+  noReviewWords.classList.add("hidden");
   reviewCount.textContent = wrongWords.length;
-  reviewWordsContainer.innerHTML = '';
-  
+  reviewWordsContainer.innerHTML = "";
+
   wrongWords.forEach((wordData, index) => {
-    const card = document.createElement('div');
-    card.className = 'review-word-card';
+    const card = document.createElement("div");
+    card.className = "review-word-card";
     card.innerHTML = `
       <div class="review-word-header">
         <div>
@@ -583,12 +1837,12 @@ function displayReviewWords() {
         암기 완료
       </button>
     `;
-    
-    const memorizedBtn = card.querySelector('.memorized-btn');
-    memorizedBtn.addEventListener('click', () => {
+
+    const memorizedBtn = card.querySelector(".memorized-btn");
+    memorizedBtn.addEventListener("click", () => {
       removeWrongWord(wordData.word, wordData.lecture);
     });
-    
+
     reviewWordsContainer.appendChild(card);
   });
 }
@@ -596,112 +1850,130 @@ function displayReviewWords() {
 // 다크모드/라이트모드 토글
 function toggleTheme() {
   const body = document.body;
-  const isLight = body.classList.contains('light-mode');
-  
+  const isLight = body.classList.contains("light-mode");
+
   if (isLight) {
-    body.classList.remove('light-mode');
-    localStorage.setItem('theme', 'dark');
+    body.classList.remove("light-mode");
+    localStorage.setItem("theme", "dark");
   } else {
-    body.classList.add('light-mode');
-    localStorage.setItem('theme', 'light');
+    body.classList.add("light-mode");
+    localStorage.setItem("theme", "light");
   }
 }
 
 // 테마 초기화
 function initTheme() {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    document.body.classList.add('light-mode');
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "light") {
+    document.body.classList.add("light-mode");
   }
 }
 
 // DOM 요소 초기화
 function initDOMElements() {
-  lectureSelectionScreen = document.getElementById('lecture-selection-screen');
-  lectureGrid = document.getElementById('lecture-grid');
-  recordsList = document.getElementById('records-list');
-  quizContainer = document.getElementById('quiz-container');
-  wordCard = document.getElementById('word-card');
-  wordText = document.getElementById('word-text');
-  pronounceBtn = document.getElementById('pronounce-btn');
-  optionsContainer = document.getElementById('options-container');
-  scoreDisplay = document.getElementById('score');
-  questionCounter = document.getElementById('current-question');
-  totalQuestions = document.getElementById('total-questions');
-  timerText = document.getElementById('timer-text');
-  timerProgressCircle = document.getElementById('timer-progress');
-  feedbackModal = document.getElementById('feedback-modal');
-  modalIcon = document.getElementById('modal-icon');
-  modalTitle = document.getElementById('modal-title');
-  modalWord = document.getElementById('modal-word');
-  modalMeaning = document.getElementById('modal-meaning');
-  modalExample = document.getElementById('modal-example');
-  nextBtn = document.getElementById('next-btn');
-  resultScreen = document.getElementById('result-screen');
-  finalScore = document.getElementById('final-score');
-  maxScore = document.getElementById('max-score');
-  scorePercentage = document.getElementById('score-percentage');
-  restartBtn = document.getElementById('restart-btn');
-  backToLecturesBtn = document.getElementById('back-to-lectures-btn');
-  backToLectureBtn = document.getElementById('back-to-lecture-btn');
-  themeToggle = document.getElementById('theme-toggle');
-  calendarContainer = document.getElementById('calendar-container');
-  selectedDateRecords = document.getElementById('selected-date-records');
-  dateRecordsList = document.getElementById('date-records-list');
-  selectedDateTitle = document.getElementById('selected-date-title');
-  reviewWordsContainer = document.getElementById('review-words-container');
-  reviewCount = document.getElementById('review-count');
-  noReviewWords = document.getElementById('no-review-words');
+  lectureSelectionScreen = document.getElementById("lecture-selection-screen");
+  lectureGrid = document.getElementById("lecture-grid");
+  recordsList = document.getElementById("records-list");
+  quizContainer = document.getElementById("quiz-container");
+  wordCard = document.getElementById("word-card");
+  wordText = document.getElementById("word-text");
+  pronounceBtn = document.getElementById("pronounce-btn");
+  optionsContainer = document.getElementById("options-container");
+  scoreDisplay = document.getElementById("score");
+  questionCounter = document.getElementById("current-question");
+  totalQuestions = document.getElementById("total-questions");
+  timerText = document.getElementById("timer-text");
+  timerProgressCircle = document.getElementById("timer-progress");
+  feedbackModal = document.getElementById("feedback-modal");
+  modalIcon = document.getElementById("modal-icon");
+  modalTitle = document.getElementById("modal-title");
+  modalWord = document.getElementById("modal-word");
+  modalMeaning = document.getElementById("modal-meaning");
+  modalExample = document.getElementById("modal-example");
+  nextBtn = document.getElementById("next-btn");
+  resultScreen = document.getElementById("result-screen");
+  finalScore = document.getElementById("final-score");
+  maxScore = document.getElementById("max-score");
+  scorePercentage = document.getElementById("score-percentage");
+  restartBtn = document.getElementById("restart-btn");
+  backToLecturesBtn = document.getElementById("back-to-lectures-btn");
+  backToLectureBtn = document.getElementById("back-to-lecture-btn");
+  themeToggle = document.getElementById("theme-toggle");
+  calendarContainer = document.getElementById("calendar-container");
+  selectedDateRecords = document.getElementById("selected-date-records");
+  dateRecordsList = document.getElementById("date-records-list");
+  selectedDateTitle = document.getElementById("selected-date-title");
+  reviewWordsContainer = document.getElementById("review-words-container");
+  reviewCount = document.getElementById("review-count");
+  noReviewWords = document.getElementById("no-review-words");
+  reviewQuizBtn = document.getElementById("review-quiz-btn");
+  addWordLecture = document.getElementById("add-word-lecture");
+  addWordInput = document.getElementById("add-word-input");
+  addWordMeaning = document.getElementById("add-word-meaning");
+  addWordExample = document.getElementById("add-word-example");
+  addWordBtn = document.getElementById("add-word-btn");
 }
 
 // 페이지 로드 시 챕터 선택 화면 표시
 function initVocabQuiz() {
   // DOM 요소 초기화
   initDOMElements();
-  
+
   // 네비게이션 초기화
   initNavigation();
-  
+
   // 이벤트 리스너 설정
   if (nextBtn) {
-    nextBtn.addEventListener('click', () => {
+    nextBtn.addEventListener("click", () => {
       if (feedbackModal) {
-        feedbackModal.classList.add('hidden');
+        feedbackModal.classList.add("hidden");
       }
       currentQuestionIndex++;
       loadQuestion();
     });
   }
-  
+
   if (pronounceBtn && wordText) {
-    pronounceBtn.addEventListener('click', () => {
+    pronounceBtn.addEventListener("click", () => {
       const word = wordText.textContent;
-      if (word && 'speechSynthesis' in window) {
+      if (word && "speechSynthesis" in window) {
         const utterance = new SpeechSynthesisUtterance(word);
-        utterance.lang = 'en-US';
+        utterance.lang = "en-US";
         utterance.rate = 0.9;
         speechSynthesis.speak(utterance);
       }
     });
   }
-  
+
   if (restartBtn) {
-restartBtn.addEventListener('click', () => {
+    restartBtn.addEventListener("click", () => {
       if (currentLecture) {
-        startQuiz(vocaData.findIndex(l => l.lecture === currentLecture.lecture));
+        // Review 퀴즈인지 확인
+        if (currentLecture.lecture === "틀린 단어 복습") {
+          startQuiz(0, true);
+        } else {
+          const lectureIndex = vocaData.findIndex(
+            (l) => l.lecture === currentLecture.lecture,
+          );
+          if (lectureIndex !== -1) {
+            startQuiz(lectureIndex);
+          }
+        }
       }
     });
   }
-  
+
   if (backToLecturesBtn) {
-    backToLecturesBtn.addEventListener('click', () => {
+    backToLecturesBtn.addEventListener("click", () => {
       showLectureSelection();
     });
   }
-  
+
   if (backToLectureBtn) {
-    backToLectureBtn.addEventListener('click', () => {
-      if (confirm('진행 중인 퀴즈를 중단하고 챕터 선택으로 돌아가시겠습니까?')) {
+    backToLectureBtn.addEventListener("click", () => {
+      if (
+        confirm("진행 중인 퀴즈를 중단하고 챕터 선택으로 돌아가시겠습니까?")
+      ) {
         if (timerInterval) {
           clearInterval(timerInterval);
         }
@@ -709,37 +1981,109 @@ restartBtn.addEventListener('click', () => {
       }
     });
   }
-  
+
   if (themeToggle) {
-    themeToggle.addEventListener('click', toggleTheme);
+    themeToggle.addEventListener("click", toggleTheme);
   }
-  
+
+  // 단어 추가 버튼
+  if (addWordBtn) {
+    addWordBtn.addEventListener("click", () => {
+      const lecture = addWordLecture ? addWordLecture.value : "";
+      const word = addWordInput ? addWordInput.value.trim() : "";
+      const meaning = addWordMeaning ? addWordMeaning.value.trim() : "";
+      const example = addWordExample ? addWordExample.value.trim() : "";
+
+      if (!lecture) {
+        alert("챕터를 선택해주세요.");
+        return;
+      }
+      if (!word || !meaning) {
+        alert("단어와 뜻을 입력해주세요.");
+        return;
+      }
+
+      // 사용자 단어 저장
+      const userWords = JSON.parse(
+        localStorage.getItem("vocabUserWords") || "[]",
+      );
+      userWords.push({
+        word: word,
+        meaning: meaning,
+        example: example || `${word} - ${meaning}`,
+        lecture: lecture,
+        date: new Date().toISOString().split("T")[0],
+      });
+      localStorage.setItem("vocabUserWords", JSON.stringify(userWords));
+
+      // 입력 필드 초기화
+      if (addWordInput) addWordInput.value = "";
+      if (addWordMeaning) addWordMeaning.value = "";
+      if (addWordExample) addWordExample.value = "";
+
+      alert("단어가 추가되었습니다!");
+      showLectureSelection(); // 챕터 목록 새로고침
+    });
+  }
+
+  // Review 퀴즈 버튼
+  if (reviewQuizBtn) {
+    reviewQuizBtn.addEventListener("click", () => {
+      const wrongWords = getWrongWords();
+      if (wrongWords.length === 0) {
+        alert("복습할 단어가 없습니다.");
+        return;
+      }
+
+      // Vocab Quiz 섹션으로 이동
+      const navLinks = document.querySelectorAll(".nav-link");
+      const sections = document.querySelectorAll(".section");
+
+      navLinks.forEach((l) => l.classList.remove("active"));
+      const vocabQuizLink = Array.from(navLinks).find(
+        (l) => l.getAttribute("data-section") === "vocab-quiz",
+      );
+      if (vocabQuizLink) {
+        vocabQuizLink.classList.add("active");
+      }
+
+      sections.forEach((s) => s.classList.add("hidden"));
+      const vocabQuizSection = document.getElementById("vocab-quiz");
+      if (vocabQuizSection) {
+        vocabQuizSection.classList.remove("hidden");
+      }
+
+      // Review 퀴즈 시작
+      startQuiz(0, true);
+    });
+  }
+
   // 테마 초기화
   initTheme();
-  
+
   // 초기 상태 설정
   if (lectureSelectionScreen) {
-    lectureSelectionScreen.classList.remove('hidden');
+    lectureSelectionScreen.classList.remove("hidden");
   }
   if (quizContainer) {
-    quizContainer.classList.add('hidden');
+    quizContainer.classList.add("hidden");
   }
   if (resultScreen) {
-    resultScreen.classList.add('hidden');
+    resultScreen.classList.add("hidden");
   }
   if (feedbackModal) {
-    feedbackModal.classList.add('hidden');
+    feedbackModal.classList.add("hidden");
   }
-  
+
   showLectureSelection();
 }
 
 // DOM 로드 완료 시 또는 이미 로드된 경우
-if (document.readyState === 'loading') {
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", () => {
     initTheme();
     initVocabQuiz();
-});
+  });
 } else {
   initTheme();
   initVocabQuiz();
