@@ -49,17 +49,58 @@
           
           <!-- Add Word Section -->
           <div class="add-word-section">
-            <h3 class="add-word-title">단어 추가하기</h3>
-            <div class="add-word-form">
+            <h3 class="add-word-title">✨ 단어 추가하기</h3>
+            <p class="add-word-subtitle">영어 단어만 입력하면 AI가 뜻과 예문을 찾아드립니다</p>
+            
+            <div class="add-word-search">
+              <div class="search-input-wrapper">
+                <input 
+                  type="text" 
+                  id="add-word-input" 
+                  class="add-word-input" 
+                  placeholder="영어 단어를 입력하세요..."
+                  autocomplete="off"
+                >
+                <button class="search-word-btn" id="search-word-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                  </svg>
+                  검색
+                </button>
+              </div>
               <select id="add-word-lecture" class="add-word-select">
                 <option value="">챕터 선택</option>
               </select>
-              <input type="text" id="add-word-input" class="add-word-input" placeholder="단어 (영어)">
-              <input type="text" id="add-word-meaning" class="add-word-input" placeholder="뜻 (한국어)">
-              <input type="text" id="add-word-example" class="add-word-input" placeholder="예문 (선택사항)">
-              <button class="add-word-btn" id="add-word-btn">추가</button>
             </div>
-            <p class="add-word-info">추가한 단어는 해당 챕터의 퀴즈에 포함됩니다.</p>
+
+            <!-- Word Preview Card -->
+            <div class="word-preview-card hidden" id="word-preview-card">
+              <div class="preview-loading" id="preview-loading">
+                <div class="loading-spinner"></div>
+                <p>단어를 검색하고 있습니다...</p>
+              </div>
+              
+              <div class="preview-content hidden" id="preview-content">
+                <div class="preview-header">
+                  <h4 class="preview-word" id="preview-word"></h4>
+                  <span class="preview-phonetic" id="preview-phonetic"></span>
+                </div>
+                <div class="preview-meaning" id="preview-meaning"></div>
+                <div class="preview-example" id="preview-example"></div>
+                <div class="preview-actions">
+                  <button class="preview-cancel-btn" id="preview-cancel-btn">취소</button>
+                  <button class="preview-add-btn" id="preview-add-btn">추가하기</button>
+                </div>
+              </div>
+              
+              <div class="preview-error hidden" id="preview-error">
+                <p>단어를 찾을 수 없습니다. 다시 시도해주세요.</p>
+                <button class="preview-retry-btn" id="preview-retry-btn">다시 시도</button>
+              </div>
+            </div>
+            
+            <p class="add-word-info">💡 추가한 단어는 해당 챕터의 퀴즈에 자동으로 포함됩니다.</p>
           </div>
           
           <!-- Recent Study Records - Calendar View -->
