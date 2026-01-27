@@ -2550,7 +2550,7 @@ async function searchWord() {
         meaning: koreanMeaning,
         example: example,
         phonetic: phonetic,
-        naverDictUrl: `https://dict.naver.com/endic/search.naver?query=${encodeURIComponent(wordText)}`
+        naverDictUrl: `https://en.dict.naver.com/#/search?query=wordText`
       };
 
       // 로딩 완료 처리 - 반드시 마지막에 실행
