@@ -2334,7 +2334,7 @@ function initVocabQuiz() {
   }
 }
 
-// 단어 검색 함수 (네이버 영어사전 스타일)
+// 단어 검색 함수 (네이버 영한사전 스타일)
 async function searchWord() {
   const word = addWordInput ? addWordInput.value.trim() : "";
 
@@ -2360,7 +2360,7 @@ async function searchWord() {
   previewError.classList.add("hidden");
 
   try {
-    // 네이버 영어사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
+    // 네이버 영한사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
     // 대신 Free Dictionary API로 기본 정보를 가져온 후 네이버 사전 링크 제공
     
     // Free Dictionary API 사용
@@ -2390,7 +2390,7 @@ async function searchWord() {
         (wordData.phonetics && wordData.phonetics[0]?.text) ||
         "";
 
-      // 품사와 뜻 추출 (네이버 영어사전 스타일)
+      // 품사와 뜻 추출 (네이버 영한사전 스타일)
       let koreanMeaning = "";
       let partOfSpeech = "";
       let example = "";
@@ -2520,7 +2520,7 @@ async function searchWord() {
         koreanMeaning = "뜻을 찾을 수 없습니다.";
       }
       
-      // 품사와 뜻을 함께 표시 (네이버 영어사전 스타일 - 간결하게)
+      // 품사와 뜻을 함께 표시 (네이버 영한사전 스타일 - 간결하게)
       const partOfSpeechText = partOfSpeech ? `[${partOfSpeech}] ` : "";
       
       // 한글 뜻이 너무 길면 자르기 (최대 50자)
@@ -2550,7 +2550,7 @@ async function searchWord() {
         meaning: koreanMeaning,
         example: example,
         phonetic: phonetic,
-        naverDictUrl: `https://dict.naver.com/enendict/#/search?query=${encodeURIComponent(wordText)}`
+        naverDictUrl: `https://dict.naver.com/endic/search.naver?query=${encodeURIComponent(wordText)}`
       };
 
       // 로딩 완료 처리 - 반드시 마지막에 실행
@@ -2638,7 +2638,7 @@ function displayPreview(wordData) {
           <polyline points="15 3 21 3 21 9"></polyline>
           <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
-        네이버 영어사전에서 보기
+        네이버 영한사전에서 보기
       `;
       previewHeader.appendChild(naverLink);
     }
