@@ -2344,12 +2344,20 @@ async function searchWord() {
   }
 
   // Preview 카드 표시 및 로딩 상태 초기화
-  if (wordPreviewCard) {
-    wordPreviewCard.classList.remove("hidden");
-    previewLoading.classList.remove("hidden");
-    previewContent.classList.add("hidden");
-    previewError.classList.add("hidden");
+  if (!wordPreviewCard) {
+    console.error("wordPreviewCard not found");
+    return;
   }
+  
+  if (!previewLoading || !previewContent || !previewError) {
+    console.error("Preview elements not initialized");
+    return;
+  }
+  
+  wordPreviewCard.classList.remove("hidden");
+  previewLoading.classList.remove("hidden");
+  previewContent.classList.add("hidden");
+  previewError.classList.add("hidden");
 
   try {
     // 네이버 영어사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
@@ -2391,21 +2399,26 @@ async function searchWord() {
         // 첫 번째 의미의 품사 가져오기
         partOfSpeech = wordData.meanings[0].partOfSpeech || "";
         
-        // 모든 의미를 수집
+        // 모든 의미를 수집하고 예문도 적극적으로 찾기
         const allMeanings = [];
-        wordData.meanings.forEach((meaningItem) => {
+        
+        // 먼저 예문을 찾기 (모든 meanings와 definitions를 순회)
+        for (const meaningItem of wordData.meanings) {
           if (meaningItem.definitions && meaningItem.definitions.length > 0) {
-            meaningItem.definitions.forEach((def) => {
+            for (const def of meaningItem.definitions) {
+              // 정의 수집
               if (def.definition) {
                 allMeanings.push(def.definition);
-                // 예문도 찾기
-                if (!example && def.example) {
-                  example = def.example;
-                }
               }
-            });
+              // 예문 찾기 (우선순위: example 필드)
+              if (!example && def.example && def.example.trim() !== "") {
+                example = def.example.trim();
+                break; // 첫 번째 예문을 찾으면 중단
+              }
+            }
+            if (example) break; // 예문을 찾으면 전체 루프 중단
           }
-        });
+        }
         
         // 첫 번째 뜻을 한국어로 번역 시도 (네이버 파파고 스타일)
         if (allMeanings.length > 0) {
@@ -2451,9 +2464,13 @@ async function searchWord() {
       const partOfSpeechText = partOfSpeech ? `[${partOfSpeech}] ` : "";
       koreanMeaning = partOfSpeechText + koreanMeaning;
       
-      // 예문이 없으면 기본 예문 생성
-      if (!example) {
-        example = `${wordText} - ${koreanMeaning}`;
+      // 예문 검증: 예문이 실제 예문인지 확인 (뜻이 아닌 실제 문장인지)
+      if (!example || example.trim() === "" || example.length < 10) {
+        // 예문이 없거나 너무 짧으면 의미 있는 기본 예문 생성
+        example = `Example: ${wordText} is an important word.`;
+      } else {
+        // 예문이 있으면 그대로 사용 (이미 API에서 가져온 실제 예문)
+        example = example.trim();
       }
       
       // Preview에 데이터 표시
@@ -2487,18 +2504,37 @@ async function searchWord() {
 
 // Preview 표시
 function displayPreview(wordData) {
-  if (!previewWord || !previewMeaningInput || !previewExample) return;
+  if (!previewWord || !previewMeaningInput || !previewExample) {
+    console.error("Preview elements not found");
+    return;
+  }
 
-  previewWord.textContent = wordData.word;
+  previewWord.textContent = wordData.word || "";
   previewPhonetic.textContent = wordData.phonetic
     ? `[${wordData.phonetic}]`
     : "";
-  previewMeaningInput.value = wordData.meaning;
-  previewExample.textContent = wordData.example;
+  previewMeaningInput.value = wordData.meaning || "";
+  
+  // 예문 표시: 실제 예문인지 확인 (뜻이 아닌 실제 문장인지)
+  const exampleText = wordData.example || "";
+  // 예문이 뜻과 같은지 확인 (예문이 뜻으로 잘못 들어간 경우 방지)
+  const isRealExample = exampleText && 
+                        exampleText.trim() !== "" && 
+                        !exampleText.includes(" - ") && 
+                        !exampleText.toLowerCase().startsWith(wordData.word.toLowerCase() + " -") &&
+                        exampleText.length > wordData.meaning.length;
+  
+  if (isRealExample) {
+    // 실제 예문인 경우
+    previewExample.textContent = exampleText;
+  } else {
+    // 예문이 없거나 기본값인 경우 - 단어를 포함한 간단한 예문 생성
+    previewExample.textContent = `Example: ${wordData.word} is used in various contexts.`;
+  }
 
   // 네이버 영어사전 링크 추가 (있는 경우)
   const previewHeader = document.querySelector(".preview-header");
-  if (previewHeader && wordData.naverDictUrl) {
+  if (previewHeader) {
     // 기존 링크가 있으면 제거
     const existingLink = previewHeader.querySelector(".naver-dict-link");
     if (existingLink) {
@@ -2506,20 +2542,22 @@ function displayPreview(wordData) {
     }
     
     // 네이버 영어사전 링크 추가
-    const naverLink = document.createElement("a");
-    naverLink.href = wordData.naverDictUrl;
-    naverLink.target = "_blank";
-    naverLink.rel = "noopener noreferrer";
-    naverLink.className = "naver-dict-link";
-    naverLink.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-        <polyline points="15 3 21 3 21 9"></polyline>
-        <line x1="10" y1="14" x2="21" y2="3"></line>
-      </svg>
-      네이버 영어사전에서 보기
-    `;
-    previewHeader.appendChild(naverLink);
+    if (wordData.naverDictUrl) {
+      const naverLink = document.createElement("a");
+      naverLink.href = wordData.naverDictUrl;
+      naverLink.target = "_blank";
+      naverLink.rel = "noopener noreferrer";
+      naverLink.className = "naver-dict-link";
+      naverLink.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+        네이버 영어사전에서 보기
+      `;
+      previewHeader.appendChild(naverLink);
+    }
   }
 
   // 로딩 완료 처리 - 반드시 마지막에 실행
