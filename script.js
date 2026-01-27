@@ -1175,14 +1175,19 @@ let wordPreviewCard, previewLoading, previewContent, previewError;
 let previewWord, previewPhonetic, previewMeaningInput, previewExample;
 let previewCancelBtn, previewAddBtn, previewRetryBtn;
 let currentWordData = null;
-let chapterList, addChapterBtn, addChapterModal, closeChapterModal, submitChapterBtn, newChapterName;
+let chapterList,
+  addChapterBtn,
+  addChapterModal,
+  closeChapterModal,
+  submitChapterBtn,
+  newChapterName;
 
 // 네비게이션 기능 초기화
 let navigationInitialized = false;
 
 function initNavigation() {
   if (navigationInitialized) return; // 중복 초기화 방지
-  
+
   try {
     const navLinks = document.querySelectorAll(".nav-link");
     const sections = document.querySelectorAll(".section");
@@ -1212,33 +1217,33 @@ function initNavigation() {
         const targetElement = document.getElementById(targetSection);
         if (targetElement) {
           targetElement.classList.remove("hidden");
-          
+
           // 각 섹션별 초기화
           if (targetSection === "home") {
             // Home 섹션은 그냥 표시
-        } else if (targetSection === "vocab-quiz") {
-          // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
-          setTimeout(() => {
-            try {
-              showLectureSelection();
-            } catch (err) {
-              console.error("Error showing lecture selection:", err);
-            }
-          }, 50);
-        } else if (targetSection === "voca-review") {
-          // Voca Review 섹션으로 갈 때 단어 표시 (챕터 선택 창 없이)
-          setTimeout(() => {
-            try {
-              displayReviewWords();
-            } catch (err) {
-              console.error("Error displaying review words:", err);
-            }
-          }, 50);
-        }
+          } else if (targetSection === "vocab-quiz") {
+            // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
+            setTimeout(() => {
+              try {
+                showLectureSelection();
+              } catch (err) {
+                console.error("Error showing lecture selection:", err);
+              }
+            }, 50);
+          } else if (targetSection === "voca-review") {
+            // Voca Review 섹션으로 갈 때 단어 표시 (챕터 선택 창 없이)
+            setTimeout(() => {
+              try {
+                displayReviewWords();
+              } catch (err) {
+                console.error("Error displaying review words:", err);
+              }
+            }, 50);
+          }
         }
       });
     });
-    
+
     navigationInitialized = true;
   } catch (error) {
     console.error("Error initializing navigation:", error);
@@ -1251,13 +1256,13 @@ function updateChapterList() {
     // chapterList가 없으면 조용히 리턴 (에러 방지)
     return;
   }
-  
+
   try {
     chapterList.innerHTML = "";
     vocaData.forEach((lecture, index) => {
       const userWords = getUserAddedWords(lecture.lecture);
       const totalWords = lecture.words.length + userWords.length;
-      
+
       const listItem = document.createElement("div");
       listItem.className = "chapter-list-item";
       listItem.innerHTML = `
@@ -1267,7 +1272,7 @@ function updateChapterList() {
         </div>
         <button class="chapter-test-btn" data-index="${index}">TEST</button>
       `;
-      
+
       const testBtn = listItem.querySelector(".chapter-test-btn");
       if (testBtn) {
         testBtn.addEventListener("click", (e) => {
@@ -1279,7 +1284,7 @@ function updateChapterList() {
           }
         });
       }
-      
+
       chapterList.appendChild(listItem);
     });
   } catch (error) {
@@ -1292,13 +1297,14 @@ function showLectureSelection() {
   try {
     // Vocab Quiz 섹션이 활성화되어 있을 때만 챕터 선택 창 표시
     const vocabQuizSection = document.getElementById("vocab-quiz");
-    const isVocabQuizActive = vocabQuizSection && !vocabQuizSection.classList.contains("hidden");
-    
+    const isVocabQuizActive =
+      vocabQuizSection && !vocabQuizSection.classList.contains("hidden");
+
     if (!isVocabQuizActive) {
       // Vocab Quiz 섹션이 아니면 챕터 선택 창을 표시하지 않음
       return;
     }
-    
+
     if (lectureSelectionScreen) {
       lectureSelectionScreen.classList.remove("hidden");
     }
@@ -1640,7 +1646,7 @@ function startQuiz(lectureIndex, isReviewQuiz = false) {
       lecture: "틀린 단어 복습",
       words: selectedWords,
     };
-    
+
     // Voca Review에서는 챕터 선택 창 숨기기
     if (lectureSelectionScreen) {
       lectureSelectionScreen.classList.add("hidden");
@@ -1809,9 +1815,7 @@ function selectOption(selectedOption, question) {
     if (currentLecture && currentLecture.lecture === "틀린 단어 복습") {
       // 틀린 단어장에서 제거하고 암기한 단어장에 추가
       const wrongWords = getWrongWords();
-      const wordToRemove = wrongWords.find(
-        (w) => w.word === question.word
-      );
+      const wordToRemove = wrongWords.find((w) => w.word === question.word);
       if (wordToRemove) {
         removeWrongWord(question.word, wordToRemove.lecture);
       }
@@ -1996,7 +2000,7 @@ function displayMemorizedWords() {
 function deleteMemorizedWord(word, lecture) {
   const memorizedWords = getMemorizedWords();
   const filtered = memorizedWords.filter(
-    (w) => !(w.word === word && w.lecture === lecture)
+    (w) => !(w.word === word && w.lecture === lecture),
   );
   localStorage.setItem("vocabMemorizedWords", JSON.stringify(filtered));
   displayMemorizedWords();
@@ -2062,7 +2066,9 @@ function initDOMElements() {
   reviewCount = document.getElementById("review-count");
   noReviewWords = document.getElementById("no-review-words");
   reviewQuizBtn = document.getElementById("review-quiz-btn");
-  memorizedWordsContainer = document.getElementById("memorized-words-container");
+  memorizedWordsContainer = document.getElementById(
+    "memorized-words-container",
+  );
   memorizedCount = document.getElementById("memorized-count");
   noMemorizedWords = document.getElementById("no-memorized-words");
   addWordLecture = document.getElementById("add-word-lecture");
@@ -2092,238 +2098,238 @@ let vocabQuizInitialized = false;
 
 function initVocabQuiz() {
   if (vocabQuizInitialized) return; // 중복 초기화 방지
-  
+
   try {
     // DOM 요소 초기화
     initDOMElements();
-    
+
     // 네비게이션 초기화
     initNavigation();
-  
-  // 이벤트 리스너 설정
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      if (feedbackModal) {
-        feedbackModal.classList.add("hidden");
-      }
-      currentQuestionIndex++;
-      loadQuestion();
-    });
-  }
-  
-  if (pronounceBtn && wordText) {
-    pronounceBtn.addEventListener("click", () => {
-      const word = wordText.textContent;
-      if (word && "speechSynthesis" in window) {
-        const utterance = new SpeechSynthesisUtterance(word);
-        utterance.lang = "en-US";
-        utterance.rate = 0.9;
-        speechSynthesis.speak(utterance);
-      }
-    });
-  }
-  
-  if (restartBtn) {
-    restartBtn.addEventListener("click", () => {
-      if (currentLecture) {
-        // Review 퀴즈인지 확인
-        if (currentLecture.lecture === "틀린 단어 복습") {
-          startQuiz(0, true);
-        } else {
-          const lectureIndex = vocaData.findIndex(
-            (l) => l.lecture === currentLecture.lecture,
-          );
-          if (lectureIndex !== -1) {
-            startQuiz(lectureIndex);
+
+    // 이벤트 리스너 설정
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        if (feedbackModal) {
+          feedbackModal.classList.add("hidden");
+        }
+        currentQuestionIndex++;
+        loadQuestion();
+      });
+    }
+
+    if (pronounceBtn && wordText) {
+      pronounceBtn.addEventListener("click", () => {
+        const word = wordText.textContent;
+        if (word && "speechSynthesis" in window) {
+          const utterance = new SpeechSynthesisUtterance(word);
+          utterance.lang = "en-US";
+          utterance.rate = 0.9;
+          speechSynthesis.speak(utterance);
+        }
+      });
+    }
+
+    if (restartBtn) {
+      restartBtn.addEventListener("click", () => {
+        if (currentLecture) {
+          // Review 퀴즈인지 확인
+          if (currentLecture.lecture === "틀린 단어 복습") {
+            startQuiz(0, true);
+          } else {
+            const lectureIndex = vocaData.findIndex(
+              (l) => l.lecture === currentLecture.lecture,
+            );
+            if (lectureIndex !== -1) {
+              startQuiz(lectureIndex);
+            }
           }
         }
-      }
-    });
-  }
-  
-  if (backToLecturesBtn) {
-    backToLecturesBtn.addEventListener("click", () => {
-      showLectureSelection();
-    });
-  }
-  
-  if (backToLectureBtn) {
-    backToLectureBtn.addEventListener("click", () => {
-      if (
-        confirm("진행 중인 퀴즈를 중단하고 챕터 선택으로 돌아가시겠습니까?")
-      ) {
-        if (timerInterval) {
-          clearInterval(timerInterval);
-        }
-        showLectureSelection();
-      }
-    });
-  }
-  
-  if (themeToggle) {
-    themeToggle.addEventListener("click", toggleTheme);
-  }
-  
-  // 단어 검색 버튼
-  if (searchWordBtn) {
-    searchWordBtn.addEventListener("click", searchWord);
-  }
-  
-  // Enter 키로 검색
-  if (addWordInput) {
-    addWordInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        searchWord();
-      }
-    });
-  }
-  
-  // Preview 취소 버튼
-  if (previewCancelBtn) {
-    previewCancelBtn.addEventListener("click", () => {
-      hidePreview();
-    });
-  }
-  
-  // Preview 추가 버튼
-  if (previewAddBtn) {
-    previewAddBtn.addEventListener("click", addWordFromPreview);
-  }
-  
-  // Preview 재시도 버튼
-  if (previewRetryBtn) {
-    previewRetryBtn.addEventListener("click", () => {
-      if (addWordInput && addWordInput.value.trim()) {
-        searchWord();
-      }
-    });
-  }
-
-  // 챕터 추가 버튼
-  if (addChapterBtn) {
-    addChapterBtn.addEventListener("click", () => {
-      if (addChapterModal) {
-        addChapterModal.classList.remove("hidden");
-      }
-      if (newChapterName) {
-        newChapterName.value = "";
-        newChapterName.focus();
-      }
-    });
-  }
-
-  // 챕터 추가 모달 닫기
-  if (closeChapterModal) {
-    closeChapterModal.addEventListener("click", () => {
-      if (addChapterModal) {
-        addChapterModal.classList.add("hidden");
-      }
-    });
-  }
-
-  // 챕터 추가 제출
-  if (submitChapterBtn) {
-    submitChapterBtn.addEventListener("click", () => {
-      const chapterName = newChapterName ? newChapterName.value.trim() : "";
-      if (!chapterName) {
-        alert("챕터 이름을 입력해주세요.");
-        return;
-      }
-
-      // 중복 확인
-      const exists = vocaData.some((l) => l.lecture === chapterName);
-      if (exists) {
-        alert("이미 존재하는 챕터입니다.");
-        return;
-      }
-
-      // 새 챕터 추가
-      vocaData.push({
-        lecture: chapterName,
-        words: [],
       });
+    }
 
-      // 모달 닫기
-      if (addChapterModal) {
-        addChapterModal.classList.add("hidden");
-      }
+    if (backToLecturesBtn) {
+      backToLecturesBtn.addEventListener("click", () => {
+        showLectureSelection();
+      });
+    }
 
-      alert("✅ 챕터가 추가되었습니다!");
-      
-      // 챕터 목록 새로고침
-      showLectureSelection();
-    });
-  }
+    if (backToLectureBtn) {
+      backToLectureBtn.addEventListener("click", () => {
+        if (
+          confirm("진행 중인 퀴즈를 중단하고 챕터 선택으로 돌아가시겠습니까?")
+        ) {
+          if (timerInterval) {
+            clearInterval(timerInterval);
+          }
+          showLectureSelection();
+        }
+      });
+    }
 
-  // Enter 키로 챕터 추가
-  if (newChapterName) {
-    newChapterName.addEventListener("keypress", (e) => {
-      if (e.key === "Enter" && submitChapterBtn) {
-        submitChapterBtn.click();
-      }
-    });
-  }
+    if (themeToggle) {
+      themeToggle.addEventListener("click", toggleTheme);
+    }
 
-  // Review 퀴즈 버튼
-  if (reviewQuizBtn) {
-    reviewQuizBtn.addEventListener("click", () => {
-      const wrongWords = getWrongWords();
-      if (wrongWords.length === 0) {
-        alert("복습할 단어가 없습니다.");
-        return;
-      }
+    // 단어 검색 버튼
+    if (searchWordBtn) {
+      searchWordBtn.addEventListener("click", searchWord);
+    }
 
-      // Vocab Quiz 섹션으로 이동
-      const navLinks = document.querySelectorAll(".nav-link");
-      const sections = document.querySelectorAll(".section");
+    // Enter 키로 검색
+    if (addWordInput) {
+      addWordInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          searchWord();
+        }
+      });
+    }
 
-      navLinks.forEach((l) => l.classList.remove("active"));
-      const vocabQuizLink = Array.from(navLinks).find(
-        (l) => l.getAttribute("data-section") === "vocab-quiz",
-      );
-      if (vocabQuizLink) {
-        vocabQuizLink.classList.add("active");
-      }
+    // Preview 취소 버튼
+    if (previewCancelBtn) {
+      previewCancelBtn.addEventListener("click", () => {
+        hidePreview();
+      });
+    }
 
-      sections.forEach((s) => s.classList.add("hidden"));
-      const vocabQuizSection = document.getElementById("vocab-quiz");
-      if (vocabQuizSection) {
-        vocabQuizSection.classList.remove("hidden");
-      }
+    // Preview 추가 버튼
+    if (previewAddBtn) {
+      previewAddBtn.addEventListener("click", addWordFromPreview);
+    }
 
-      // 챕터 선택 창 숨기기 (Review 퀴즈이므로)
-      if (lectureSelectionScreen) {
-        lectureSelectionScreen.classList.add("hidden");
-      }
-      if (quizContainer) {
-        quizContainer.classList.remove("hidden");
-      }
+    // Preview 재시도 버튼
+    if (previewRetryBtn) {
+      previewRetryBtn.addEventListener("click", () => {
+        if (addWordInput && addWordInput.value.trim()) {
+          searchWord();
+        }
+      });
+    }
 
-      // Review 퀴즈 시작
-      startQuiz(0, true);
-    });
-  }
+    // 챕터 추가 버튼
+    if (addChapterBtn) {
+      addChapterBtn.addEventListener("click", () => {
+        if (addChapterModal) {
+          addChapterModal.classList.remove("hidden");
+        }
+        if (newChapterName) {
+          newChapterName.value = "";
+          newChapterName.focus();
+        }
+      });
+    }
 
-  // 테마 초기화
-  initTheme();
+    // 챕터 추가 모달 닫기
+    if (closeChapterModal) {
+      closeChapterModal.addEventListener("click", () => {
+        if (addChapterModal) {
+          addChapterModal.classList.add("hidden");
+        }
+      });
+    }
 
-  // 초기 상태 설정
-  if (lectureSelectionScreen) {
-    lectureSelectionScreen.classList.remove("hidden");
-  }
-  if (quizContainer) {
-    quizContainer.classList.add("hidden");
-  }
-  if (resultScreen) {
-    resultScreen.classList.add("hidden");
-  }
-  if (feedbackModal) {
-    feedbackModal.classList.add("hidden");
-  }
+    // 챕터 추가 제출
+    if (submitChapterBtn) {
+      submitChapterBtn.addEventListener("click", () => {
+        const chapterName = newChapterName ? newChapterName.value.trim() : "";
+        if (!chapterName) {
+          alert("챕터 이름을 입력해주세요.");
+          return;
+        }
+
+        // 중복 확인
+        const exists = vocaData.some((l) => l.lecture === chapterName);
+        if (exists) {
+          alert("이미 존재하는 챕터입니다.");
+          return;
+        }
+
+        // 새 챕터 추가
+        vocaData.push({
+          lecture: chapterName,
+          words: [],
+        });
+
+        // 모달 닫기
+        if (addChapterModal) {
+          addChapterModal.classList.add("hidden");
+        }
+
+        alert("✅ 챕터가 추가되었습니다!");
+
+        // 챕터 목록 새로고침
+        showLectureSelection();
+      });
+    }
+
+    // Enter 키로 챕터 추가
+    if (newChapterName) {
+      newChapterName.addEventListener("keypress", (e) => {
+        if (e.key === "Enter" && submitChapterBtn) {
+          submitChapterBtn.click();
+        }
+      });
+    }
+
+    // Review 퀴즈 버튼
+    if (reviewQuizBtn) {
+      reviewQuizBtn.addEventListener("click", () => {
+        const wrongWords = getWrongWords();
+        if (wrongWords.length === 0) {
+          alert("복습할 단어가 없습니다.");
+          return;
+        }
+
+        // Vocab Quiz 섹션으로 이동
+        const navLinks = document.querySelectorAll(".nav-link");
+        const sections = document.querySelectorAll(".section");
+
+        navLinks.forEach((l) => l.classList.remove("active"));
+        const vocabQuizLink = Array.from(navLinks).find(
+          (l) => l.getAttribute("data-section") === "vocab-quiz",
+        );
+        if (vocabQuizLink) {
+          vocabQuizLink.classList.add("active");
+        }
+
+        sections.forEach((s) => s.classList.add("hidden"));
+        const vocabQuizSection = document.getElementById("vocab-quiz");
+        if (vocabQuizSection) {
+          vocabQuizSection.classList.remove("hidden");
+        }
+
+        // 챕터 선택 창 숨기기 (Review 퀴즈이므로)
+        if (lectureSelectionScreen) {
+          lectureSelectionScreen.classList.add("hidden");
+        }
+        if (quizContainer) {
+          quizContainer.classList.remove("hidden");
+        }
+
+        // Review 퀴즈 시작
+        startQuiz(0, true);
+      });
+    }
+
+    // 테마 초기화
+    initTheme();
+
+    // 초기 상태 설정
+    if (lectureSelectionScreen) {
+      lectureSelectionScreen.classList.remove("hidden");
+    }
+    if (quizContainer) {
+      quizContainer.classList.add("hidden");
+    }
+    if (resultScreen) {
+      resultScreen.classList.add("hidden");
+    }
+    if (feedbackModal) {
+      feedbackModal.classList.add("hidden");
+    }
 
     // 챕터 목록 초기화
     showLectureSelection();
-    
+
     vocabQuizInitialized = true;
   } catch (error) {
     console.error("Error initializing Vocab Quiz:", error);
@@ -2348,12 +2354,12 @@ async function searchWord() {
     console.error("wordPreviewCard not found");
     return;
   }
-  
+
   if (!previewLoading || !previewContent || !previewError) {
     console.error("Preview elements not initialized");
     return;
   }
-  
+
   wordPreviewCard.classList.remove("hidden");
   previewLoading.classList.remove("hidden");
   previewContent.classList.add("hidden");
@@ -2362,16 +2368,16 @@ async function searchWord() {
   try {
     // 네이버 영한사전 페이지에서 데이터 가져오기 (CORS 문제로 직접 접근 불가)
     // 대신 Free Dictionary API로 기본 정보를 가져온 후 네이버 사전 링크 제공
-    
+
     // Free Dictionary API 사용
     const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`,
       {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Accept': 'application/json'
-        }
-      }
+          Accept: "application/json",
+        },
+      },
     );
 
     if (!response.ok) {
@@ -2394,14 +2400,14 @@ async function searchWord() {
       let koreanMeaning = "";
       let partOfSpeech = "";
       let example = "";
-      
+
       if (wordData.meanings && wordData.meanings.length > 0) {
         // 첫 번째 의미의 품사 가져오기
         partOfSpeech = wordData.meanings[0].partOfSpeech || "";
-        
+
         // 모든 의미를 수집하고 예문도 적극적으로 찾기
         const allMeanings = [];
-        
+
         // 먼저 예문을 찾기 (모든 meanings와 definitions를 순회)
         for (const meaningItem of wordData.meanings) {
           if (meaningItem.definitions && meaningItem.definitions.length > 0) {
@@ -2419,41 +2425,48 @@ async function searchWord() {
             if (example) break; // 예문을 찾으면 전체 루프 중단
           }
         }
-        
+
         // 첫 번째 뜻을 한국어로 번역 시도 (영한사전 스타일 - 간결하게)
         if (allMeanings.length > 0) {
           try {
             // 첫 번째 정의만 사용 (간결하게)
             const firstDefinition = allMeanings[0];
-            
+
             // 여러 번역 API를 순차적으로 시도
             let translationSuccess = false;
-            
+
             // 1차 시도: MyMemory Translation API
             try {
               const translateResponse = await fetch(
                 `https://api.mymemory.translated.net/get?q=${encodeURIComponent(firstDefinition)}&langpair=en|ko`,
                 {
-                  method: 'GET',
+                  method: "GET",
                   headers: {
-                    'Accept': 'application/json'
-                  }
-                }
+                    Accept: "application/json",
+                  },
+                },
               );
-              
+
               if (translateResponse.ok) {
                 const translateData = await translateResponse.json();
-                if (translateData.responseData && translateData.responseData.translatedText) {
+                if (
+                  translateData.responseData &&
+                  translateData.responseData.translatedText
+                ) {
                   let translated = translateData.responseData.translatedText;
-                  
+
                   // 번역 품질 검증
-                  if (translated !== firstDefinition && translated.length >= 2) {
+                  if (
+                    translated !== firstDefinition &&
+                    translated.length >= 2
+                  ) {
                     // 한글 뜻을 간결하게 처리
                     if (translated.length > 50) {
                       const firstSentence = translated.split(/[.,;]/)[0].trim();
-                      koreanMeaning = firstSentence.length > 0 && firstSentence.length <= 50 
-                        ? firstSentence 
-                        : translated.substring(0, 47) + "...";
+                      koreanMeaning =
+                        firstSentence.length > 0 && firstSentence.length <= 50
+                          ? firstSentence
+                          : translated.substring(0, 47) + "...";
                     } else {
                       koreanMeaning = translated;
                     }
@@ -2464,35 +2477,36 @@ async function searchWord() {
             } catch (e1) {
               console.log("MyMemory API failed:", e1);
             }
-            
+
             // 2차 시도: LibreTranslate API (무료)
             if (!translationSuccess) {
               try {
                 const libreResponse = await fetch(
                   `https://libretranslate.de/translate`,
                   {
-                    method: 'POST',
+                    method: "POST",
                     headers: {
-                      'Content-Type': 'application/json'
+                      "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
                       q: firstDefinition,
-                      source: 'en',
-                      target: 'ko',
-                      format: 'text'
-                    })
-                  }
+                      source: "en",
+                      target: "ko",
+                      format: "text",
+                    }),
+                  },
                 );
-                
+
                 if (libreResponse.ok) {
                   const libreData = await libreResponse.json();
                   if (libreData.translatedText) {
                     let translated = libreData.translatedText;
                     if (translated.length > 50) {
                       const firstSentence = translated.split(/[.,;]/)[0].trim();
-                      koreanMeaning = firstSentence.length > 0 && firstSentence.length <= 50 
-                        ? firstSentence 
-                        : translated.substring(0, 47) + "...";
+                      koreanMeaning =
+                        firstSentence.length > 0 && firstSentence.length <= 50
+                          ? firstSentence
+                          : translated.substring(0, 47) + "...";
                     } else {
                       koreanMeaning = translated;
                     }
@@ -2503,7 +2517,7 @@ async function searchWord() {
                 console.log("LibreTranslate API failed:", e2);
               }
             }
-            
+
             // 모든 번역 API 실패 시 영어 뜻 사용
             if (!translationSuccess) {
               koreanMeaning = firstDefinition;
@@ -2514,27 +2528,28 @@ async function searchWord() {
           }
         }
       }
-      
+
       // 번역이 실패했으면 영어 뜻 사용
       if (!koreanMeaning) {
         koreanMeaning = "뜻을 찾을 수 없습니다.";
       }
-      
+
       // 품사와 뜻을 함께 표시 (네이버 영한사전 스타일 - 간결하게)
       const partOfSpeechText = partOfSpeech ? `[${partOfSpeech}] ` : "";
-      
+
       // 한글 뜻이 너무 길면 자르기 (최대 50자)
       let finalMeaning = koreanMeaning;
       if (finalMeaning.length > 50) {
         // 첫 번째 문장이나 의미 단위로 자르기
         const firstPart = finalMeaning.split(/[.,;]/)[0].trim();
-        finalMeaning = firstPart.length > 0 && firstPart.length <= 50 
-          ? firstPart 
-          : finalMeaning.substring(0, 47) + "...";
+        finalMeaning =
+          firstPart.length > 0 && firstPart.length <= 50
+            ? firstPart
+            : finalMeaning.substring(0, 47) + "...";
       }
-      
+
       koreanMeaning = partOfSpeechText + finalMeaning;
-      
+
       // 예문 검증: 예문이 실제 예문인지 확인 (뜻이 아닌 실제 문장인지)
       if (!example || example.trim() === "" || example.length < 10) {
         // 예문이 없거나 너무 짧으면 의미 있는 기본 예문 생성
@@ -2543,14 +2558,14 @@ async function searchWord() {
         // 예문이 있으면 그대로 사용 (이미 API에서 가져온 실제 예문)
         example = example.trim();
       }
-      
+
       // Preview에 데이터 표시
       currentWordData = {
         word: wordText,
         meaning: koreanMeaning,
         example: example,
         phonetic: phonetic,
-        naverDictUrl: `https://en.dict.naver.com/#/search?query=wordText`
+        naverDictUrl: `https://en.dict.naver.com/#/search?query=${encodeURIComponent(wordText)}`,
       };
 
       // 로딩 완료 처리 - 반드시 마지막에 실행
@@ -2598,16 +2613,17 @@ function displayPreview(wordData) {
     ? `[${wordData.phonetic}]`
     : "";
   previewMeaningInput.value = wordData.meaning || "";
-  
+
   // 예문 표시: 실제 예문인지 확인 (뜻이 아닌 실제 문장인지)
   const exampleText = wordData.example || "";
   // 예문이 뜻과 같은지 확인 (예문이 뜻으로 잘못 들어간 경우 방지)
-  const isRealExample = exampleText && 
-                        exampleText.trim() !== "" && 
-                        !exampleText.includes(" - ") && 
-                        !exampleText.toLowerCase().startsWith(wordData.word.toLowerCase() + " -") &&
-                        exampleText.length > wordData.meaning.length;
-  
+  const isRealExample =
+    exampleText &&
+    exampleText.trim() !== "" &&
+    !exampleText.includes(" - ") &&
+    !exampleText.toLowerCase().startsWith(wordData.word.toLowerCase() + " -") &&
+    exampleText.length > wordData.meaning.length;
+
   if (isRealExample) {
     // 실제 예문인 경우
     previewExample.textContent = exampleText;
@@ -2624,7 +2640,7 @@ function displayPreview(wordData) {
     if (existingLink) {
       existingLink.remove();
     }
-    
+
     // 네이버 영어사전 링크 추가
     if (wordData.naverDictUrl) {
       const naverLink = document.createElement("a");
@@ -2655,7 +2671,7 @@ function displayPreview(wordData) {
   if (previewContent) {
     previewContent.classList.remove("hidden");
   }
-  
+
   // 추가 보장을 위한 setTimeout
   setTimeout(() => {
     if (previewLoading) {
@@ -2708,8 +2724,10 @@ function addWordFromPreview() {
   }
 
   // 사용자가 수정한 뜻 가져오기
-  const finalMeaning = previewMeaningInput ? previewMeaningInput.value.trim() : currentWordData.meaning;
-  
+  const finalMeaning = previewMeaningInput
+    ? previewMeaningInput.value.trim()
+    : currentWordData.meaning;
+
   userWords.push({
     word: currentWordData.word,
     meaning: finalMeaning || currentWordData.meaning,
@@ -2731,10 +2749,10 @@ function addWordFromPreview() {
 }
 
 // DOM 로드 완료 시 또는 이미 로드된 경우
-(function() {
+(function () {
   try {
     initTheme();
-    
+
     function init() {
       try {
         initVocabQuiz();
@@ -2742,7 +2760,7 @@ function addWordFromPreview() {
         console.error("Error in initVocabQuiz:", error);
       }
     }
-    
+
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", () => {
         setTimeout(init, 200);
