@@ -1177,78 +1177,113 @@ let currentWordData = null;
 let chapterList, addChapterBtn, addChapterModal, closeChapterModal, submitChapterBtn, newChapterName;
 
 // 네비게이션 기능 초기화
+let navigationInitialized = false;
+
 function initNavigation() {
-  const navLinks = document.querySelectorAll(".nav-link");
-  const sections = document.querySelectorAll(".section");
+  if (navigationInitialized) return; // 중복 초기화 방지
+  
+  try {
+    const navLinks = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll(".section");
 
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetSection = link.getAttribute("data-section");
+    if (navLinks.length === 0 || sections.length === 0) {
+      console.warn("Navigation elements not found");
+      return;
+    }
 
-      // 활성 링크 업데이트
-      navLinks.forEach((l) => l.classList.remove("active"));
-      link.classList.add("active");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetSection = link.getAttribute("data-section");
 
-      // 섹션 표시/숨김
-      sections.forEach((section) => {
-        section.classList.add("hidden");
-      });
+        if (!targetSection) return;
 
-      const targetElement = document.getElementById(targetSection);
-      if (targetElement) {
-        targetElement.classList.remove("hidden");
-        
-        // 각 섹션별 초기화
-        if (targetSection === "home") {
-          // Home 섹션은 그냥 표시
-        } else if (targetSection === "vocab-quiz") {
-          // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
-          showLectureSelection();
-        } else if (targetSection === "voca-review") {
-          // Voca Review 섹션으로 갈 때 단어 표시
-          displayReviewWords();
+        // 활성 링크 업데이트
+        navLinks.forEach((l) => l.classList.remove("active"));
+        link.classList.add("active");
+
+        // 섹션 표시/숨김
+        sections.forEach((section) => {
+          section.classList.add("hidden");
+        });
+
+        const targetElement = document.getElementById(targetSection);
+        if (targetElement) {
+          targetElement.classList.remove("hidden");
+          
+          // 각 섹션별 초기화
+          if (targetSection === "home") {
+            // Home 섹션은 그냥 표시
+          } else if (targetSection === "vocab-quiz") {
+            // Vocab Quiz 섹션으로 돌아올 때 챕터 선택 화면 표시
+            setTimeout(() => {
+              try {
+                showLectureSelection();
+              } catch (err) {
+                console.error("Error showing lecture selection:", err);
+              }
+            }, 50);
+          } else if (targetSection === "voca-review") {
+            // Voca Review 섹션으로 갈 때 단어 표시
+            setTimeout(() => {
+              try {
+                displayReviewWords();
+              } catch (err) {
+                console.error("Error displaying review words:", err);
+              }
+            }, 50);
+          }
         }
-      }
+      });
     });
-  });
+    
+    navigationInitialized = true;
+  } catch (error) {
+    console.error("Error initializing navigation:", error);
+  }
 }
 
 // 챕터 목록 업데이트 (사이드바)
 function updateChapterList() {
   if (!chapterList) {
-    console.error("chapterList element not found");
+    // chapterList가 없으면 조용히 리턴 (에러 방지)
     return;
   }
   
-  chapterList.innerHTML = "";
-  vocaData.forEach((lecture, index) => {
-    const userWords = getUserAddedWords(lecture.lecture);
-    const totalWords = lecture.words.length + userWords.length;
-    
-    const listItem = document.createElement("div");
-    listItem.className = "chapter-list-item";
-    listItem.innerHTML = `
-      <div class="chapter-item-content">
-        <div class="chapter-item-title">${lecture.lecture}</div>
-        <div class="chapter-item-count">${totalWords}개</div>
-      </div>
-      <button class="chapter-test-btn" data-index="${index}">TEST</button>
-    `;
-    
-    const testBtn = listItem.querySelector(".chapter-test-btn");
-    if (testBtn) {
-      testBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const idx = parseInt(testBtn.getAttribute("data-index"));
-        if (!isNaN(idx)) {
-          startQuiz(idx);
-        }
-      });
-    }
-    
-    chapterList.appendChild(listItem);
-  });
+  try {
+    chapterList.innerHTML = "";
+    vocaData.forEach((lecture, index) => {
+      const userWords = getUserAddedWords(lecture.lecture);
+      const totalWords = lecture.words.length + userWords.length;
+      
+      const listItem = document.createElement("div");
+      listItem.className = "chapter-list-item";
+      listItem.innerHTML = `
+        <div class="chapter-item-content">
+          <div class="chapter-item-title">${lecture.lecture}</div>
+          <div class="chapter-item-count">${totalWords}개</div>
+        </div>
+        <button class="chapter-test-btn" data-index="${index}">TEST</button>
+      `;
+      
+      const testBtn = listItem.querySelector(".chapter-test-btn");
+      if (testBtn) {
+        testBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          const idx = parseInt(testBtn.getAttribute("data-index"));
+          if (!isNaN(idx) && idx >= 0 && idx < vocaData.length) {
+            startQuiz(idx);
+          }
+        });
+      }
+      
+      chapterList.appendChild(listItem);
+    });
+  } catch (error) {
+    console.error("Error updating chapter list:", error);
+  }
 }
 
 // 챕터 선택 화면 표시
@@ -1973,12 +2008,17 @@ function initDOMElements() {
 }
 
 // 페이지 로드 시 챕터 선택 화면 표시
+let vocabQuizInitialized = false;
+
 function initVocabQuiz() {
-  // DOM 요소 초기화
-  initDOMElements();
+  if (vocabQuizInitialized) return; // 중복 초기화 방지
   
-  // 네비게이션 초기화
-  initNavigation();
+  try {
+    // DOM 요소 초기화
+    initDOMElements();
+    
+    // 네비게이션 초기화
+    initNavigation();
   
   // 이벤트 리스너 설정
   if (nextBtn) {
@@ -2193,8 +2233,17 @@ function initVocabQuiz() {
     feedbackModal.classList.add("hidden");
   }
 
-  // 챕터 목록 초기화
-  showLectureSelection();
+    // 챕터 목록 초기화
+    showLectureSelection();
+    
+    vocabQuizInitialized = true;
+  } catch (error) {
+    console.error("Error initializing Vocab Quiz:", error);
+    // 최소한의 기능이라도 작동하도록
+    if (lectureSelectionScreen) {
+      lectureSelectionScreen.classList.remove("hidden");
+    }
+  }
 }
 
 // 단어 검색 함수
@@ -2395,12 +2444,26 @@ function addWordFromPreview() {
 }
 
 // DOM 로드 완료 시 또는 이미 로드된 경우
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
+(function() {
+  try {
     initTheme();
-    initVocabQuiz();
-  });
-} else {
-  initTheme();
-  initVocabQuiz();
-}
+    
+    function init() {
+      try {
+        initVocabQuiz();
+      } catch (error) {
+        console.error("Error in initVocabQuiz:", error);
+      }
+    }
+    
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(init, 200);
+      });
+    } else {
+      setTimeout(init, 200);
+    }
+  } catch (error) {
+    console.error("Error initializing app:", error);
+  }
+})();
