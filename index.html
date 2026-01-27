@@ -138,11 +138,6 @@
 
                 <!-- Word Preview Card -->
                 <div class="word-preview-card hidden" id="word-preview-card">
-                  <div class="preview-loading" id="preview-loading">
-                    <!-- <div class="loading-spinner"></div>
-                    <p>단어를 검색하고 있습니다...</p> -->
-                  </div>
-
                   <div class="preview-content hidden" id="preview-content">
                     <div class="preview-header">
                       <h4 class="preview-word" id="preview-word"></h4>
@@ -418,6 +413,25 @@
             <div class="today-stats">
               <h3>오늘의 누적 공부 시간</h3>
               <div class="stats-time" id="today-time">0시간 0분</div>
+              
+              <!-- Goal Time Setting -->
+              <div class="goal-setting">
+                <label for="goal-time-input" class="goal-label">오늘의 목표 시간 (시간)</label>
+                <div class="goal-input-wrapper">
+                  <input
+                    type="number"
+                    id="goal-time-input"
+                    class="goal-input"
+                    min="0.5"
+                    max="24"
+                    step="0.5"
+                    value="6"
+                    placeholder="6"
+                  />
+                  <button class="goal-save-btn" id="save-goal-btn">저장</button>
+                </div>
+                <div class="goal-display" id="goal-display">목표: 6시간</div>
+              </div>
             </div>
 
             <!-- Study Calendar -->
@@ -429,15 +443,15 @@
               <div class="calendar-legend">
                 <div class="legend-item">
                   <span class="legend-emoji">😄</span>
-                  <span>목표 달성 (6시간 이상)</span>
+                  <span>목표의 80% 이상</span>
                 </div>
                 <div class="legend-item">
                   <span class="legend-emoji">🍀</span>
-                  <span>적당함 (3-6시간)</span>
+                  <span>목표의 50~80%</span>
                 </div>
                 <div class="legend-item">
                   <span class="legend-emoji">💧</span>
-                  <span>부족함 (3시간 미만)</span>
+                  <span>목표의 50% 미만</span>
                 </div>
               </div>
             </div>
