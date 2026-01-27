@@ -47,6 +47,21 @@
             <!-- Lectures will be dynamically generated -->
           </div>
           
+          <!-- Add Word Section -->
+          <div class="add-word-section">
+            <h3 class="add-word-title">단어 추가하기</h3>
+            <div class="add-word-form">
+              <select id="add-word-lecture" class="add-word-select">
+                <option value="">챕터 선택</option>
+              </select>
+              <input type="text" id="add-word-input" class="add-word-input" placeholder="단어 (영어)">
+              <input type="text" id="add-word-meaning" class="add-word-input" placeholder="뜻 (한국어)">
+              <input type="text" id="add-word-example" class="add-word-input" placeholder="예문 (선택사항)">
+              <button class="add-word-btn" id="add-word-btn">추가</button>
+            </div>
+            <p class="add-word-info">추가한 단어는 해당 챕터의 퀴즈에 포함됩니다.</p>
+          </div>
+          
           <!-- Recent Study Records - Calendar View -->
           <div class="study-records-section">
             <h3 class="records-title">학습 기록 캘린더</h3>
@@ -185,6 +200,9 @@
             <span class="stat-number" id="review-count">0</span>
             <span class="stat-label">복습할 단어</span>
           </div>
+        </div>
+        <div class="review-actions">
+          <button class="review-quiz-btn" id="review-quiz-btn">틀린 단어 퀴즈 시작 (10개)</button>
         </div>
         <div class="review-words-container" id="review-words-container">
           <!-- Review words will be dynamically generated -->
