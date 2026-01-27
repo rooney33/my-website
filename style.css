@@ -408,6 +408,7 @@ p, span, div {
   padding: 1rem;
   margin: 2rem 0;
   overflow-x: auto;
+  max-width: 100%;
 }
 
 .calendar-months {
@@ -1169,6 +1170,8 @@ body.light-mode .legend-empty {
   border-radius: 20px;
   border: 2px solid var(--border);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .add-word-title {
@@ -1217,8 +1220,8 @@ body.light-mode .legend-empty {
 }
 
 .search-word-btn {
-  background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
-  color: white;
+  background-color: #fff59d;
+  color: #333;
   border: none;
   padding: 1rem 1.5rem;
   border-radius: 12px;
@@ -1234,8 +1237,9 @@ body.light-mode .legend-empty {
 }
 
 .search-word-btn:hover {
+  background-color: #ffeb3b;
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+  box-shadow: 0 5px 20px rgba(255, 235, 59, 0.4);
 }
 
 .search-word-btn:active {
@@ -1620,8 +1624,8 @@ body.light-mode .legend-empty {
 
 .review-quiz-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 50%, var(--accent-light) 100%);
-  color: white;
+  background-color: #fff59d;
+  color: #333;
   border: none;
   padding: 1.25rem 2rem;
   border-radius: 12px;
@@ -1630,12 +1634,13 @@ body.light-mode .legend-empty {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
-  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 235, 59, 0.3);
 }
 
 .review-quiz-btn:hover {
+  background-color: #ffeb3b;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 157, 0.4);
+  box-shadow: 0 6px 20px rgba(255, 235, 59, 0.4);
 }
 
 .memorized-card {
@@ -1676,15 +1681,38 @@ body.light-mode .legend-empty {
 
   .add-word-section {
     padding: 1.5rem;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .search-input-wrapper {
     flex-direction: column;
+    width: 100%;
   }
   
   .search-word-btn {
     width: 100%;
     justify-content: center;
+  }
+  
+  .calendar-wrapper {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.75rem;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+  
+  .study-records-section {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
   }
   
   .preview-actions {
