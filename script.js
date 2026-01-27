@@ -2568,7 +2568,12 @@ async function searchWord() {
         naverDictUrl: `https://en.dict.naver.com/#/search?query=${encodeURIComponent(wordText)}`,
       };
 
-      // 로딩 완료 처리 - 반드시 마지막에 실행
+      // 로딩 완료 처리 - 즉시 로딩창 제거
+      if (previewLoading) {
+        previewLoading.classList.add("hidden");
+      }
+      
+      // Preview 표시
       displayPreview(currentWordData);
     } else {
       throw new Error("Word not found");
